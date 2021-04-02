@@ -10,10 +10,12 @@ https://ewserver.di.unimi.it/gitlab/riccardopresotto/setup_test_sdp.git
 
 * Otherwise, take care to import the project as a Gradle Project
 * If required, trust the project and accept the Gradle auto-import
+* Wait until the Gradle indexing process ends (it may take a few seconds)
 
 ## REST
 
 * Run StartServer.java located in: *REST\_MQTT_example/src/main/java/REST/*
+    * Don't worry about the red *INFO* console prints
 * Use a REST Client application (i.e., Advanced REST Client) to test if the server works correctly
 * For example you can run the following request:
 
