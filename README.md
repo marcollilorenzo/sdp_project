@@ -9,7 +9,7 @@ https://ewserver.di.unimi.it/gitlab/riccardopresotto/setup_test_sdp.git
 
 
 * Otherwise, take care to import the project as a Gradle Project
-* If required, trust the repository and accept the Gradle auto-import
+* If required, trust the project and accept the Gradle auto-import
 
 ## REST
 
