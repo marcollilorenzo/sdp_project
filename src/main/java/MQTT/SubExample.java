@@ -18,14 +18,13 @@ public class SubExample {
 
         try {
             // Create an Mqtt client
-            MqttAsyncClient mqttClient = new MqttAsyncClient(broker, clientId);
+            MqttClient mqttClient = new MqttClient(broker, clientId);
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
 
             // Connect the client
             System.out.println(clientId + " Connecting to " + broker);
-            IMqttToken token = mqttClient.connect(connOpts);
-            token.waitForCompletion();
+            mqttClient.connect(connOpts);
             System.out.println(clientId + " Connected");
 
 
