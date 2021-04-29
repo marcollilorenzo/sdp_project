@@ -19,7 +19,6 @@ public class UsersService {
     @GET
     @Produces({"application/json", "application/xml"})
     public Response getUsersList(){
-
         return Response.ok(Users.getInstance()).build();
 
     }
@@ -33,7 +32,7 @@ public class UsersService {
         return Response.ok().build();
     }
 
-    //permette di prelevare con un determinato nome
+    //permette di prelevare un utente con un determinato nome
     @Path("get/{name}")
     @GET
     @Produces({"application/json", "application/xml"})

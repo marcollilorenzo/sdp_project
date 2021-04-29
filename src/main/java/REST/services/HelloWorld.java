@@ -11,14 +11,12 @@ public class HelloWorld {
     @GET
     @Produces("text/plain")
     public String helloWorld(){
-
         return "Hello world!";
-
     }
 
     @GET
     @Path("{name}")
-    @Produces("text/plain")
+    @Produces({"text/plain"})
     public String helloWorldName(@PathParam("name") String name){
 
         return "Hello, "+name+"!";
@@ -28,7 +26,6 @@ public class HelloWorld {
     @GET
     @Produces("application/json")
     public String helloWorld2(){
-
         return "{\"message\": \"helloWorld\"}";
 
     }
