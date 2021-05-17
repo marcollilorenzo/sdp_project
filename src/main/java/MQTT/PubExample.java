@@ -10,6 +10,8 @@ public class PubExample {
         String topic = "home/sensors/light";
         int qos = 2;
 
+        //brew services start mosquitto
+
         try {
             client = new MqttClient(broker, clientId);
             MqttConnectOptions connOpts = new MqttConnectOptions();

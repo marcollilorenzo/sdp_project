@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType (XmlAccessType.FIELD)
 public class Users {
 
-    @XmlElement(name="user")
+    @XmlElement(name="my_users")
     private List<User> userslist;
 
     private static Users instance;
@@ -41,15 +41,12 @@ public class Users {
     }
 
     public synchronized void add(User u){
-
         userslist.add(u);
-
     }
 
+
     public User getByName(String name){
-
         List<User> usersCopy = getUserslist();
-
         for(User u: usersCopy)
             if(u.getName().toLowerCase().equals(name.toLowerCase()))
                 return u;
