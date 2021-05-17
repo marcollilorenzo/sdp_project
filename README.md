@@ -3,7 +3,7 @@
 
 
 * You can import the project directly from a *Version Control System*, by providing the following URL: 
-https://ewserver.di.unimi.it/gitlab/riccardopresotto/setup_test_sdp.git
+https://ewserver.di.unimi.it/gitlab/riccardopresotto/setup_rest_mqtt.git
 
 <img src = './assets/img_1.png'>
 
