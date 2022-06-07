@@ -13,7 +13,7 @@ import java.util.List;
 public class TaxiProcess {
 
     public static void main(String[] args) {
-        // TODO: REGISTER TAXI TO LIST
+        // REGISTER TAXI TO LIST
         registerTaxi();
 
     }
@@ -42,19 +42,30 @@ public class TaxiProcess {
             response = result.getEntity(JSONArray.class);
 
             if (result.getStatus() == 200){
-
-                // start to send statistic
-                List<Taxi> taxis = Taxis.getInstance().getTaxisList();
+                // Save new singleton
                 for (int i = 0; i < response.length() ; i++) {
                     JSONObject jsonObject = (JSONObject) response.get(i);
-                    System.out.println(jsonObject.get("batteryLevel"));
+                    int droneBattery = (int) jsonObject.get("batteryLevel");
+                    System.out.println("Id: "+jsonObject.get("id"));
+                    System.out.println("Port: "+jsonObject.get("port"));
+                    System.out.println("Server Address: "+jsonObject.get("serverAddress"));
+                    System.out.println("Coordinate: "+jsonObject.get("coordinate"));
+                    System.out.println("Battery Level: "+ droneBattery);
+                    System.out.println("------");
                 }
+
+                // Start to send statistics 📈
+
             }
 
 
         }catch (Exception e){
             System.out.println(e);
         }
+    }
+
+    private static void acquireStats(){
+        
     }
 
 }

@@ -8,6 +8,8 @@ import org.codehaus.jackson.node.ObjectNode;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path("/taxis")
 public class TaxiAdministrator {
@@ -25,19 +27,10 @@ public class TaxiAdministrator {
     @Produces("application/json")
     @Consumes({"application/json", "application/xml"})
     public Response addTaxi(Taxi taxi){
+
         Boolean response = Taxis.getInstance().add(taxi);
-        System.out.println(response);
 
         if(response){
-
-            // Choose position of the recharge station of a randomly chosen district
-            int x = (int)Math.floor(Math.random()*(9-0+1)+0);
-            int y = (int)Math.floor(Math.random()*(9-0+1)+0);
-            Coordinate coordinate = new Coordinate(x,y);
-            taxi.setCoordinate(coordinate);
-
-            // Return to taxi the list of taxis already registered in the smart-city
-            taxi.setAllTaxi(Taxis.getInstance().getTaxisList());
             return Response.ok(Taxis.getInstance().getTaxisList()).build();
 
         }else{

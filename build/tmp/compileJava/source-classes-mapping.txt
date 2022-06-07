@@ -4,6 +4,14 @@ models/Coordinate.java
  models.Coordinate
 models/Taxi.java
  models.Taxi
+simulator/Buffer.java
+ Buffer
+simulator/PM10Simulator.java
+ PM10Simulator
+simulator/Simulator.java
+ Simulator
+simulator/Measurement.java
+ Measurement
 services/TaxiAdministrator.java
  services.TaxiAdministrator
 models/Taxis.java
