@@ -4,17 +4,21 @@ models/Coordinate.java
  models.Coordinate
 models/Taxi.java
  models.Taxi
-simulator/Buffer.java
- Buffer
-simulator/PM10Simulator.java
- PM10Simulator
-simulator/Simulator.java
- Simulator
-simulator/Measurement.java
- Measurement
 services/TaxiAdministrator.java
  services.TaxiAdministrator
 models/Taxis.java
  models.Taxis
+smartcity/TaxisSingleton.java
+ smartcity.TaxisSingleton
+simulators/Simulator.java
+ simulators.Simulator
+simulators/Buffer.java
+ simulators.Buffer
+simulators/Measurement.java
+ simulators.Measurement
+simulators/AdminMeasurement.java
+ simulators.AdminMeasurement
 smartcity/TaxiProcess.java
  smartcity.TaxiProcess
+simulators/PM10Simulator.java
+ simulators.PM10Simulator
