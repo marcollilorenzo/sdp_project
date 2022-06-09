@@ -1,24 +1,33 @@
-StartServer.java
- StartServer
-models/Coordinate.java
- models.Coordinate
-models/Taxi.java
- models.Taxi
-services/TaxiAdministrator.java
- services.TaxiAdministrator
-models/Taxis.java
- models.Taxis
-smartcity/TaxisSingleton.java
- smartcity.TaxisSingleton
 simulators/Simulator.java
  simulators.Simulator
-simulators/Buffer.java
- simulators.Buffer
 simulators/Measurement.java
  simulators.Measurement
 simulators/AdminMeasurement.java
  simulators.AdminMeasurement
-smartcity/TaxiProcess.java
- smartcity.TaxiProcess
+StartServer.java
+ StartServer
+smartcity/Seta.java
+ smartcity.Seta
+simulators/Buffer.java
+ simulators.Buffer
 simulators/PM10Simulator.java
  simulators.PM10Simulator
+utilis/RideGenerator.java
+ utilis.RideGenerator
+services/TaxiAdministrator.java
+ services.TaxiAdministrator
+models/Coordinate.java
+ models.Coordinate
+models/Taxis.java
+ models.Taxis
+smartcity/TaxisSingleton.java
+ smartcity.TaxisSingleton
+models/Taxi.java
+ models.Taxi
+models/Ride.java
+ models.Ride
+smartcity/TaxiSubscriber.java
+ smartcity.TaxiSubscriber
+ smartcity.TaxiSubscriber$1
+smartcity/TaxiProcess.java
+ smartcity.TaxiProcess

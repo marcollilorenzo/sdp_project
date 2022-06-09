@@ -16,6 +16,7 @@ public class TaxisSingleton {
     // Constructor
     private TaxisSingleton() {
         taxiList = new ArrayList<Taxi>();
+        pollutionMeasurementList = new ArrayList<>();
     }
 
     // Singleton
@@ -36,7 +37,7 @@ public class TaxisSingleton {
     public void addTaxi(Taxi t){
         synchronized (taxiList) {
             taxiList.add(t);
-           // taxiList.notify();
+            taxiList.notify();
         }
     }
 

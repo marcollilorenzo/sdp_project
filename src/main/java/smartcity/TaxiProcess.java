@@ -19,7 +19,8 @@ public class TaxiProcess {
 
     public static void main(String[] args) {
 
-        registerTaxi(); // register texi to list and start to send statistics
+        registerTaxi(); // register texi to list and start to acquire statistic from pollution sensor
+        taxiBroker();
 
     }
 
@@ -82,8 +83,36 @@ public class TaxiProcess {
         System.out.println("START TO ACQUIRE POLLUTION STATS");
         AdminMeasurement pollutionBuffer = new AdminMeasurement();
         PM10Simulator pm10Simulator = new PM10Simulator(pollutionBuffer);
-        pm10Simulator.start();
+        pm10Simulator.start(); // start sensor
 
+        ArrayList<Measurement> measurementList = new ArrayList<>(); // lista delle misurazioni
+
+        // THREAD THAT MANAGE THE MEASURMENT OF POLLUTION SENSOR
+        new Thread(() -> {
+            while(true) {
+
+                // readAllAndClean wait if not have just 8 measurement
+                measurementList.addAll( pollutionBuffer.readAllAndClean() );
+
+                double sum = 0; long timestamp = 0; int measurementId = 0;
+                for(Measurement m : measurementList){
+                    sum += m.getValue();
+                    timestamp = m.getTimestamp();
+                }
+
+                TaxisSingleton.getInstance().addAverageList(
+                        new Measurement("pm10-"+measurementId++,"PM10",sum/8,timestamp) // compute average
+                );
+                measurementList.clear(); //sum = 0
+
+            }
+        }).start();
+
+    }
+
+    private static void taxiBroker(){
+        TaxiSubscriber thread = new TaxiSubscriber();
+        thread.start();
     }
 
 }

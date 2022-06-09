@@ -1,5 +1,8 @@
 package models;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Coordinate {
 
     private int x;
@@ -28,5 +31,12 @@ public class Coordinate {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public String toString() {
+        return
+                x +
+                "--" + y;
     }
 }
