@@ -54,8 +54,20 @@ public class RideGenerator extends Thread{
                 id = i;
 
                 int min = 0, max = 9;
-                startCoordinate = new Coordinate((int) (Math.random() * ((max - min) + 1)) + min, (int) (Math.random() * ((max - min) + 1)) + min);
-                destinationCoordinate = new Coordinate((int) (Math.random() * ((max - min) + 1)) + min, (int) (Math.random() * ((max - min) + 1)) + min);
+                int x1 = 0;
+                int x2 = 0;
+                int y1 = 0;
+                int y2 = 0;
+
+                while (x1 == x2 && y1 == y2) {
+                     x1 = (int) (Math.random() * ((max - min) + 1) + min);
+                     y1 = (int) (Math.random() * ((max - min) + 1)) + min;
+                     x2 = (int) (Math.random() * ((max - min) + 1)) + min;
+                     y2 = (int) (Math.random() * ((max - min) + 1)) + min;
+                }
+
+                startCoordinate = new Coordinate(x1, y1);
+                destinationCoordinate = new Coordinate(x2, y2);
 
                 Ride ride = new Ride(id, startCoordinate, destinationCoordinate);
                 String data = ride.toString();

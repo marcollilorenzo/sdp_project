@@ -1,5 +1,6 @@
 package smartcity;
 
+import models.Coordinate;
 import models.Taxi;
 import models.Taxis;
 import simulators.Measurement;
@@ -16,7 +17,7 @@ public class TaxisSingleton {
     // Constructor
     private TaxisSingleton() {
         taxiList = new ArrayList<Taxi>();
-        pollutionMeasurementList = new ArrayList<>();
+        pollutionMeasurementList = new ArrayList<Measurement>();
     }
 
     // Singleton
@@ -50,6 +51,21 @@ public class TaxisSingleton {
     public void addAverageList(Measurement pm10) {
         synchronized (pollutionMeasurementList){
             pollutionMeasurementList.add(pm10);
+        }
+    }
+
+    // GET POSITION BY TAXI ID
+    public Taxi getPositionByTaxiId(int taxiId){
+        synchronized (taxiList){
+            Taxi t = taxiList.stream()
+                    .filter(a -> a.getId() == taxiId)
+                    .findAny()
+                    .orElse(null);
+            if( t == null){
+                return null;
+            }else{
+                return t;
+            }
         }
     }
 }

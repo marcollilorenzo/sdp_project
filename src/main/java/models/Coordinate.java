@@ -1,6 +1,7 @@
 package models;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 
 @XmlRootElement
 public class Coordinate {
@@ -31,6 +32,22 @@ public class Coordinate {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getDistrict(){
+        if(y <= 4){
+            if(x <= 4){
+                return 1;
+            }else{
+                return 2;
+            }
+        }else{
+            if(x <= 4){
+                return 3;
+            }else{
+                return 4;
+            }
+        }
     }
 
     @Override

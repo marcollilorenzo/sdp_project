@@ -13,9 +13,7 @@ public class Seta {
 
         /* THREAD ride generator */
         RideGenerator rideGenerator = new RideGenerator(clientId,topic,qos,broker);
-        rideGenerator.run();
-
-
+        rideGenerator.start();
 
     }
 }

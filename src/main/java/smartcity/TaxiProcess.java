@@ -8,6 +8,7 @@ import models.Taxi;
 import models.Taxis;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import simulators.AdminMeasurement;
 import simulators.Measurement;
 import simulators.PM10Simulator;
@@ -17,10 +18,13 @@ import java.util.List;
 
 public class TaxiProcess {
 
+    private static TaxiSubscriber threadSubscriber;
+    private static int myID;
+
     public static void main(String[] args) {
 
         registerTaxi(); // register texi to list and start to acquire statistic from pollution sensor
-        taxiBroker();
+        taxiBroker(); // start broker and subscribe to topic
 
     }
 
@@ -48,6 +52,9 @@ public class TaxiProcess {
             response = result.getEntity(JSONArray.class);
 
             if (result.getStatus() == 200){
+
+                myID = taxiId;
+
                 // Save on singleton process
                 for (int i = 0; i < response.length() ; i++) {
                     JSONObject jsonObject = (JSONObject) response.get(i);
@@ -110,9 +117,19 @@ public class TaxiProcess {
 
     }
 
-    private static void taxiBroker(){
-        TaxiSubscriber thread = new TaxiSubscriber();
-        thread.start();
+    private static void taxiBroker() {
+
+        Coordinate coordinate = TaxisSingleton.getInstance().getPositionByTaxiId(myID).getCoordinate();
+        if(coordinate != null){
+
+            int myInitDistrict = coordinate.getDistrict();
+
+            //get district number
+            threadSubscriber = new TaxiSubscriber(myInitDistrict);
+            threadSubscriber.start();
+
+        }
+
     }
 
 }
