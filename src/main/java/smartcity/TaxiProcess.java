@@ -3,6 +3,8 @@ package smartcity;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import io.grpc.Server;
+import io.grpc.ServerBuilder;
 import models.Coordinate;
 import models.Taxi;
 import models.Taxis;
@@ -13,18 +15,21 @@ import simulators.AdminMeasurement;
 import simulators.Measurement;
 import simulators.PM10Simulator;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaxiProcess {
 
+    private static Server serverGrcp;
     private static TaxiSubscriber threadSubscriber;
     private static int myID;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        registerTaxi(); // register texi to list and start to acquire statistic from pollution sensor
+        registerTaxi(); // register taxi to list and start to acquire statistic from pollution sensor
         taxiBroker(); // start broker and subscribe to topic
+
 
     }
 
@@ -70,13 +75,23 @@ public class TaxiProcess {
                         int batteryLevel = (int) jsonObject.get("batteryLevel");
 
                         Taxi taxi = new Taxi(id, port, serverAddress, batteryLevel, coordinate);
-                        TaxisSingleton.getInstance().addTaxi(taxi);
+
+                        // Se sono io non aggiungo il taxi alla lista ma come taxi corrente
+                        if (taxi.getId() == myID){
+                            System.out.println(taxi.getId());
+                            TaxisSingleton.getInstance().setCurrentTaxi(taxi);
+                        }else{
+                            TaxisSingleton.getInstance().addTaxi(taxi);
+                        }
                 }
 
-                System.out.println(TaxisSingleton.getInstance().getTaxiList().size() + " TAXI ADDED TO LIST");
+                System.out.println("THERE ARE " + TaxisSingleton.getInstance().getTaxiList().size() + " OTHER TAXI");
 
                 // Start to send statistics 📈
                 acquirePollutionStats();
+
+                // Start server GRCP
+                startServerGrcp();
 
             }
 
@@ -117,9 +132,29 @@ public class TaxiProcess {
 
     }
 
+    private static void startServerGrcp() throws IOException {
+        try {
+            serverGrcp = ServerBuilder
+                    .forPort(TaxisSingleton.getInstance().getCurrentTaxi().getPort())
+                    .addService(new GrcpImpl())
+                    .build();
+            serverGrcp.start();
+
+            //AVVISO TUTTI GLI ALTRI TAXI
+            if (!TaxisSingleton.getInstance().getTaxiList().isEmpty()){
+                ArrayList<Taxi> otherTaxiList = TaxisSingleton.getInstance().getTaxiList();
+                for (Taxi t : otherTaxiList){
+
+                }
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
     private static void taxiBroker() {
 
-        Coordinate coordinate = TaxisSingleton.getInstance().getPositionByTaxiId(myID).getCoordinate();
+        Coordinate coordinate = TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate();
         if(coordinate != null){
 
             int myInitDistrict = coordinate.getDistrict();

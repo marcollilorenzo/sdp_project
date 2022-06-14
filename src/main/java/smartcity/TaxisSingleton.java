@@ -11,6 +11,7 @@ import java.util.List;
 public class TaxisSingleton {
     private List<Taxi> taxiList;
     private List<Measurement> pollutionMeasurementList;
+    private Taxi currentTaxi;
 
     private static TaxisSingleton instance;
 
@@ -18,6 +19,7 @@ public class TaxisSingleton {
     private TaxisSingleton() {
         taxiList = new ArrayList<Taxi>();
         pollutionMeasurementList = new ArrayList<Measurement>();
+        currentTaxi = new Taxi();
     }
 
     // Singleton
@@ -40,6 +42,14 @@ public class TaxisSingleton {
             taxiList.add(t);
             taxiList.notify();
         }
+    }
+
+    public Taxi getCurrentTaxi() {
+        return currentTaxi;
+    }
+
+    public void setCurrentTaxi(Taxi currentTaxi) {
+        this.currentTaxi = currentTaxi;
     }
 
     public List<Measurement> getPollutionMeasurementList() {
