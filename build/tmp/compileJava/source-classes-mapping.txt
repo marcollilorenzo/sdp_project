@@ -11,15 +11,14 @@ com/example/taxis/GrcpOuterClass.java
  com.example.taxis.GrcpOuterClass$WelcomeResponseOrBuilder
 simulators/Simulator.java
  simulators.Simulator
-models/Ride.java
- models.Ride
-StartServer.java
- StartServer
-smartcity/TaxiSubscriber.java
- smartcity.TaxiSubscriber
- smartcity.TaxiSubscriber$1
-simulators/AdminMeasurement.java
- simulators.AdminMeasurement
+utilis/RideGenerator.java
+ utilis.RideGenerator
+models/Coordinate.java
+ models.Coordinate
+simulators/Measurement.java
+ simulators.Measurement
+smartcity/Seta.java
+ smartcity.Seta
 simulators/Buffer.java
  simulators.Buffer
 com/example/taxis/GrcpGrpc.java
@@ -33,8 +32,24 @@ com/example/taxis/GrcpGrpc.java
  com.example.taxis.GrcpGrpc$GrcpMethodDescriptorSupplier
  com.example.taxis.GrcpGrpc$GrcpStub
  com.example.taxis.GrcpGrpc$MethodHandlers
-simulators/Measurement.java
- simulators.Measurement
+models/RidesQueue.java
+ models.RidesQueue
+smartcity/GrcpImpl.java
+ smartcity.GrcpImpl
+models/Taxis.java
+ models.Taxis
+smartcity/TaxisSingleton.java
+ smartcity.TaxisSingleton
+simulators/AdminMeasurement.java
+ simulators.AdminMeasurement
+models/Ride.java
+ models.Ride
+models/Taxi.java
+ models.Taxi
+StartServer.java
+ StartServer
+simulators/PM10Simulator.java
+ simulators.PM10Simulator
 Grcp.java
  Grcp
  Grcp$1
@@ -46,25 +61,10 @@ Grcp.java
  Grcp$WelcomeResponse$1
  Grcp$WelcomeResponse$Builder
  Grcp$WelcomeResponseOrBuilder
-simulators/PM10Simulator.java
- simulators.PM10Simulator
-models/Coordinate.java
- models.Coordinate
-utilis/RideGenerator.java
- utilis.RideGenerator
 services/TaxiAdministrator.java
  services.TaxiAdministrator
-smartcity/Seta.java
- smartcity.Seta
-models/Taxis.java
- models.Taxis
-smartcity/TaxisSingleton.java
- smartcity.TaxisSingleton
+smartcity/TaxiSubscriber.java
+ smartcity.TaxiSubscriber
+ smartcity.TaxiSubscriber$1
 smartcity/TaxiProcess.java
  smartcity.TaxiProcess
-threads/StopTaxiThread.java
- threads.StopTaxiThread
-models/Taxi.java
- models.Taxi
-smartcity/GrcpImpl.java
- smartcity.GrcpImpl

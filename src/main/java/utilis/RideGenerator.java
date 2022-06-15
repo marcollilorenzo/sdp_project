@@ -47,7 +47,6 @@ public class RideGenerator extends Thread{
         // PUBLISH RIDE TO RANDOM TOPIC FROM [1-4]
         while (true){
 
-            int district = (int) (Math.random() * ((4 - 1) + 1)) + 1;
 
             try {
 
@@ -68,6 +67,8 @@ public class RideGenerator extends Thread{
 
                 startCoordinate = new Coordinate(x1, y1);
                 destinationCoordinate = new Coordinate(x2, y2);
+
+                int district = startCoordinate.getDistrict();
 
                 Ride ride = new Ride(id, startCoordinate, destinationCoordinate);
                 String data = ride.toString();

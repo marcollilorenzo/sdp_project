@@ -1,9 +1,17 @@
 package smartcity;
 
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+
+import com.sun.jersey.api.client.WebResource;
 import models.Coordinate;
 import models.Ride;
 import models.RidesQueue;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jettison.json.JSONArray;
 import org.eclipse.paho.client.mqttv3.*;
+
+import java.io.IOException;
 
 public class TaxiSubscriber extends Thread{
 
@@ -42,7 +50,7 @@ public class TaxiSubscriber extends Thread{
                 client.connect(connOpts);
                 client.setCallback(new MqttCallback() {
 
-                    public void messageArrived(String topic, MqttMessage message) {
+                    public void messageArrived(String topic, MqttMessage message) throws IOException {
 
                         String receivedMessage = new String(message.getPayload()); // da binario a stringa
 
@@ -56,11 +64,29 @@ public class TaxiSubscriber extends Thread{
                         Coordinate con = new Coordinate(x2, y2);
                         Ride ride = new Ride(id, rit, con);
 
-                     //   System.out.println(ride.toString());
+                        // Variable for REST call
+                        String input;
+                        String json;
+                        ClientResponse result;
+                        JSONArray response = null;
+
+                        ObjectMapper mapper = new ObjectMapper();
+                        json = mapper.writeValueAsString(ride);
+
+                        input = "{" +
+                                "\"id\":\"" + id +
+                                "\",\"startPosition\":\"" + rit +
+                                "\",\"endPosition\":\"" + con + "\"}";
+                        System.out.println(input);
 
                         // add ride to queue
-                        RidesQueue.getInstance().add(ride);
+                        Client client = Client.create();
+                        WebResource webResource = client.resource("http://localhost:1337/taxis/add/ride");
 
+                        result = webResource.type("application/json").post(ClientResponse.class, input);
+                       // response = result.getEntity(JSONArray.class);
+
+                        System.out.println(result);
 
                     }
 

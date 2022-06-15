@@ -35,17 +35,17 @@ public class Coordinate {
     }
 
     public int getDistrict(){
-        if(y <= 4){
-            if(x <= 4){
+        if(x <= 4){
+            if(y <= 4){
                 return 1;
             }else{
                 return 2;
             }
         }else{
-            if(x <= 4){
-                return 3;
-            }else{
+            if(y <= 4){
                 return 4;
+            }else{
+                return 3;
             }
         }
     }

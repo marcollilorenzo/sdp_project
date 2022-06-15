@@ -1,8 +1,6 @@
 package services;
 
-import models.Coordinate;
-import models.Taxi;
-import models.Taxis;
+import models.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 
@@ -54,6 +52,27 @@ public class TaxiAdministrator {
             ObjectNode json = mapper.createObjectNode();
             json.put("message", "Error, not exits taxi with ID "+ taxiID);
             return Response.status(Response.Status.BAD_REQUEST).entity(json).build();
+        }
+    }
+
+
+    @Path("add/ride")
+    @POST
+    @Produces("application/json")
+    @Consumes({"application/json", "application/xml"})
+    public Response addRide(Ride ride){
+
+        System.out.println("New Ride");
+
+        Boolean response = RidesQueue.getInstance().add(ride);
+
+        if(response){
+            return Response.ok(Taxis.getInstance().getTaxisList()).build();
+
+        }else{
+            ObjectNode json = mapper.createObjectNode();
+            json.put("message", "Error, exits just a taxi with this ID");
+            return Response.status(Response.Status.NOT_ACCEPTABLE).entity(json).build();
         }
     }
 }

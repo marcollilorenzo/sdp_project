@@ -16,7 +16,6 @@ import org.codehaus.jettison.json.JSONObject;
 import simulators.AdminMeasurement;
 import simulators.Measurement;
 import simulators.PM10Simulator;
-import smartcity.ride.RideQueue;
 
 import java.io.IOException;
 import java.util.ArrayList;

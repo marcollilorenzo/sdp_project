@@ -14,6 +14,13 @@ public class Ride {
         this.endPosition = endPosition;
     }
 
+    public Ride(int id, int x1, int y1, int x2, int y2){
+        this.id = id;
+        this.startPosition = new Coordinate(x1,y1);
+        this.endPosition = new Coordinate(x2,y2);
+
+    };
+
     public int getId() {
         return id;
     }
