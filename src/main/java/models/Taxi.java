@@ -24,6 +24,7 @@ public class Taxi {
         this.id = id;
         this.port = port;
         this.serverAddress = serverAddress;
+
     }
 
     public Taxi(int id, int port, String serverAddress, int batteryLevel, Coordinate coordinate) {
@@ -60,4 +61,5 @@ public class Taxi {
         return batteryLevel;
     }
     public void setBatteryLevel(int batteryLevel) { this.batteryLevel = batteryLevel;}
+
 }

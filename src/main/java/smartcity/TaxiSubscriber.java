@@ -1,11 +1,8 @@
 package smartcity;
 
-import com.google.gson.Gson;
 import models.Coordinate;
 import models.Ride;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
+import models.RidesQueue;
 import org.eclipse.paho.client.mqttv3.*;
 
 public class TaxiSubscriber extends Thread{
@@ -58,8 +55,12 @@ public class TaxiSubscriber extends Thread{
                         Coordinate rit = new Coordinate(x1, y1);
                         Coordinate con = new Coordinate(x2, y2);
                         Ride ride = new Ride(id, rit, con);
-                        //  Orders.getInstance().add(order);
-                        System.out.println(ride.toString());
+
+                     //   System.out.println(ride.toString());
+
+                        // add ride to queue
+                        RidesQueue.getInstance().add(ride);
+
 
                     }
 

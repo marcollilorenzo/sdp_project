@@ -77,7 +77,7 @@ public class RideGenerator extends Thread{
                 message.setQos(qos);
 
                 client.publish(topic+district, message);
-                System.out.println("NEW RIDE for TOPIC: " + topic+district);
+                //System.out.println("NEW RIDE for TOPIC: " + topic+district);
 
                 Thread.sleep(5000);
 

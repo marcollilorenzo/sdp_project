@@ -1,23 +1,25 @@
 package smartcity;
 
+import com.example.taxis.GrcpGrpc;
+import com.example.taxis.GrcpOuterClass;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import models.Coordinate;
 import models.Taxi;
-import models.Taxis;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
-import org.eclipse.paho.client.mqttv3.MqttException;
 import simulators.AdminMeasurement;
 import simulators.Measurement;
 import simulators.PM10Simulator;
+import smartcity.ride.RideQueue;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class TaxiProcess {
 
@@ -28,8 +30,7 @@ public class TaxiProcess {
     public static void main(String[] args) throws IOException {
 
         registerTaxi(); // register taxi to list and start to acquire statistic from pollution sensor
-        taxiBroker(); // start broker and subscribe to topic
-
+     //   taxiBroker(); // start broker and subscribe to topic
 
     }
 
@@ -78,7 +79,7 @@ public class TaxiProcess {
 
                         // Se sono io non aggiungo il taxi alla lista ma come taxi corrente
                         if (taxi.getId() == myID){
-                            System.out.println(taxi.getId());
+                            System.out.println("MY ID: "+ taxi.getId());
                             TaxisSingleton.getInstance().setCurrentTaxi(taxi);
                         }else{
                             TaxisSingleton.getInstance().addTaxi(taxi);
@@ -87,12 +88,16 @@ public class TaxiProcess {
 
                 System.out.println("THERE ARE " + TaxisSingleton.getInstance().getTaxiList().size() + " OTHER TAXI");
 
+
+
                 // Start to send statistics 📈
                 acquirePollutionStats();
 
                 // Start server GRCP
                 startServerGrcp();
 
+                //register topic
+                taxiBroker();
             }
 
 
@@ -143,8 +148,31 @@ public class TaxiProcess {
             //AVVISO TUTTI GLI ALTRI TAXI
             if (!TaxisSingleton.getInstance().getTaxiList().isEmpty()){
                 ArrayList<Taxi> otherTaxiList = TaxisSingleton.getInstance().getTaxiList();
+                System.out.println(otherTaxiList);
                 for (Taxi t : otherTaxiList){
+                   // System.out.println("Other ID: "+ t.getId());
+                    final ManagedChannel channel = ManagedChannelBuilder
+                            .forTarget(t.getServerAddress() + ":" + t.getPort())
+                            .usePlaintext()
+                            .build();
 
+                    GrcpGrpc.GrcpBlockingStub stub = GrcpGrpc.newBlockingStub(channel);
+
+                    GrcpOuterClass.WelcomeRequest req = GrcpOuterClass.WelcomeRequest.newBuilder()
+                            .setId(t.getId())
+                            .setPort(t.getPort())
+                            .setX(t.getCoordinate().getX())
+                            .setY(t.getCoordinate().getY())
+                            .setBattery(t.getBatteryLevel())
+                            .build();
+
+                    GrcpOuterClass.WelcomeResponse res;
+                    try {
+                        res = stub.welcome(req);
+                        System.out.println(res);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         } catch (IOException e){
@@ -155,8 +183,8 @@ public class TaxiProcess {
     private static void taxiBroker() {
 
         Coordinate coordinate = TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate();
+        System.out.println(coordinate);
         if(coordinate != null){
-
             int myInitDistrict = coordinate.getDistrict();
 
             //get district number
@@ -166,5 +194,9 @@ public class TaxiProcess {
         }
 
     }
+
+
+
+
 
 }

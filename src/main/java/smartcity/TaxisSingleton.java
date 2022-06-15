@@ -20,6 +20,7 @@ public class TaxisSingleton {
         taxiList = new ArrayList<Taxi>();
         pollutionMeasurementList = new ArrayList<Measurement>();
         currentTaxi = new Taxi();
+
     }
 
     // Singleton

@@ -31,6 +31,18 @@ public final class GrcpOuterClass {
     int getPort();
 
     /**
+     * <code>string address = 3;</code>
+     * @return The address.
+     */
+    java.lang.String getAddress();
+    /**
+     * <code>string address = 3;</code>
+     * @return The bytes for address.
+     */
+    com.google.protobuf.ByteString
+        getAddressBytes();
+
+    /**
      * <code>int32 x = 4;</code>
      * @return The x.
      */
@@ -61,6 +73,7 @@ public final class GrcpOuterClass {
       super(builder);
     }
     private WelcomeRequest() {
+      address_ = "";
     }
 
     @java.lang.Override
@@ -101,6 +114,12 @@ public final class GrcpOuterClass {
             case 16: {
 
               port_ = input.readInt32();
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              address_ = s;
               break;
             }
             case 32: {
@@ -170,6 +189,42 @@ public final class GrcpOuterClass {
       return port_;
     }
 
+    public static final int ADDRESS_FIELD_NUMBER = 3;
+    private volatile java.lang.Object address_;
+    /**
+     * <code>string address = 3;</code>
+     * @return The address.
+     */
+    public java.lang.String getAddress() {
+      java.lang.Object ref = address_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        address_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string address = 3;</code>
+     * @return The bytes for address.
+     */
+    public com.google.protobuf.ByteString
+        getAddressBytes() {
+      java.lang.Object ref = address_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        address_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     public static final int X_FIELD_NUMBER = 4;
     private int x_;
     /**
@@ -220,6 +275,9 @@ public final class GrcpOuterClass {
       if (port_ != 0) {
         output.writeInt32(2, port_);
       }
+      if (!getAddressBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, address_);
+      }
       if (x_ != 0) {
         output.writeInt32(4, x_);
       }
@@ -245,6 +303,9 @@ public final class GrcpOuterClass {
       if (port_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, port_);
+      }
+      if (!getAddressBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, address_);
       }
       if (x_ != 0) {
         size += com.google.protobuf.CodedOutputStream
@@ -277,6 +338,8 @@ public final class GrcpOuterClass {
           != other.getId()) return false;
       if (getPort()
           != other.getPort()) return false;
+      if (!getAddress()
+          .equals(other.getAddress())) return false;
       if (getX()
           != other.getX()) return false;
       if (getY()
@@ -298,6 +361,8 @@ public final class GrcpOuterClass {
       hash = (53 * hash) + getId();
       hash = (37 * hash) + PORT_FIELD_NUMBER;
       hash = (53 * hash) + getPort();
+      hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
+      hash = (53 * hash) + getAddress().hashCode();
       hash = (37 * hash) + X_FIELD_NUMBER;
       hash = (53 * hash) + getX();
       hash = (37 * hash) + Y_FIELD_NUMBER;
@@ -441,6 +506,8 @@ public final class GrcpOuterClass {
 
         port_ = 0;
 
+        address_ = "";
+
         x_ = 0;
 
         y_ = 0;
@@ -475,6 +542,7 @@ public final class GrcpOuterClass {
         com.example.taxis.GrcpOuterClass.WelcomeRequest result = new com.example.taxis.GrcpOuterClass.WelcomeRequest(this);
         result.id_ = id_;
         result.port_ = port_;
+        result.address_ = address_;
         result.x_ = x_;
         result.y_ = y_;
         result.battery_ = battery_;
@@ -531,6 +599,10 @@ public final class GrcpOuterClass {
         }
         if (other.getPort() != 0) {
           setPort(other.getPort());
+        }
+        if (!other.getAddress().isEmpty()) {
+          address_ = other.address_;
+          onChanged();
         }
         if (other.getX() != 0) {
           setX(other.getX());
@@ -626,6 +698,82 @@ public final class GrcpOuterClass {
       public Builder clearPort() {
         
         port_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object address_ = "";
+      /**
+       * <code>string address = 3;</code>
+       * @return The address.
+       */
+      public java.lang.String getAddress() {
+        java.lang.Object ref = address_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          address_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string address = 3;</code>
+       * @return The bytes for address.
+       */
+      public com.google.protobuf.ByteString
+          getAddressBytes() {
+        java.lang.Object ref = address_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          address_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string address = 3;</code>
+       * @param value The address to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAddress(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        address_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string address = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAddress() {
+        
+        address_ = getDefaultInstance().getAddress();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string address = 3;</code>
+       * @param value The bytes for address to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAddressBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        address_ = value;
         onChanged();
         return this;
       }
@@ -1277,13 +1425,13 @@ public final class GrcpOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\nGrcp.proto\022\021com.example.taxis\"Q\n\016Welco" +
-      "meRequest\022\n\n\002id\030\001 \001(\005\022\014\n\004port\030\002 \001(\005\022\t\n\001x" +
-      "\030\004 \001(\005\022\t\n\001y\030\005 \001(\005\022\017\n\007battery\030\006 \001(\005\"\035\n\017We" +
-      "lcomeResponse\022\n\n\002id\030\001 \001(\0052X\n\004Grcp\022P\n\007wel" +
-      "come\022!.com.example.taxis.WelcomeRequest\032" +
-      "\".com.example.taxis.WelcomeResponseb\006pro" +
-      "to3"
+      "\n\nGrcp.proto\022\021com.example.taxis\"b\n\016Welco" +
+      "meRequest\022\n\n\002id\030\001 \001(\005\022\014\n\004port\030\002 \001(\005\022\017\n\007a" +
+      "ddress\030\003 \001(\t\022\t\n\001x\030\004 \001(\005\022\t\n\001y\030\005 \001(\005\022\017\n\007ba" +
+      "ttery\030\006 \001(\005\"\035\n\017WelcomeResponse\022\n\n\002id\030\001 \001" +
+      "(\0052X\n\004Grcp\022P\n\007welcome\022!.com.example.taxi" +
+      "s.WelcomeRequest\032\".com.example.taxis.Wel" +
+      "comeResponseb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -1294,7 +1442,7 @@ public final class GrcpOuterClass {
     internal_static_com_example_taxis_WelcomeRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_example_taxis_WelcomeRequest_descriptor,
-        new java.lang.String[] { "Id", "Port", "X", "Y", "Battery", });
+        new java.lang.String[] { "Id", "Port", "Address", "X", "Y", "Battery", });
     internal_static_com_example_taxis_WelcomeResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_example_taxis_WelcomeResponse_fieldAccessorTable = new
