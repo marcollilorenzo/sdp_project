@@ -64,30 +64,6 @@ public class TaxiSubscriber extends Thread{
                         Coordinate con = new Coordinate(x2, y2);
                         Ride ride = new Ride(id, rit, con);
 
-                        // Variable for REST call
-                        String input;
-                        String json;
-                        ClientResponse result;
-                        JSONArray response = null;
-
-                        ObjectMapper mapper = new ObjectMapper();
-                        json = mapper.writeValueAsString(ride);
-
-                        input = "{" +
-                                "\"id\":\"" + id +
-                                "\",\"startPosition\":\"" + rit +
-                                "\",\"endPosition\":\"" + con + "\"}";
-                        System.out.println(input);
-
-                        // add ride to queue
-                        Client client = Client.create();
-                        WebResource webResource = client.resource("http://localhost:1337/taxis/add/ride");
-
-                        result = webResource.type("application/json").post(ClientResponse.class, input);
-                       // response = result.getEntity(JSONArray.class);
-
-                        System.out.println(result);
-
                     }
 
                     @Override

@@ -13,6 +13,9 @@ public class TaxisSingleton {
     private List<Measurement> pollutionMeasurementList;
     private Taxi currentTaxi;
 
+    private volatile int rides;
+    private volatile double km;
+
     private static TaxisSingleton instance;
 
     // Constructor

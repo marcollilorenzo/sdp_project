@@ -14,13 +14,6 @@ public class Ride {
         this.endPosition = endPosition;
     }
 
-    public Ride(int id, int x1, int y1, int x2, int y2){
-        this.id = id;
-        this.startPosition = new Coordinate(x1,y1);
-        this.endPosition = new Coordinate(x2,y2);
-
-    };
-
     public int getId() {
         return id;
     }
@@ -43,6 +36,17 @@ public class Ride {
 
     public void setEndPosition(Coordinate endPosition) {
         this.endPosition = endPosition;
+    }
+
+    public double getDistance(){
+        int rooting = (
+                (this.endPosition.getX() - this.startPosition.getX())^2
+                        +
+                (this.endPosition.getY() - this.startPosition.getY())^2
+        );
+
+        double distance = Math.sqrt(rooting);
+        return distance;
     }
 
     @Override

@@ -11,14 +11,15 @@ com/example/taxis/GrcpOuterClass.java
  com.example.taxis.GrcpOuterClass$WelcomeResponseOrBuilder
 simulators/Simulator.java
  simulators.Simulator
-utilis/RideGenerator.java
- utilis.RideGenerator
 models/Coordinate.java
  models.Coordinate
+services/TaxiAdministrator.java
+ services.TaxiAdministrator
+smartcity/TaxiSubscriber.java
+ smartcity.TaxiSubscriber
+ smartcity.TaxiSubscriber$1
 simulators/Measurement.java
  simulators.Measurement
-smartcity/Seta.java
- smartcity.Seta
 simulators/Buffer.java
  simulators.Buffer
 com/example/taxis/GrcpGrpc.java
@@ -32,6 +33,8 @@ com/example/taxis/GrcpGrpc.java
  com.example.taxis.GrcpGrpc$GrcpMethodDescriptorSupplier
  com.example.taxis.GrcpGrpc$GrcpStub
  com.example.taxis.GrcpGrpc$MethodHandlers
+utilis/RideGenerator.java
+ utilis.RideGenerator
 models/RidesQueue.java
  models.RidesQueue
 smartcity/GrcpImpl.java
@@ -40,8 +43,8 @@ models/Taxis.java
  models.Taxis
 smartcity/TaxisSingleton.java
  smartcity.TaxisSingleton
-simulators/AdminMeasurement.java
- simulators.AdminMeasurement
+smartcity/TaxiProcess.java
+ smartcity.TaxiProcess
 models/Ride.java
  models.Ride
 models/Taxi.java
@@ -61,10 +64,10 @@ Grcp.java
  Grcp$WelcomeResponse$1
  Grcp$WelcomeResponse$Builder
  Grcp$WelcomeResponseOrBuilder
-services/TaxiAdministrator.java
- services.TaxiAdministrator
-smartcity/TaxiSubscriber.java
- smartcity.TaxiSubscriber
- smartcity.TaxiSubscriber$1
-smartcity/TaxiProcess.java
- smartcity.TaxiProcess
+simulators/AdminMeasurement.java
+ simulators.AdminMeasurement
+smartcity/Seta.java
+ smartcity.Seta
+utilis/SetaSubscriber.java
+ utilis.SetaSubscriber
+ utilis.SetaSubscriber$1

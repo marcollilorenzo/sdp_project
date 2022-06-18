@@ -59,10 +59,10 @@ public class RideGenerator extends Thread{
                 int y2 = 0;
 
                 while (x1 == x2 && y1 == y2) {
-                     x1 = (int) (Math.random() * ((max - min) + 1) + min);
-                     y1 = (int) (Math.random() * ((max - min) + 1)) + min;
-                     x2 = (int) (Math.random() * ((max - min) + 1)) + min;
-                     y2 = (int) (Math.random() * ((max - min) + 1)) + min;
+                    x1 = (int) (Math.random() * ((max - min) + 1) + min);
+                    y1 = (int) (Math.random() * ((max - min) + 1)) + min;
+                    x2 = (int) (Math.random() * ((max - min) + 1)) + min;
+                    y2 = (int) (Math.random() * ((max - min) + 1)) + min;
                 }
 
                 startCoordinate = new Coordinate(x1, y1);
@@ -72,13 +72,13 @@ public class RideGenerator extends Thread{
 
                 Ride ride = new Ride(id, startCoordinate, destinationCoordinate);
                 String data = ride.toString();
-                System.out.println(data);
+
 
                 MqttMessage message = new MqttMessage(data.getBytes());
                 message.setQos(qos);
 
                 client.publish(topic+district, message);
-                //System.out.println("NEW RIDE for TOPIC: " + topic+district);
+                System.out.println("NEW RIDE for TOPIC: " + topic+district);
 
                 Thread.sleep(5000);
 
