@@ -1,5 +1,6 @@
 package services;
 
+import com.google.gson.Gson;
 import models.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
@@ -18,6 +19,15 @@ public class TaxiAdministrator {
     @Produces("application/json")
     public String helloServer(){
         return "{\"message\": \"Welcome to SETA Server\"}";
+    }
+
+    @Path("get")
+    @GET
+    @Produces({"application/json", "application/xml"})
+    public Response getTaxisList(){
+        Gson gson = new Gson();
+        Taxis drones = Taxis.getInstance();
+        return Response.status(Response.Status.OK).entity(gson.toJson(drones)).build();
     }
 
     @Path("add")

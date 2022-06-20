@@ -2,6 +2,7 @@ package utilis;
 
 import models.Coordinate;
 import models.Ride;
+import models.RidesQueue;
 import org.eclipse.paho.client.mqttv3.*;
 
 import java.io.IOException;
@@ -14,7 +15,8 @@ public class SetaSubscriber extends Thread{
     ArrayList<String> topics = new ArrayList<>();
 
     public SetaSubscriber() {
-        topics.add("seta/smartcity/rides/district1");
+        topics.add("seta/smartcity/rides/accomplished/#");
+        topics.add("seta/smartcity/rides/unaccomplished/#");
     }
 
     @Override
@@ -35,7 +37,13 @@ public class SetaSubscriber extends Thread{
             client.setCallback(new MqttCallback() {
 
                 public void messageArrived(String topic, MqttMessage message) throws IOException {
-                    // TODO: MANAGED RIDES QUEUE
+                    if (topic.split("/")[3].equals("accomplished")){
+                        RidesQueue.getInstance().removePendingRides(Integer.parseInt(topic.split("/")[4]));
+                    } else {
+                        // TODO: MANAGED RIDES QUEUE, add ride to noAccomplishedRides in RidesQueue
+
+                        // There are no taxi avaiable
+                    }
                 }
 
                 @Override

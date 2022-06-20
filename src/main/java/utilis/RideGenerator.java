@@ -2,6 +2,7 @@ package utilis;
 
 import models.Coordinate;
 import models.Ride;
+import models.RidesQueue;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -78,7 +79,9 @@ public class RideGenerator extends Thread{
                 message.setQos(qos);
 
                 client.publish(topic+district, message);
+                RidesQueue.getInstance().addPending(ride);
                 System.out.println("NEW RIDE for TOPIC: " + topic+district);
+
 
                 Thread.sleep(5000);
 
