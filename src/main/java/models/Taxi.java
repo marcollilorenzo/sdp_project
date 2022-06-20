@@ -18,13 +18,17 @@ public class Taxi {
     private Coordinate coordinate;
     private List<Taxi> allTaxi;
 
+    // status
+    private boolean isRiding = false;
+    private boolean isRecharging = false;
+
+
     public Taxi(){}
 
     public Taxi(int id, int port, String serverAddress) {
         this.id = id;
         this.port = port;
         this.serverAddress = serverAddress;
-
     }
 
     public Taxi(int id, int port, String serverAddress, int batteryLevel, Coordinate coordinate) {
@@ -62,4 +66,17 @@ public class Taxi {
     }
     public void setBatteryLevel(int batteryLevel) { this.batteryLevel = batteryLevel;}
 
+    public boolean isRiding() {
+        return isRiding;
+    }
+    public void setRiding(boolean riding) {
+        isRiding = riding;
+    }
+
+    public boolean isRecharging() {
+        return isRecharging;
+    }
+    public void setRecharging(boolean recharging) {
+        isRecharging = recharging;
+    }
 }

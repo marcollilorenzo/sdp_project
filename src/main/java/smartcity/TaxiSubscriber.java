@@ -86,4 +86,14 @@ public class TaxiSubscriber extends Thread{
             }
         }
 
+    public static void disconnect(){
+        //System.out.println("disconnectClient()");
+        try {
+            client.disconnect();
+        } catch (MqttException e) {
+            System.out.println("disconnectClient - Errore: " + e);
+        }
+        System.out.println("MQTT Client disconnected!");
+    }
+
 }

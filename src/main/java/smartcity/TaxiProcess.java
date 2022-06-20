@@ -16,9 +16,9 @@ import org.codehaus.jettison.json.JSONObject;
 import simulators.AdminMeasurement;
 import simulators.Measurement;
 import simulators.PM10Simulator;
-
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class TaxiProcess {
 
@@ -28,13 +28,12 @@ public class TaxiProcess {
 
     public static void main(String[] args) throws IOException {
 
-        registerTaxi(); // register taxi to list and start to acquire statistic from pollution sensor
-     //   taxiBroker(); // start broker and subscribe to topic
+        initTaxi(); // register taxi to list and start to acquire statistic from pollution sensor
+        manageInput(); // manage keyboard input for quit the taxis
 
     }
 
-
-    public static void registerTaxi(){
+    public static void initTaxi(){
         // Create random info
         int taxiId = (int)Math.floor(Math.random()*(1000-1+1)+1);
         int taxiPort = (int)Math.floor(Math.random()*(3000-1000+1)+1000);
@@ -194,7 +193,54 @@ public class TaxiProcess {
 
     }
 
+    private static void manageInput(){
+        new Thread(()->{ // lambda expression
+            while(true) {
+                Scanner scanner = new Scanner(System.in);
+                //System.out.print("⏹ Send quit to stop the drone process...\n");
+                String input = scanner.next();
+                if (input.equals("quit")) {
+                    try {
+                        exitFromNetwork();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } // while
+        }).start();
+    }
 
+    private static void exitFromNetwork() throws IOException {
+
+        // DISCONETT MQTT
+       TaxiSubscriber.disconnect();
+
+       // DISCONNECT GRPC
+        try {
+            serverGrcp.shutdownNow();
+            System.out.println("GRCP stop!");
+        } catch (Exception e){
+            System.out.println("Error GRCP stop: " + e);
+        }
+
+        // COMUNICATE EXIT TO SERVER REST
+        int id = TaxisSingleton.getInstance().getCurrentTaxi().getId();
+        try {
+            Client client = Client.create();
+            WebResource webResource = client.resource("http://localhost:1337/taxis/delete/"+id);
+
+            ClientResponse result = webResource.type("application/json").delete(ClientResponse.class);
+
+            if(result.getStatus() == 200){
+                System.out.println("Delete from network OK");
+                System.exit(0);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
 
