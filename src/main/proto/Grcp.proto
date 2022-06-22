@@ -14,6 +14,17 @@ message WelcomeResponse {
   int32 id = 1;
 }
 
+message ElectionRequest {
+  int32 rideId = 1;
+  int32 taxiId = 2;
+}
+
+message ElectionResponse {
+  int32 rideId = 1;
+  int32 taxiId = 2;
+}
+
 service Grcp {
   rpc welcome(WelcomeRequest) returns (WelcomeResponse);
+  rpc election(ElectionRequest) returns (ElectionResponse);
 }

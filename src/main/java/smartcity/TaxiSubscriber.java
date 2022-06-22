@@ -1,17 +1,23 @@
 package smartcity;
 
+import com.example.taxis.GrcpGrpc;
+import com.example.taxis.GrcpOuterClass;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 
 import com.sun.jersey.api.client.WebResource;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import models.Coordinate;
 import models.Ride;
 import models.RidesQueue;
+import models.Taxi;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jettison.json.JSONArray;
 import org.eclipse.paho.client.mqttv3.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class TaxiSubscriber extends Thread{
 
@@ -82,7 +88,36 @@ public class TaxiSubscriber extends Thread{
 
                         System.out.println("NUOVA CORSA DISTRETTO: " + ride.getStartPosition().getDistrict());
 
+                        // start election algo
 
+                        // se il taxi sta ricaricando o è già occupato non fa nulla
+                        if (!TaxisSingleton.getInstance().getCurrentTaxi().isRiding() || !TaxisSingleton.getInstance().getCurrentTaxi().isRecharging()){
+                            ArrayList<Taxi> otherTaxiList = TaxisSingleton.getInstance().getTaxiList();
+
+                            for (Taxi t : otherTaxiList){
+                               // System.out.println(t.getId());
+                                System.out.println("Send election to Taxi: "+ t.getId() + " for Ride: " + ride.getId() );
+                                final ManagedChannel channel = ManagedChannelBuilder
+                                        .forTarget(t.getServerAddress() + ":" + t.getPort())
+                                        .usePlaintext()
+                                        .build();
+
+                                GrcpGrpc.GrcpBlockingStub stub = GrcpGrpc.newBlockingStub(channel);
+
+                                GrcpOuterClass.ElectionRequest req = GrcpOuterClass.ElectionRequest.newBuilder()
+                                        .setTaxiId(TaxisSingleton.getInstance().getCurrentTaxi().getId())
+                                        .setRideId(ride.getId())
+                                        .build();
+
+                                GrcpOuterClass.ElectionResponse res;
+                                try {
+                                    res = stub.election(req);
+                                    System.out.println(res);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
 
                     }
 
@@ -94,6 +129,7 @@ public class TaxiSubscriber extends Thread{
                     @Override
                     public void connectionLost(Throwable cause) {
                         System.out.println("Connection Lost");
+                        System.out.println(cause.toString());
                     }
                 });
 

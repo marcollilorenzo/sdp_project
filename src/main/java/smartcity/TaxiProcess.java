@@ -142,13 +142,14 @@ public class TaxiProcess {
                     .addService(new GrcpImpl())
                     .build();
             serverGrcp.start();
+            System.out.println("START GRPC");
 
             //AVVISO TUTTI GLI ALTRI TAXI
             if (!TaxisSingleton.getInstance().getTaxiList().isEmpty()){
                 ArrayList<Taxi> otherTaxiList = TaxisSingleton.getInstance().getTaxiList();
                 System.out.println(otherTaxiList);
                 for (Taxi t : otherTaxiList){
-                   // System.out.println("Other ID: "+ t.getId());
+                    System.out.println("Send Welcome to Taxi ID: "+ t.getId());
                     final ManagedChannel channel = ManagedChannelBuilder
                             .forTarget(t.getServerAddress() + ":" + t.getPort())
                             .usePlaintext()
@@ -157,11 +158,12 @@ public class TaxiProcess {
                     GrcpGrpc.GrcpBlockingStub stub = GrcpGrpc.newBlockingStub(channel);
 
                     GrcpOuterClass.WelcomeRequest req = GrcpOuterClass.WelcomeRequest.newBuilder()
-                            .setId(t.getId())
-                            .setPort(t.getPort())
-                            .setX(t.getCoordinate().getX())
-                            .setY(t.getCoordinate().getY())
-                            .setBattery(t.getBatteryLevel())
+                            .setId(TaxisSingleton.getInstance().getCurrentTaxi().getId())
+                            .setPort(TaxisSingleton.getInstance().getCurrentTaxi().getPort())
+                            .setX(TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate().getX())
+                            .setY(TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate().getY())
+                            .setBattery(TaxisSingleton.getInstance().getCurrentTaxi().getBatteryLevel())
+                            .setAddress(TaxisSingleton.getInstance().getCurrentTaxi().getServerAddress())
                             .build();
 
                     GrcpOuterClass.WelcomeResponse res;

@@ -58,6 +58,37 @@ public final class GrcpGrpc {
     return getWelcomeMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.ElectionRequest,
+      com.example.taxis.GrcpOuterClass.ElectionResponse> getElectionMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "election",
+      requestType = com.example.taxis.GrcpOuterClass.ElectionRequest.class,
+      responseType = com.example.taxis.GrcpOuterClass.ElectionResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.ElectionRequest,
+      com.example.taxis.GrcpOuterClass.ElectionResponse> getElectionMethod() {
+    io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.ElectionRequest, com.example.taxis.GrcpOuterClass.ElectionResponse> getElectionMethod;
+    if ((getElectionMethod = GrcpGrpc.getElectionMethod) == null) {
+      synchronized (GrcpGrpc.class) {
+        if ((getElectionMethod = GrcpGrpc.getElectionMethod) == null) {
+          GrcpGrpc.getElectionMethod = getElectionMethod =
+              io.grpc.MethodDescriptor.<com.example.taxis.GrcpOuterClass.ElectionRequest, com.example.taxis.GrcpOuterClass.ElectionResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "election"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.example.taxis.GrcpOuterClass.ElectionRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.example.taxis.GrcpOuterClass.ElectionResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new GrcpMethodDescriptorSupplier("election"))
+              .build();
+        }
+      }
+    }
+    return getElectionMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -92,6 +123,13 @@ public final class GrcpGrpc {
       asyncUnimplementedUnaryCall(getWelcomeMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void election(com.example.taxis.GrcpOuterClass.ElectionRequest request,
+        io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.ElectionResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getElectionMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -101,6 +139,13 @@ public final class GrcpGrpc {
                 com.example.taxis.GrcpOuterClass.WelcomeRequest,
                 com.example.taxis.GrcpOuterClass.WelcomeResponse>(
                   this, METHODID_WELCOME)))
+          .addMethod(
+            getElectionMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.example.taxis.GrcpOuterClass.ElectionRequest,
+                com.example.taxis.GrcpOuterClass.ElectionResponse>(
+                  this, METHODID_ELECTION)))
           .build();
     }
   }
@@ -130,6 +175,14 @@ public final class GrcpGrpc {
       asyncUnaryCall(
           getChannel().newCall(getWelcomeMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void election(com.example.taxis.GrcpOuterClass.ElectionRequest request,
+        io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.ElectionResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getElectionMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -155,6 +208,13 @@ public final class GrcpGrpc {
     public com.example.taxis.GrcpOuterClass.WelcomeResponse welcome(com.example.taxis.GrcpOuterClass.WelcomeRequest request) {
       return blockingUnaryCall(
           getChannel(), getWelcomeMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.example.taxis.GrcpOuterClass.ElectionResponse election(com.example.taxis.GrcpOuterClass.ElectionRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getElectionMethod(), getCallOptions(), request);
     }
   }
 
@@ -183,9 +243,18 @@ public final class GrcpGrpc {
       return futureUnaryCall(
           getChannel().newCall(getWelcomeMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.example.taxis.GrcpOuterClass.ElectionResponse> election(
+        com.example.taxis.GrcpOuterClass.ElectionRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getElectionMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_WELCOME = 0;
+  private static final int METHODID_ELECTION = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -207,6 +276,10 @@ public final class GrcpGrpc {
         case METHODID_WELCOME:
           serviceImpl.welcome((com.example.taxis.GrcpOuterClass.WelcomeRequest) request,
               (io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.WelcomeResponse>) responseObserver);
+          break;
+        case METHODID_ELECTION:
+          serviceImpl.election((com.example.taxis.GrcpOuterClass.ElectionRequest) request,
+              (io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.ElectionResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -270,6 +343,7 @@ public final class GrcpGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new GrcpFileDescriptorSupplier())
               .addMethod(getWelcomeMethod())
+              .addMethod(getElectionMethod())
               .build();
         }
       }

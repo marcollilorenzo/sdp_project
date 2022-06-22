@@ -1406,6 +1406,1114 @@ public final class GrcpOuterClass {
 
   }
 
+  public interface ElectionRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.example.taxis.ElectionRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 rideId = 1;</code>
+     * @return The rideId.
+     */
+    int getRideId();
+
+    /**
+     * <code>int32 taxiId = 2;</code>
+     * @return The taxiId.
+     */
+    int getTaxiId();
+  }
+  /**
+   * Protobuf type {@code com.example.taxis.ElectionRequest}
+   */
+  public  static final class ElectionRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.example.taxis.ElectionRequest)
+      ElectionRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ElectionRequest.newBuilder() to construct.
+    private ElectionRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ElectionRequest() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ElectionRequest();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ElectionRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              rideId_ = input.readInt32();
+              break;
+            }
+            case 16: {
+
+              taxiId_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.example.taxis.GrcpOuterClass.internal_static_com_example_taxis_ElectionRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.example.taxis.GrcpOuterClass.internal_static_com_example_taxis_ElectionRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.example.taxis.GrcpOuterClass.ElectionRequest.class, com.example.taxis.GrcpOuterClass.ElectionRequest.Builder.class);
+    }
+
+    public static final int RIDEID_FIELD_NUMBER = 1;
+    private int rideId_;
+    /**
+     * <code>int32 rideId = 1;</code>
+     * @return The rideId.
+     */
+    public int getRideId() {
+      return rideId_;
+    }
+
+    public static final int TAXIID_FIELD_NUMBER = 2;
+    private int taxiId_;
+    /**
+     * <code>int32 taxiId = 2;</code>
+     * @return The taxiId.
+     */
+    public int getTaxiId() {
+      return taxiId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (rideId_ != 0) {
+        output.writeInt32(1, rideId_);
+      }
+      if (taxiId_ != 0) {
+        output.writeInt32(2, taxiId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (rideId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, rideId_);
+      }
+      if (taxiId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, taxiId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.example.taxis.GrcpOuterClass.ElectionRequest)) {
+        return super.equals(obj);
+      }
+      com.example.taxis.GrcpOuterClass.ElectionRequest other = (com.example.taxis.GrcpOuterClass.ElectionRequest) obj;
+
+      if (getRideId()
+          != other.getRideId()) return false;
+      if (getTaxiId()
+          != other.getTaxiId()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + RIDEID_FIELD_NUMBER;
+      hash = (53 * hash) + getRideId();
+      hash = (37 * hash) + TAXIID_FIELD_NUMBER;
+      hash = (53 * hash) + getTaxiId();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.example.taxis.GrcpOuterClass.ElectionRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.example.taxis.GrcpOuterClass.ElectionRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.example.taxis.ElectionRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.example.taxis.ElectionRequest)
+        com.example.taxis.GrcpOuterClass.ElectionRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.example.taxis.GrcpOuterClass.internal_static_com_example_taxis_ElectionRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.example.taxis.GrcpOuterClass.internal_static_com_example_taxis_ElectionRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.example.taxis.GrcpOuterClass.ElectionRequest.class, com.example.taxis.GrcpOuterClass.ElectionRequest.Builder.class);
+      }
+
+      // Construct using com.example.taxis.GrcpOuterClass.ElectionRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        rideId_ = 0;
+
+        taxiId_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.example.taxis.GrcpOuterClass.internal_static_com_example_taxis_ElectionRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.example.taxis.GrcpOuterClass.ElectionRequest getDefaultInstanceForType() {
+        return com.example.taxis.GrcpOuterClass.ElectionRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.example.taxis.GrcpOuterClass.ElectionRequest build() {
+        com.example.taxis.GrcpOuterClass.ElectionRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.example.taxis.GrcpOuterClass.ElectionRequest buildPartial() {
+        com.example.taxis.GrcpOuterClass.ElectionRequest result = new com.example.taxis.GrcpOuterClass.ElectionRequest(this);
+        result.rideId_ = rideId_;
+        result.taxiId_ = taxiId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.example.taxis.GrcpOuterClass.ElectionRequest) {
+          return mergeFrom((com.example.taxis.GrcpOuterClass.ElectionRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.example.taxis.GrcpOuterClass.ElectionRequest other) {
+        if (other == com.example.taxis.GrcpOuterClass.ElectionRequest.getDefaultInstance()) return this;
+        if (other.getRideId() != 0) {
+          setRideId(other.getRideId());
+        }
+        if (other.getTaxiId() != 0) {
+          setTaxiId(other.getTaxiId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.example.taxis.GrcpOuterClass.ElectionRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.example.taxis.GrcpOuterClass.ElectionRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int rideId_ ;
+      /**
+       * <code>int32 rideId = 1;</code>
+       * @return The rideId.
+       */
+      public int getRideId() {
+        return rideId_;
+      }
+      /**
+       * <code>int32 rideId = 1;</code>
+       * @param value The rideId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRideId(int value) {
+        
+        rideId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 rideId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRideId() {
+        
+        rideId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int taxiId_ ;
+      /**
+       * <code>int32 taxiId = 2;</code>
+       * @return The taxiId.
+       */
+      public int getTaxiId() {
+        return taxiId_;
+      }
+      /**
+       * <code>int32 taxiId = 2;</code>
+       * @param value The taxiId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTaxiId(int value) {
+        
+        taxiId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 taxiId = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearTaxiId() {
+        
+        taxiId_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.example.taxis.ElectionRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.example.taxis.ElectionRequest)
+    private static final com.example.taxis.GrcpOuterClass.ElectionRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.example.taxis.GrcpOuterClass.ElectionRequest();
+    }
+
+    public static com.example.taxis.GrcpOuterClass.ElectionRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ElectionRequest>
+        PARSER = new com.google.protobuf.AbstractParser<ElectionRequest>() {
+      @java.lang.Override
+      public ElectionRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ElectionRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ElectionRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ElectionRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.example.taxis.GrcpOuterClass.ElectionRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ElectionResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.example.taxis.ElectionResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 rideId = 1;</code>
+     * @return The rideId.
+     */
+    int getRideId();
+
+    /**
+     * <code>int32 taxiId = 2;</code>
+     * @return The taxiId.
+     */
+    int getTaxiId();
+  }
+  /**
+   * Protobuf type {@code com.example.taxis.ElectionResponse}
+   */
+  public  static final class ElectionResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.example.taxis.ElectionResponse)
+      ElectionResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ElectionResponse.newBuilder() to construct.
+    private ElectionResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ElectionResponse() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ElectionResponse();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ElectionResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              rideId_ = input.readInt32();
+              break;
+            }
+            case 16: {
+
+              taxiId_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.example.taxis.GrcpOuterClass.internal_static_com_example_taxis_ElectionResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.example.taxis.GrcpOuterClass.internal_static_com_example_taxis_ElectionResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.example.taxis.GrcpOuterClass.ElectionResponse.class, com.example.taxis.GrcpOuterClass.ElectionResponse.Builder.class);
+    }
+
+    public static final int RIDEID_FIELD_NUMBER = 1;
+    private int rideId_;
+    /**
+     * <code>int32 rideId = 1;</code>
+     * @return The rideId.
+     */
+    public int getRideId() {
+      return rideId_;
+    }
+
+    public static final int TAXIID_FIELD_NUMBER = 2;
+    private int taxiId_;
+    /**
+     * <code>int32 taxiId = 2;</code>
+     * @return The taxiId.
+     */
+    public int getTaxiId() {
+      return taxiId_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (rideId_ != 0) {
+        output.writeInt32(1, rideId_);
+      }
+      if (taxiId_ != 0) {
+        output.writeInt32(2, taxiId_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (rideId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, rideId_);
+      }
+      if (taxiId_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, taxiId_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.example.taxis.GrcpOuterClass.ElectionResponse)) {
+        return super.equals(obj);
+      }
+      com.example.taxis.GrcpOuterClass.ElectionResponse other = (com.example.taxis.GrcpOuterClass.ElectionResponse) obj;
+
+      if (getRideId()
+          != other.getRideId()) return false;
+      if (getTaxiId()
+          != other.getTaxiId()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + RIDEID_FIELD_NUMBER;
+      hash = (53 * hash) + getRideId();
+      hash = (37 * hash) + TAXIID_FIELD_NUMBER;
+      hash = (53 * hash) + getTaxiId();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.example.taxis.GrcpOuterClass.ElectionResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.example.taxis.GrcpOuterClass.ElectionResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.example.taxis.GrcpOuterClass.ElectionResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.example.taxis.ElectionResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.example.taxis.ElectionResponse)
+        com.example.taxis.GrcpOuterClass.ElectionResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.example.taxis.GrcpOuterClass.internal_static_com_example_taxis_ElectionResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.example.taxis.GrcpOuterClass.internal_static_com_example_taxis_ElectionResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.example.taxis.GrcpOuterClass.ElectionResponse.class, com.example.taxis.GrcpOuterClass.ElectionResponse.Builder.class);
+      }
+
+      // Construct using com.example.taxis.GrcpOuterClass.ElectionResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        rideId_ = 0;
+
+        taxiId_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.example.taxis.GrcpOuterClass.internal_static_com_example_taxis_ElectionResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.example.taxis.GrcpOuterClass.ElectionResponse getDefaultInstanceForType() {
+        return com.example.taxis.GrcpOuterClass.ElectionResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.example.taxis.GrcpOuterClass.ElectionResponse build() {
+        com.example.taxis.GrcpOuterClass.ElectionResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.example.taxis.GrcpOuterClass.ElectionResponse buildPartial() {
+        com.example.taxis.GrcpOuterClass.ElectionResponse result = new com.example.taxis.GrcpOuterClass.ElectionResponse(this);
+        result.rideId_ = rideId_;
+        result.taxiId_ = taxiId_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.example.taxis.GrcpOuterClass.ElectionResponse) {
+          return mergeFrom((com.example.taxis.GrcpOuterClass.ElectionResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.example.taxis.GrcpOuterClass.ElectionResponse other) {
+        if (other == com.example.taxis.GrcpOuterClass.ElectionResponse.getDefaultInstance()) return this;
+        if (other.getRideId() != 0) {
+          setRideId(other.getRideId());
+        }
+        if (other.getTaxiId() != 0) {
+          setTaxiId(other.getTaxiId());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.example.taxis.GrcpOuterClass.ElectionResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.example.taxis.GrcpOuterClass.ElectionResponse) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int rideId_ ;
+      /**
+       * <code>int32 rideId = 1;</code>
+       * @return The rideId.
+       */
+      public int getRideId() {
+        return rideId_;
+      }
+      /**
+       * <code>int32 rideId = 1;</code>
+       * @param value The rideId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRideId(int value) {
+        
+        rideId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 rideId = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRideId() {
+        
+        rideId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int taxiId_ ;
+      /**
+       * <code>int32 taxiId = 2;</code>
+       * @return The taxiId.
+       */
+      public int getTaxiId() {
+        return taxiId_;
+      }
+      /**
+       * <code>int32 taxiId = 2;</code>
+       * @param value The taxiId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTaxiId(int value) {
+        
+        taxiId_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 taxiId = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearTaxiId() {
+        
+        taxiId_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.example.taxis.ElectionResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.example.taxis.ElectionResponse)
+    private static final com.example.taxis.GrcpOuterClass.ElectionResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.example.taxis.GrcpOuterClass.ElectionResponse();
+    }
+
+    public static com.example.taxis.GrcpOuterClass.ElectionResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ElectionResponse>
+        PARSER = new com.google.protobuf.AbstractParser<ElectionResponse>() {
+      @java.lang.Override
+      public ElectionResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ElectionResponse(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ElectionResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ElectionResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.example.taxis.GrcpOuterClass.ElectionResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_example_taxis_WelcomeRequest_descriptor;
   private static final 
@@ -1416,6 +2524,16 @@ public final class GrcpOuterClass {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_example_taxis_WelcomeResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_example_taxis_ElectionRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_example_taxis_ElectionRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_example_taxis_ElectionResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_example_taxis_ElectionResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -1429,9 +2547,14 @@ public final class GrcpOuterClass {
       "meRequest\022\n\n\002id\030\001 \001(\005\022\014\n\004port\030\002 \001(\005\022\017\n\007a" +
       "ddress\030\003 \001(\t\022\t\n\001x\030\004 \001(\005\022\t\n\001y\030\005 \001(\005\022\017\n\007ba" +
       "ttery\030\006 \001(\005\"\035\n\017WelcomeResponse\022\n\n\002id\030\001 \001" +
-      "(\0052X\n\004Grcp\022P\n\007welcome\022!.com.example.taxi" +
-      "s.WelcomeRequest\032\".com.example.taxis.Wel" +
-      "comeResponseb\006proto3"
+      "(\005\"1\n\017ElectionRequest\022\016\n\006rideId\030\001 \001(\005\022\016\n" +
+      "\006taxiId\030\002 \001(\005\"2\n\020ElectionResponse\022\016\n\006rid" +
+      "eId\030\001 \001(\005\022\016\n\006taxiId\030\002 \001(\0052\255\001\n\004Grcp\022P\n\007we" +
+      "lcome\022!.com.example.taxis.WelcomeRequest" +
+      "\032\".com.example.taxis.WelcomeResponse\022S\n\010" +
+      "election\022\".com.example.taxis.ElectionReq" +
+      "uest\032#.com.example.taxis.ElectionRespons" +
+      "eb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -1449,6 +2572,18 @@ public final class GrcpOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_example_taxis_WelcomeResponse_descriptor,
         new java.lang.String[] { "Id", });
+    internal_static_com_example_taxis_ElectionRequest_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_com_example_taxis_ElectionRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_example_taxis_ElectionRequest_descriptor,
+        new java.lang.String[] { "RideId", "TaxiId", });
+    internal_static_com_example_taxis_ElectionResponse_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_com_example_taxis_ElectionResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_example_taxis_ElectionResponse_descriptor,
+        new java.lang.String[] { "RideId", "TaxiId", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
