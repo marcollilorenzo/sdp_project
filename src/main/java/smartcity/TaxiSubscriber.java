@@ -29,9 +29,25 @@ public class TaxiSubscriber extends Thread{
     }
 
     public void setDistrict(int district) {
-        this.district = district;
+       this.district = district;
     }
 
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public void changeDistrict (int district) throws MqttException {
+        client.unsubscribe(topic);
+        System.out.println("Mi sono disiscritto dal TOPIC: " + topic);
+        setDistrict(district);
+        setTopic("seta/smartcity/rides/district"+district);
+        client.subscribe(this.topic);
+        System.out.println("Mi sono iscritto al nuovo TOPIC: " + topic);
+    }
 
     @Override
     public void run() {
@@ -50,7 +66,7 @@ public class TaxiSubscriber extends Thread{
                 client.connect(connOpts);
                 client.setCallback(new MqttCallback() {
 
-                    public void messageArrived(String topic, MqttMessage message) throws IOException {
+                    public void messageArrived(String topic, MqttMessage message) {
 
                         String receivedMessage = new String(message.getPayload()); // da binario a stringa
 
@@ -63,6 +79,10 @@ public class TaxiSubscriber extends Thread{
                         Coordinate rit = new Coordinate(x1, y1);
                         Coordinate con = new Coordinate(x2, y2);
                         Ride ride = new Ride(id, rit, con);
+
+                        System.out.println("NUOVA CORSA DISTRETTO: " + ride.getStartPosition().getDistrict());
+
+
 
                     }
 
@@ -84,7 +104,7 @@ public class TaxiSubscriber extends Thread{
             } catch (MqttException e) {
                 System.out.println("MqttException");
             }
-        }
+    }
 
     public static void disconnect(){
         //System.out.println("disconnectClient()");
