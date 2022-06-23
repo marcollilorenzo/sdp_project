@@ -40,6 +40,21 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
     public void election(GrcpOuterClass.ElectionRequest request, StreamObserver<GrcpOuterClass.ElectionResponse> responseObserver) {
         System.out.println("Nuova elezione dal taxi: " + request.getTaxiId() +  " per la corsa: " + request.getRideId());
 
+
+
+        // TODO: rispondere con OK o NO in base ai parametri
+
+        /*
+            CRITERI IN ORDINE DI RILEVANZA:
+
+            1. Se il taxi è giù in un'altra corsa va scartata
+            2. Il taxi deve avere la distanza minima dal punto di partenza della corsa
+            3. Il taxi deve avere il più alto livello di batteria
+            4. Il taxi deve avere ID più grande
+
+         */
+
+
         GrcpOuterClass.ElectionResponse response = GrcpOuterClass.ElectionResponse
                 .newBuilder()
                 .setRideId(request.getRideId())

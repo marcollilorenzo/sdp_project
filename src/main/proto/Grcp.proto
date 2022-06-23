@@ -22,6 +22,7 @@ message ElectionRequest {
 message ElectionResponse {
   int32 rideId = 1;
   int32 taxiId = 2;
+  string result = 3; // OK - NO
 }
 
 service Grcp {

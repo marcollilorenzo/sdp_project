@@ -25,6 +25,8 @@ public class TaxiSubscriber extends Thread{
     private int district;
     private String topic;
 
+    private int count;
+
     public TaxiSubscriber(int district){
         this.district = district;
         this.topic = "seta/smartcity/rides/district"+district;
@@ -92,6 +94,10 @@ public class TaxiSubscriber extends Thread{
 
                         // se il taxi sta ricaricando o è già occupato non fa nulla
                         if (!TaxisSingleton.getInstance().getCurrentTaxi().isRiding() || !TaxisSingleton.getInstance().getCurrentTaxi().isRecharging()){
+
+                            TaxisSingleton.getInstance().getCurrentTaxi().setPartecipant(true); // Set taxi to partecipant
+                            count = 0; // azzero il count delle risposte
+
                             ArrayList<Taxi> otherTaxiList = TaxisSingleton.getInstance().getTaxiList();
 
                             for (Taxi t : otherTaxiList){
@@ -112,7 +118,19 @@ public class TaxiSubscriber extends Thread{
                                 GrcpOuterClass.ElectionResponse res;
                                 try {
                                     res = stub.election(req);
-                                    System.out.println(res);
+
+                                    // TODO: Gestire la risposta
+                                    if(res.getResult() == "OK"){
+                                        count++; // incremento del count ad ogni risposta
+                                    } else {
+                                        TaxisSingleton.getInstance().getCurrentTaxi().setPartecipant(false);
+                                        break; // Non vincerò sicuramente io l'elezione, termino ???
+                                    }
+                                    //System.out.println(res);
+                                    if(count == otherTaxiList.size()){
+                                        System.out.println("GESTISCO IO LA CORSA...");
+                                        TaxisSingleton.getInstance().getCurrentTaxi().setRiding(true);
+                                    }
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

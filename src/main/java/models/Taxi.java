@@ -21,6 +21,8 @@ public class Taxi {
     // status
     private boolean isRiding = false;
     private boolean isRecharging = false;
+    private boolean isPartecipant = false;
+
 
 
     public Taxi(){}
@@ -78,5 +80,13 @@ public class Taxi {
     }
     public void setRecharging(boolean recharging) {
         isRecharging = recharging;
+    }
+
+    public boolean isPartecipant() {
+        return isPartecipant;
+    }
+
+    public void setPartecipant(boolean partecipant) {
+        isPartecipant = partecipant;
     }
 }

@@ -1975,6 +1975,26 @@ public final class GrcpOuterClass {
      * @return The taxiId.
      */
     int getTaxiId();
+
+    /**
+     * <pre>
+     * OK - NO
+     * </pre>
+     *
+     * <code>string result = 3;</code>
+     * @return The result.
+     */
+    java.lang.String getResult();
+    /**
+     * <pre>
+     * OK - NO
+     * </pre>
+     *
+     * <code>string result = 3;</code>
+     * @return The bytes for result.
+     */
+    com.google.protobuf.ByteString
+        getResultBytes();
   }
   /**
    * Protobuf type {@code com.example.taxis.ElectionResponse}
@@ -1989,6 +2009,7 @@ public final class GrcpOuterClass {
       super(builder);
     }
     private ElectionResponse() {
+      result_ = "";
     }
 
     @java.lang.Override
@@ -2029,6 +2050,12 @@ public final class GrcpOuterClass {
             case 16: {
 
               taxiId_ = input.readInt32();
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              result_ = s;
               break;
             }
             default: {
@@ -2083,6 +2110,50 @@ public final class GrcpOuterClass {
       return taxiId_;
     }
 
+    public static final int RESULT_FIELD_NUMBER = 3;
+    private volatile java.lang.Object result_;
+    /**
+     * <pre>
+     * OK - NO
+     * </pre>
+     *
+     * <code>string result = 3;</code>
+     * @return The result.
+     */
+    public java.lang.String getResult() {
+      java.lang.Object ref = result_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        result_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * OK - NO
+     * </pre>
+     *
+     * <code>string result = 3;</code>
+     * @return The bytes for result.
+     */
+    public com.google.protobuf.ByteString
+        getResultBytes() {
+      java.lang.Object ref = result_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        result_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -2103,6 +2174,9 @@ public final class GrcpOuterClass {
       if (taxiId_ != 0) {
         output.writeInt32(2, taxiId_);
       }
+      if (!getResultBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, result_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -2119,6 +2193,9 @@ public final class GrcpOuterClass {
       if (taxiId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, taxiId_);
+      }
+      if (!getResultBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, result_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2139,6 +2216,8 @@ public final class GrcpOuterClass {
           != other.getRideId()) return false;
       if (getTaxiId()
           != other.getTaxiId()) return false;
+      if (!getResult()
+          .equals(other.getResult())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -2154,6 +2233,8 @@ public final class GrcpOuterClass {
       hash = (53 * hash) + getRideId();
       hash = (37 * hash) + TAXIID_FIELD_NUMBER;
       hash = (53 * hash) + getTaxiId();
+      hash = (37 * hash) + RESULT_FIELD_NUMBER;
+      hash = (53 * hash) + getResult().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -2291,6 +2372,8 @@ public final class GrcpOuterClass {
 
         taxiId_ = 0;
 
+        result_ = "";
+
         return this;
       }
 
@@ -2319,6 +2402,7 @@ public final class GrcpOuterClass {
         com.example.taxis.GrcpOuterClass.ElectionResponse result = new com.example.taxis.GrcpOuterClass.ElectionResponse(this);
         result.rideId_ = rideId_;
         result.taxiId_ = taxiId_;
+        result.result_ = result_;
         onBuilt();
         return result;
       }
@@ -2372,6 +2456,10 @@ public final class GrcpOuterClass {
         }
         if (other.getTaxiId() != 0) {
           setTaxiId(other.getTaxiId());
+        }
+        if (!other.getResult().isEmpty()) {
+          result_ = other.result_;
+          onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2458,6 +2546,102 @@ public final class GrcpOuterClass {
       public Builder clearTaxiId() {
         
         taxiId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object result_ = "";
+      /**
+       * <pre>
+       * OK - NO
+       * </pre>
+       *
+       * <code>string result = 3;</code>
+       * @return The result.
+       */
+      public java.lang.String getResult() {
+        java.lang.Object ref = result_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          result_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * OK - NO
+       * </pre>
+       *
+       * <code>string result = 3;</code>
+       * @return The bytes for result.
+       */
+      public com.google.protobuf.ByteString
+          getResultBytes() {
+        java.lang.Object ref = result_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          result_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * OK - NO
+       * </pre>
+       *
+       * <code>string result = 3;</code>
+       * @param value The result to set.
+       * @return This builder for chaining.
+       */
+      public Builder setResult(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        result_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * OK - NO
+       * </pre>
+       *
+       * <code>string result = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearResult() {
+        
+        result_ = getDefaultInstance().getResult();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * OK - NO
+       * </pre>
+       *
+       * <code>string result = 3;</code>
+       * @param value The bytes for result to set.
+       * @return This builder for chaining.
+       */
+      public Builder setResultBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        result_ = value;
         onChanged();
         return this;
       }
@@ -2548,13 +2732,13 @@ public final class GrcpOuterClass {
       "ddress\030\003 \001(\t\022\t\n\001x\030\004 \001(\005\022\t\n\001y\030\005 \001(\005\022\017\n\007ba" +
       "ttery\030\006 \001(\005\"\035\n\017WelcomeResponse\022\n\n\002id\030\001 \001" +
       "(\005\"1\n\017ElectionRequest\022\016\n\006rideId\030\001 \001(\005\022\016\n" +
-      "\006taxiId\030\002 \001(\005\"2\n\020ElectionResponse\022\016\n\006rid" +
-      "eId\030\001 \001(\005\022\016\n\006taxiId\030\002 \001(\0052\255\001\n\004Grcp\022P\n\007we" +
-      "lcome\022!.com.example.taxis.WelcomeRequest" +
-      "\032\".com.example.taxis.WelcomeResponse\022S\n\010" +
-      "election\022\".com.example.taxis.ElectionReq" +
-      "uest\032#.com.example.taxis.ElectionRespons" +
-      "eb\006proto3"
+      "\006taxiId\030\002 \001(\005\"B\n\020ElectionResponse\022\016\n\006rid" +
+      "eId\030\001 \001(\005\022\016\n\006taxiId\030\002 \001(\005\022\016\n\006result\030\003 \001(" +
+      "\t2\255\001\n\004Grcp\022P\n\007welcome\022!.com.example.taxi" +
+      "s.WelcomeRequest\032\".com.example.taxis.Wel" +
+      "comeResponse\022S\n\010election\022\".com.example.t" +
+      "axis.ElectionRequest\032#.com.example.taxis" +
+      ".ElectionResponseb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -2583,7 +2767,7 @@ public final class GrcpOuterClass {
     internal_static_com_example_taxis_ElectionResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_example_taxis_ElectionResponse_descriptor,
-        new java.lang.String[] { "RideId", "TaxiId", });
+        new java.lang.String[] { "RideId", "TaxiId", "Result", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
