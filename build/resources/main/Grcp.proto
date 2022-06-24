@@ -23,6 +23,9 @@ message ElectionRequest {
   int32 endY = 6;
   int32 district = 7;
   int32 battery = 8;
+  double distance = 9;
+  // TODO: Add distance taxi che effettua richiesta e la ride. Non la devo calcolare in GrcoImpl
+
 }
 
 message ElectionResponse {

@@ -30,6 +30,7 @@ public class TaxiProcess {
 
         initTaxi(); // register taxi to list and start to acquire statistic from pollution sensor
         manageInput(); // manage keyboard input for quit the taxis
+        checkBattery(); // check battery
 
     }
 
@@ -242,6 +243,12 @@ public class TaxiProcess {
         }
 
     }
+
+    private static void checkBattery(){
+
+    }
+
+
 
 
 

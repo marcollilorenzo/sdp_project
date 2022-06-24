@@ -1457,6 +1457,16 @@ public final class GrcpOuterClass {
      * @return The battery.
      */
     int getBattery();
+
+    /**
+     * <pre>
+     * TODO: Add distance taxi che effettua richiesta e la ride. Non la devo calcolare in GrcoImpl
+     * </pre>
+     *
+     * <code>double distance = 9;</code>
+     * @return The distance.
+     */
+    double getDistance();
   }
   /**
    * Protobuf type {@code com.example.taxis.ElectionRequest}
@@ -1541,6 +1551,11 @@ public final class GrcpOuterClass {
             case 64: {
 
               battery_ = input.readInt32();
+              break;
+            }
+            case 73: {
+
+              distance_ = input.readDouble();
               break;
             }
             default: {
@@ -1655,6 +1670,20 @@ public final class GrcpOuterClass {
       return battery_;
     }
 
+    public static final int DISTANCE_FIELD_NUMBER = 9;
+    private double distance_;
+    /**
+     * <pre>
+     * TODO: Add distance taxi che effettua richiesta e la ride. Non la devo calcolare in GrcoImpl
+     * </pre>
+     *
+     * <code>double distance = 9;</code>
+     * @return The distance.
+     */
+    public double getDistance() {
+      return distance_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -1692,6 +1721,9 @@ public final class GrcpOuterClass {
       }
       if (battery_ != 0) {
         output.writeInt32(8, battery_);
+      }
+      if (distance_ != 0D) {
+        output.writeDouble(9, distance_);
       }
       unknownFields.writeTo(output);
     }
@@ -1734,6 +1766,10 @@ public final class GrcpOuterClass {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(8, battery_);
       }
+      if (distance_ != 0D) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(9, distance_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -1765,6 +1801,9 @@ public final class GrcpOuterClass {
           != other.getDistrict()) return false;
       if (getBattery()
           != other.getBattery()) return false;
+      if (java.lang.Double.doubleToLongBits(getDistance())
+          != java.lang.Double.doubleToLongBits(
+              other.getDistance())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -1792,6 +1831,9 @@ public final class GrcpOuterClass {
       hash = (53 * hash) + getDistrict();
       hash = (37 * hash) + BATTERY_FIELD_NUMBER;
       hash = (53 * hash) + getBattery();
+      hash = (37 * hash) + DISTANCE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getDistance()));
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1941,6 +1983,8 @@ public final class GrcpOuterClass {
 
         battery_ = 0;
 
+        distance_ = 0D;
+
         return this;
       }
 
@@ -1975,6 +2019,7 @@ public final class GrcpOuterClass {
         result.endY_ = endY_;
         result.district_ = district_;
         result.battery_ = battery_;
+        result.distance_ = distance_;
         onBuilt();
         return result;
       }
@@ -2046,6 +2091,9 @@ public final class GrcpOuterClass {
         }
         if (other.getBattery() != 0) {
           setBattery(other.getBattery());
+        }
+        if (other.getDistance() != 0D) {
+          setDistance(other.getDistance());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2312,6 +2360,48 @@ public final class GrcpOuterClass {
       public Builder clearBattery() {
         
         battery_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private double distance_ ;
+      /**
+       * <pre>
+       * TODO: Add distance taxi che effettua richiesta e la ride. Non la devo calcolare in GrcoImpl
+       * </pre>
+       *
+       * <code>double distance = 9;</code>
+       * @return The distance.
+       */
+      public double getDistance() {
+        return distance_;
+      }
+      /**
+       * <pre>
+       * TODO: Add distance taxi che effettua richiesta e la ride. Non la devo calcolare in GrcoImpl
+       * </pre>
+       *
+       * <code>double distance = 9;</code>
+       * @param value The distance to set.
+       * @return This builder for chaining.
+       */
+      public Builder setDistance(double value) {
+        
+        distance_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * TODO: Add distance taxi che effettua richiesta e la ride. Non la devo calcolare in GrcoImpl
+       * </pre>
+       *
+       * <code>double distance = 9;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearDistance() {
+        
+        distance_ = 0D;
         onChanged();
         return this;
       }
@@ -4405,22 +4495,22 @@ public final class GrcpOuterClass {
       "meRequest\022\n\n\002id\030\001 \001(\005\022\014\n\004port\030\002 \001(\005\022\017\n\007a" +
       "ddress\030\003 \001(\t\022\t\n\001x\030\004 \001(\005\022\t\n\001y\030\005 \001(\005\022\017\n\007ba" +
       "ttery\030\006 \001(\005\"\035\n\017WelcomeResponse\022\n\n\002id\030\001 \001" +
-      "(\005\"\220\001\n\017ElectionRequest\022\016\n\006rideId\030\001 \001(\005\022\016" +
+      "(\005\"\242\001\n\017ElectionRequest\022\016\n\006rideId\030\001 \001(\005\022\016" +
       "\n\006taxiId\030\002 \001(\005\022\016\n\006startX\030\003 \001(\005\022\016\n\006startY" +
       "\030\004 \001(\005\022\014\n\004endX\030\005 \001(\005\022\014\n\004endY\030\006 \001(\005\022\020\n\010di" +
-      "strict\030\007 \001(\005\022\017\n\007battery\030\010 \001(\005\"B\n\020Electio" +
-      "nResponse\022\016\n\006rideId\030\001 \001(\005\022\016\n\006taxiId\030\002 \001(" +
-      "\005\022\016\n\006result\030\003 \001(\t\"J\n\025UpdateTaxiInfoReque" +
-      "st\022\n\n\002id\030\001 \001(\005\022\t\n\001x\030\004 \001(\005\022\t\n\001y\030\005 \001(\005\022\017\n\007" +
-      "battery\030\006 \001(\005\"\'\n\026UpdateTaxiInfoResponse\022" +
-      "\r\n\005reply\030\001 \001(\t2\225\002\n\004Grcp\022P\n\007welcome\022!.com" +
-      ".example.taxis.WelcomeRequest\032\".com.exam" +
-      "ple.taxis.WelcomeResponse\022S\n\010election\022\"." +
-      "com.example.taxis.ElectionRequest\032#.com." +
-      "example.taxis.ElectionResponse\022f\n\017update" +
-      "DroneInfo\022(.com.example.taxis.UpdateTaxi" +
-      "InfoRequest\032).com.example.taxis.UpdateTa" +
-      "xiInfoResponseb\006proto3"
+      "strict\030\007 \001(\005\022\017\n\007battery\030\010 \001(\005\022\020\n\010distanc" +
+      "e\030\t \001(\001\"B\n\020ElectionResponse\022\016\n\006rideId\030\001 " +
+      "\001(\005\022\016\n\006taxiId\030\002 \001(\005\022\016\n\006result\030\003 \001(\t\"J\n\025U" +
+      "pdateTaxiInfoRequest\022\n\n\002id\030\001 \001(\005\022\t\n\001x\030\004 " +
+      "\001(\005\022\t\n\001y\030\005 \001(\005\022\017\n\007battery\030\006 \001(\005\"\'\n\026Updat" +
+      "eTaxiInfoResponse\022\r\n\005reply\030\001 \001(\t2\225\002\n\004Grc" +
+      "p\022P\n\007welcome\022!.com.example.taxis.Welcome" +
+      "Request\032\".com.example.taxis.WelcomeRespo" +
+      "nse\022S\n\010election\022\".com.example.taxis.Elec" +
+      "tionRequest\032#.com.example.taxis.Election" +
+      "Response\022f\n\017updateDroneInfo\022(.com.exampl" +
+      "e.taxis.UpdateTaxiInfoRequest\032).com.exam" +
+      "ple.taxis.UpdateTaxiInfoResponseb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -4443,7 +4533,7 @@ public final class GrcpOuterClass {
     internal_static_com_example_taxis_ElectionRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_example_taxis_ElectionRequest_descriptor,
-        new java.lang.String[] { "RideId", "TaxiId", "StartX", "StartY", "EndX", "EndY", "District", "Battery", });
+        new java.lang.String[] { "RideId", "TaxiId", "StartX", "StartY", "EndX", "EndY", "District", "Battery", "Distance", });
     internal_static_com_example_taxis_ElectionResponse_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_com_example_taxis_ElectionResponse_fieldAccessorTable = new

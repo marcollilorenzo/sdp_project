@@ -53,6 +53,27 @@ utilis/SetaSubscriber.java
  utilis.SetaSubscriber$1
 models/RidesQueue.java
  models.RidesQueue
+smartcity/GrcpImpl.java
+ smartcity.GrcpImpl
+models/Taxis.java
+ models.Taxis
+smartcity/TaxisSingleton.java
+ smartcity.TaxisSingleton
+models/Ride.java
+ models.Ride
+smartcity/TaxiProcess.java
+ smartcity.TaxiProcess
+smartcity/TaxiSubPub.java
+ smartcity.TaxiSubPub
+ smartcity.TaxiSubPub$1
+client/ClientAdministrator.java
+ client.ClientAdministrator
+models/Taxi.java
+ models.Taxi
+StartServer.java
+ StartServer
+simulators/PM10Simulator.java
+ simulators.PM10Simulator
 Grcp.java
  Grcp
  Grcp$1
@@ -64,30 +85,9 @@ Grcp.java
  Grcp$WelcomeResponse$1
  Grcp$WelcomeResponse$Builder
  Grcp$WelcomeResponseOrBuilder
-models/Taxis.java
- models.Taxis
-models/Coordinate.java
- models.Coordinate
-simulators/Measurement.java
- simulators.Measurement
-models/Ride.java
- models.Ride
 simulators/AdminMeasurement.java
  simulators.AdminMeasurement
-client/ClientAdministrator.java
- client.ClientAdministrator
-models/Taxi.java
- models.Taxi
-StartServer.java
- StartServer
-simulators/PM10Simulator.java
- simulators.PM10Simulator
-smartcity/TaxisSingleton.java
- smartcity.TaxisSingleton
-smartcity/GrcpImpl.java
- smartcity.GrcpImpl
-smartcity/TaxiProcess.java
- smartcity.TaxiProcess
-smartcity/TaxiSubPub.java
- smartcity.TaxiSubPub
- smartcity.TaxiSubPub$1
+simulators/Measurement.java
+ simulators.Measurement
+models/Coordinate.java
+ models.Coordinate

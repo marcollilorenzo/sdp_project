@@ -45,8 +45,12 @@ public class SetaSubscriber extends Thread{
 
                     }else if (topic.split("/")[3].equals("free")){ // when taxi is free
 
-                        // Un taxi si è liberato, posso prenderne una dalla coda
+                        // Un taxi si è liberato, posso prendere una ride dalla coda
                         int taxiId = Integer.parseInt(topic.split("/")[4]);
+                        System.out.println("NOW TAXI: " + taxiId + "IS FREE");
+
+                        Ride ride = RidesQueue.getInstance().take();
+
 
 
                     }else{ // other topic
