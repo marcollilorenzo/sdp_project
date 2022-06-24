@@ -69,7 +69,7 @@ public class TaxisSingleton {
     }
 
     // GET POSITION BY TAXI ID
-    public Taxi getPositionByTaxiId(int taxiId){
+    public Coordinate getPositionByTaxiId(int taxiId){
         synchronized (taxiList){
             Taxi t = taxiList.stream()
                     .filter(a -> a.getId() == taxiId)
@@ -78,7 +78,7 @@ public class TaxisSingleton {
             if( t == null){
                 return null;
             }else{
-                return t;
+                return t.getCoordinate();
             }
         }
     }

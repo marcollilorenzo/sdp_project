@@ -17,6 +17,12 @@ message WelcomeResponse {
 message ElectionRequest {
   int32 rideId = 1;
   int32 taxiId = 2;
+  int32 startX = 3;
+  int32 startY = 4;
+  int32 endX = 5;
+  int32 endY = 6;
+  int32 district = 7;
+  int32 battery = 8;
 }
 
 message ElectionResponse {

@@ -19,15 +19,14 @@ com/example/taxis/GrcpOuterClass.java
  com.example.taxis.GrcpOuterClass$WelcomeResponseOrBuilder
 simulators/Simulator.java
  simulators.Simulator
-utilis/RideGenerator.java
- utilis.RideGenerator
-services/TaxiAdministrator.java
- services.TaxiAdministrator
-smartcity/TaxiSubscriber.java
- smartcity.TaxiSubscriber
- smartcity.TaxiSubscriber$1
-smartcity/Seta.java
- smartcity.Seta
+StartServer.java
+ StartServer
+simulators/PM10Simulator.java
+ simulators.PM10Simulator
+models/Coordinate.java
+ models.Coordinate
+smartcity/GrcpImpl.java
+ smartcity.GrcpImpl
 simulators/Buffer.java
  simulators.Buffer
 client/ClientMenu.java
@@ -43,29 +42,6 @@ com/example/taxis/GrcpGrpc.java
  com.example.taxis.GrcpGrpc$GrcpMethodDescriptorSupplier
  com.example.taxis.GrcpGrpc$GrcpStub
  com.example.taxis.GrcpGrpc$MethodHandlers
-utilis/SetaSubscriber.java
- utilis.SetaSubscriber
- utilis.SetaSubscriber$1
-models/RidesQueue.java
- models.RidesQueue
-smartcity/GrcpImpl.java
- smartcity.GrcpImpl
-models/Taxis.java
- models.Taxis
-smartcity/TaxisSingleton.java
- smartcity.TaxisSingleton
-smartcity/TaxiProcess.java
- smartcity.TaxiProcess
-models/Ride.java
- models.Ride
-client/ClientAdministrator.java
- client.ClientAdministrator
-models/Taxi.java
- models.Taxi
-StartServer.java
- StartServer
-simulators/PM10Simulator.java
- simulators.PM10Simulator
 Grcp.java
  Grcp
  Grcp$1
@@ -77,9 +53,33 @@ Grcp.java
  Grcp$WelcomeResponse$1
  Grcp$WelcomeResponse$Builder
  Grcp$WelcomeResponseOrBuilder
+models/Taxi.java
+ models.Taxi
 simulators/AdminMeasurement.java
  simulators.AdminMeasurement
+models/Taxis.java
+ models.Taxis
+smartcity/TaxisSingleton.java
+ smartcity.TaxisSingleton
 simulators/Measurement.java
  simulators.Measurement
-models/Coordinate.java
- models.Coordinate
+models/Ride.java
+ models.Ride
+client/ClientAdministrator.java
+ client.ClientAdministrator
+utilis/RideGenerator.java
+ utilis.RideGenerator
+services/TaxiAdministrator.java
+ services.TaxiAdministrator
+models/RidesQueue.java
+ models.RidesQueue
+smartcity/TaxiProcess.java
+ smartcity.TaxiProcess
+smartcity/TaxiSubPub.java
+ smartcity.TaxiSubPub
+ smartcity.TaxiSubPub$1
+smartcity/Seta.java
+ smartcity.Seta
+utilis/SetaSubscriber.java
+ utilis.SetaSubscriber
+ utilis.SetaSubscriber$1

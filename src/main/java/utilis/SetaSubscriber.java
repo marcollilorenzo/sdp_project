@@ -11,8 +11,7 @@ import java.util.ArrayList;
 public class SetaSubscriber extends Thread{
 
     private static MqttClient client;
-    private
-    ArrayList<String> topics = new ArrayList<>();
+    private ArrayList<String> topics = new ArrayList<>();
 
     public SetaSubscriber() {
         topics.add("seta/smartcity/rides/accomplished/#");
@@ -37,12 +36,17 @@ public class SetaSubscriber extends Thread{
             client.setCallback(new MqttCallback() {
 
                 public void messageArrived(String topic, MqttMessage message) throws IOException {
+                    // Ride accomplished
                     if (topic.split("/")[3].equals("accomplished")){
-                        RidesQueue.getInstance().removePendingRides(Integer.parseInt(topic.split("/")[4]));
-                    } else {
-                        // TODO: MANAGED RIDES QUEUE, add ride to noAccomplishedRides in RidesQueue
 
-                        // There are no taxi avaiable
+                        System.out.println("PENDING: " +  RidesQueue.getInstance().getPendingRides().size());
+                        RidesQueue.getInstance().removePendingRides(Integer.parseInt(topic.split("/")[4]));
+                        String receivedMessage = new String(message.getPayload());
+                        System.out.println(receivedMessage);
+                        System.out.println("PENDING: " +  RidesQueue.getInstance().getPendingRides().size());
+
+                    }else{ // other topic
+
                     }
                 }
 

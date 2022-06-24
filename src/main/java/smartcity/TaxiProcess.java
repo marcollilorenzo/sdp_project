@@ -23,7 +23,7 @@ import java.util.Scanner;
 public class TaxiProcess {
 
     private static Server serverGrcp;
-    private static TaxiSubscriber threadSubscriber;
+    private static TaxiSubPub threadSubPub;
     private static int myID;
 
     public static void main(String[] args) throws IOException {
@@ -183,13 +183,12 @@ public class TaxiProcess {
     private static void taxiBroker() {
 
         Coordinate coordinate = TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate();
-        System.out.println(coordinate);
         if(coordinate != null){
             int myInitDistrict = coordinate.getDistrict();
 
             //get district number
-            threadSubscriber = new TaxiSubscriber(myInitDistrict);
-            threadSubscriber.start();
+            threadSubPub = new TaxiSubPub(myInitDistrict);
+            threadSubPub.start();
 
         }
 
@@ -215,7 +214,7 @@ public class TaxiProcess {
     private static void exitFromNetwork() throws IOException {
 
         // DISCONETT MQTT
-       TaxiSubscriber.disconnect();
+       TaxiSubPub.disconnect();
 
        // DISCONNECT GRPC
         try {

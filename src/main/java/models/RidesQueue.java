@@ -33,7 +33,6 @@ public class RidesQueue {
         return instance;
     }
 
-
     // Check if ad ID in the list
     private synchronized boolean isInList(int rideId){
         List<Ride> rideShallow = getRidesList(); // shallow copy
@@ -78,7 +77,7 @@ public class RidesQueue {
 
     }
 
-    // add pending
+    // add no accomplished
     public synchronized boolean addNoAccomplishedRides(Ride r){
 
         Boolean isInList = isInList(r.getId());
@@ -103,6 +102,16 @@ public class RidesQueue {
     // get
     public synchronized ArrayList<Ride> getRidesList(){
         return new ArrayList<>(allRides);
+    }
+
+    // get pending
+    public ArrayList<Ride> getPendingRides() {
+        return pendingRides;
+    }
+
+    // get no accomplished
+    public ArrayList<Ride> getNoAccomplishedRides() {
+        return noAccomplishedRides;
     }
 
     public synchronized void removePendingRides(int rideID){

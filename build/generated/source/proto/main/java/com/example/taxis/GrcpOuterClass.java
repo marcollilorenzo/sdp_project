@@ -1421,6 +1421,42 @@ public final class GrcpOuterClass {
      * @return The taxiId.
      */
     int getTaxiId();
+
+    /**
+     * <code>int32 startX = 3;</code>
+     * @return The startX.
+     */
+    int getStartX();
+
+    /**
+     * <code>int32 startY = 4;</code>
+     * @return The startY.
+     */
+    int getStartY();
+
+    /**
+     * <code>int32 endX = 5;</code>
+     * @return The endX.
+     */
+    int getEndX();
+
+    /**
+     * <code>int32 endY = 6;</code>
+     * @return The endY.
+     */
+    int getEndY();
+
+    /**
+     * <code>int32 district = 7;</code>
+     * @return The district.
+     */
+    int getDistrict();
+
+    /**
+     * <code>int32 battery = 8;</code>
+     * @return The battery.
+     */
+    int getBattery();
   }
   /**
    * Protobuf type {@code com.example.taxis.ElectionRequest}
@@ -1477,6 +1513,36 @@ public final class GrcpOuterClass {
               taxiId_ = input.readInt32();
               break;
             }
+            case 24: {
+
+              startX_ = input.readInt32();
+              break;
+            }
+            case 32: {
+
+              startY_ = input.readInt32();
+              break;
+            }
+            case 40: {
+
+              endX_ = input.readInt32();
+              break;
+            }
+            case 48: {
+
+              endY_ = input.readInt32();
+              break;
+            }
+            case 56: {
+
+              district_ = input.readInt32();
+              break;
+            }
+            case 64: {
+
+              battery_ = input.readInt32();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -1529,6 +1595,66 @@ public final class GrcpOuterClass {
       return taxiId_;
     }
 
+    public static final int STARTX_FIELD_NUMBER = 3;
+    private int startX_;
+    /**
+     * <code>int32 startX = 3;</code>
+     * @return The startX.
+     */
+    public int getStartX() {
+      return startX_;
+    }
+
+    public static final int STARTY_FIELD_NUMBER = 4;
+    private int startY_;
+    /**
+     * <code>int32 startY = 4;</code>
+     * @return The startY.
+     */
+    public int getStartY() {
+      return startY_;
+    }
+
+    public static final int ENDX_FIELD_NUMBER = 5;
+    private int endX_;
+    /**
+     * <code>int32 endX = 5;</code>
+     * @return The endX.
+     */
+    public int getEndX() {
+      return endX_;
+    }
+
+    public static final int ENDY_FIELD_NUMBER = 6;
+    private int endY_;
+    /**
+     * <code>int32 endY = 6;</code>
+     * @return The endY.
+     */
+    public int getEndY() {
+      return endY_;
+    }
+
+    public static final int DISTRICT_FIELD_NUMBER = 7;
+    private int district_;
+    /**
+     * <code>int32 district = 7;</code>
+     * @return The district.
+     */
+    public int getDistrict() {
+      return district_;
+    }
+
+    public static final int BATTERY_FIELD_NUMBER = 8;
+    private int battery_;
+    /**
+     * <code>int32 battery = 8;</code>
+     * @return The battery.
+     */
+    public int getBattery() {
+      return battery_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -1549,6 +1675,24 @@ public final class GrcpOuterClass {
       if (taxiId_ != 0) {
         output.writeInt32(2, taxiId_);
       }
+      if (startX_ != 0) {
+        output.writeInt32(3, startX_);
+      }
+      if (startY_ != 0) {
+        output.writeInt32(4, startY_);
+      }
+      if (endX_ != 0) {
+        output.writeInt32(5, endX_);
+      }
+      if (endY_ != 0) {
+        output.writeInt32(6, endY_);
+      }
+      if (district_ != 0) {
+        output.writeInt32(7, district_);
+      }
+      if (battery_ != 0) {
+        output.writeInt32(8, battery_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -1565,6 +1709,30 @@ public final class GrcpOuterClass {
       if (taxiId_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, taxiId_);
+      }
+      if (startX_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, startX_);
+      }
+      if (startY_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, startY_);
+      }
+      if (endX_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, endX_);
+      }
+      if (endY_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, endY_);
+      }
+      if (district_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(7, district_);
+      }
+      if (battery_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(8, battery_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1585,6 +1753,18 @@ public final class GrcpOuterClass {
           != other.getRideId()) return false;
       if (getTaxiId()
           != other.getTaxiId()) return false;
+      if (getStartX()
+          != other.getStartX()) return false;
+      if (getStartY()
+          != other.getStartY()) return false;
+      if (getEndX()
+          != other.getEndX()) return false;
+      if (getEndY()
+          != other.getEndY()) return false;
+      if (getDistrict()
+          != other.getDistrict()) return false;
+      if (getBattery()
+          != other.getBattery()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -1600,6 +1780,18 @@ public final class GrcpOuterClass {
       hash = (53 * hash) + getRideId();
       hash = (37 * hash) + TAXIID_FIELD_NUMBER;
       hash = (53 * hash) + getTaxiId();
+      hash = (37 * hash) + STARTX_FIELD_NUMBER;
+      hash = (53 * hash) + getStartX();
+      hash = (37 * hash) + STARTY_FIELD_NUMBER;
+      hash = (53 * hash) + getStartY();
+      hash = (37 * hash) + ENDX_FIELD_NUMBER;
+      hash = (53 * hash) + getEndX();
+      hash = (37 * hash) + ENDY_FIELD_NUMBER;
+      hash = (53 * hash) + getEndY();
+      hash = (37 * hash) + DISTRICT_FIELD_NUMBER;
+      hash = (53 * hash) + getDistrict();
+      hash = (37 * hash) + BATTERY_FIELD_NUMBER;
+      hash = (53 * hash) + getBattery();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1737,6 +1929,18 @@ public final class GrcpOuterClass {
 
         taxiId_ = 0;
 
+        startX_ = 0;
+
+        startY_ = 0;
+
+        endX_ = 0;
+
+        endY_ = 0;
+
+        district_ = 0;
+
+        battery_ = 0;
+
         return this;
       }
 
@@ -1765,6 +1969,12 @@ public final class GrcpOuterClass {
         com.example.taxis.GrcpOuterClass.ElectionRequest result = new com.example.taxis.GrcpOuterClass.ElectionRequest(this);
         result.rideId_ = rideId_;
         result.taxiId_ = taxiId_;
+        result.startX_ = startX_;
+        result.startY_ = startY_;
+        result.endX_ = endX_;
+        result.endY_ = endY_;
+        result.district_ = district_;
+        result.battery_ = battery_;
         onBuilt();
         return result;
       }
@@ -1818,6 +2028,24 @@ public final class GrcpOuterClass {
         }
         if (other.getTaxiId() != 0) {
           setTaxiId(other.getTaxiId());
+        }
+        if (other.getStartX() != 0) {
+          setStartX(other.getStartX());
+        }
+        if (other.getStartY() != 0) {
+          setStartY(other.getStartY());
+        }
+        if (other.getEndX() != 0) {
+          setEndX(other.getEndX());
+        }
+        if (other.getEndY() != 0) {
+          setEndY(other.getEndY());
+        }
+        if (other.getDistrict() != 0) {
+          setDistrict(other.getDistrict());
+        }
+        if (other.getBattery() != 0) {
+          setBattery(other.getBattery());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1904,6 +2132,186 @@ public final class GrcpOuterClass {
       public Builder clearTaxiId() {
         
         taxiId_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int startX_ ;
+      /**
+       * <code>int32 startX = 3;</code>
+       * @return The startX.
+       */
+      public int getStartX() {
+        return startX_;
+      }
+      /**
+       * <code>int32 startX = 3;</code>
+       * @param value The startX to set.
+       * @return This builder for chaining.
+       */
+      public Builder setStartX(int value) {
+        
+        startX_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 startX = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearStartX() {
+        
+        startX_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int startY_ ;
+      /**
+       * <code>int32 startY = 4;</code>
+       * @return The startY.
+       */
+      public int getStartY() {
+        return startY_;
+      }
+      /**
+       * <code>int32 startY = 4;</code>
+       * @param value The startY to set.
+       * @return This builder for chaining.
+       */
+      public Builder setStartY(int value) {
+        
+        startY_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 startY = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearStartY() {
+        
+        startY_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int endX_ ;
+      /**
+       * <code>int32 endX = 5;</code>
+       * @return The endX.
+       */
+      public int getEndX() {
+        return endX_;
+      }
+      /**
+       * <code>int32 endX = 5;</code>
+       * @param value The endX to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEndX(int value) {
+        
+        endX_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 endX = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearEndX() {
+        
+        endX_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int endY_ ;
+      /**
+       * <code>int32 endY = 6;</code>
+       * @return The endY.
+       */
+      public int getEndY() {
+        return endY_;
+      }
+      /**
+       * <code>int32 endY = 6;</code>
+       * @param value The endY to set.
+       * @return This builder for chaining.
+       */
+      public Builder setEndY(int value) {
+        
+        endY_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 endY = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearEndY() {
+        
+        endY_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int district_ ;
+      /**
+       * <code>int32 district = 7;</code>
+       * @return The district.
+       */
+      public int getDistrict() {
+        return district_;
+      }
+      /**
+       * <code>int32 district = 7;</code>
+       * @param value The district to set.
+       * @return This builder for chaining.
+       */
+      public Builder setDistrict(int value) {
+        
+        district_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 district = 7;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearDistrict() {
+        
+        district_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int battery_ ;
+      /**
+       * <code>int32 battery = 8;</code>
+       * @return The battery.
+       */
+      public int getBattery() {
+        return battery_;
+      }
+      /**
+       * <code>int32 battery = 8;</code>
+       * @param value The battery to set.
+       * @return This builder for chaining.
+       */
+      public Builder setBattery(int value) {
+        
+        battery_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 battery = 8;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearBattery() {
+        
+        battery_ = 0;
         onChanged();
         return this;
       }
@@ -2731,14 +3139,17 @@ public final class GrcpOuterClass {
       "meRequest\022\n\n\002id\030\001 \001(\005\022\014\n\004port\030\002 \001(\005\022\017\n\007a" +
       "ddress\030\003 \001(\t\022\t\n\001x\030\004 \001(\005\022\t\n\001y\030\005 \001(\005\022\017\n\007ba" +
       "ttery\030\006 \001(\005\"\035\n\017WelcomeResponse\022\n\n\002id\030\001 \001" +
-      "(\005\"1\n\017ElectionRequest\022\016\n\006rideId\030\001 \001(\005\022\016\n" +
-      "\006taxiId\030\002 \001(\005\"B\n\020ElectionResponse\022\016\n\006rid" +
-      "eId\030\001 \001(\005\022\016\n\006taxiId\030\002 \001(\005\022\016\n\006result\030\003 \001(" +
-      "\t2\255\001\n\004Grcp\022P\n\007welcome\022!.com.example.taxi" +
-      "s.WelcomeRequest\032\".com.example.taxis.Wel" +
-      "comeResponse\022S\n\010election\022\".com.example.t" +
-      "axis.ElectionRequest\032#.com.example.taxis" +
-      ".ElectionResponseb\006proto3"
+      "(\005\"\220\001\n\017ElectionRequest\022\016\n\006rideId\030\001 \001(\005\022\016" +
+      "\n\006taxiId\030\002 \001(\005\022\016\n\006startX\030\003 \001(\005\022\016\n\006startY" +
+      "\030\004 \001(\005\022\014\n\004endX\030\005 \001(\005\022\014\n\004endY\030\006 \001(\005\022\020\n\010di" +
+      "strict\030\007 \001(\005\022\017\n\007battery\030\010 \001(\005\"B\n\020Electio" +
+      "nResponse\022\016\n\006rideId\030\001 \001(\005\022\016\n\006taxiId\030\002 \001(" +
+      "\005\022\016\n\006result\030\003 \001(\t2\255\001\n\004Grcp\022P\n\007welcome\022!." +
+      "com.example.taxis.WelcomeRequest\032\".com.e" +
+      "xample.taxis.WelcomeResponse\022S\n\010election" +
+      "\022\".com.example.taxis.ElectionRequest\032#.c" +
+      "om.example.taxis.ElectionResponseb\006proto" +
+      "3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -2761,7 +3172,7 @@ public final class GrcpOuterClass {
     internal_static_com_example_taxis_ElectionRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_example_taxis_ElectionRequest_descriptor,
-        new java.lang.String[] { "RideId", "TaxiId", });
+        new java.lang.String[] { "RideId", "TaxiId", "StartX", "StartY", "EndX", "EndY", "District", "Battery", });
     internal_static_com_example_taxis_ElectionResponse_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_com_example_taxis_ElectionResponse_fieldAccessorTable = new
