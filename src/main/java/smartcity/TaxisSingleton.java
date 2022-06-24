@@ -16,6 +16,9 @@ public class TaxisSingleton {
     private volatile int rides;
     private volatile double km;
 
+    // thread locking
+    // TODO: THREAD LOACKING CON WAIT E NOTIFY PER GESTIONE EXIT
+
     private static TaxisSingleton instance;
 
     // Constructor
@@ -23,7 +26,6 @@ public class TaxisSingleton {
         taxiList = new ArrayList<Taxi>();
         pollutionMeasurementList = new ArrayList<Measurement>();
         currentTaxi = new Taxi();
-
     }
 
     // Singleton
@@ -81,5 +83,26 @@ public class TaxisSingleton {
                 return t.getCoordinate();
             }
         }
+    }
+
+    public void updateTaxiById(int taxiId, int battery, Coordinate coordinate){
+        synchronized (taxiList){
+            Taxi t = taxiList.stream()
+                    .filter(a -> a.getId() == taxiId)
+                    .findAny()
+                    .orElse(null);
+            if( t != null){
+                t.setBatteryLevel(battery);
+                t.setCoordinate(coordinate);
+            }
+        }
+    }
+
+    public void addKm(int km){
+        this.km += km;
+    }
+
+    public void addRide(){
+        rides++;
     }
 }

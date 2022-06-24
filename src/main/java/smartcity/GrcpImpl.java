@@ -17,6 +17,7 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
     }
 
 
+    // RPC
 
     @Override
     public void welcome(GrcpOuterClass.WelcomeRequest request, StreamObserver<GrcpOuterClass.WelcomeResponse> responseObserver) {
@@ -52,9 +53,6 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
     public void election(GrcpOuterClass.ElectionRequest request, StreamObserver<GrcpOuterClass.ElectionResponse> responseObserver) {
         System.out.println("Nuova elezione dal taxi: " + request.getTaxiId() +  " per la corsa: " + request.getRideId());
 
-
-
-        // TODO: rispondere con OK o NO in base ai parametri
 
         /*
             CRITERI IN ORDINE DI RILEVANZA:
@@ -100,7 +98,7 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
                                     .newBuilder()
                                     .setRideId(request.getRideId())
                                     .setTaxiId(request.getTaxiId())
-                                    .setResult("Ok")
+                                    .setResult("OK")
                                     .build();
                         }
 
@@ -155,5 +153,23 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public void updateDroneInfo(GrcpOuterClass.UpdateTaxiInfoRequest request, StreamObserver<GrcpOuterClass.UpdateTaxiInfoResponse> responseObserver) {
+        int x = request.getX();
+        int y = request.getY();
+        Coordinate newTaxiCoordinate = new Coordinate(x, y);
+
+        TaxisSingleton.getInstance().updateTaxiById(request.getId(),request.getBattery(),newTaxiCoordinate);
+
+        GrcpOuterClass.UpdateTaxiInfoResponse response = GrcpOuterClass.UpdateTaxiInfoResponse
+                .newBuilder()
+                .setReply("OK")
+                .build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+
     }
 }

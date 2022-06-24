@@ -81,7 +81,7 @@ public class TaxiSubPub extends Thread{
                         Coordinate con = new Coordinate(x2, y2);
                         Ride ride = new Ride(id, rit, con);
 
-                        System.out.println("NUOVA CORSA DISTRETTO: " + ride.getStartPosition().getDistrict());
+                       // System.out.println("NUOVA CORSA DISTRETTO: " + ride.getStartPosition().getDistrict());
 
                         // start election algo
 
@@ -101,13 +101,13 @@ public class TaxiSubPub extends Thread{
                                     TaxisSingleton.getInstance().getCurrentTaxi().setRiding(true);
 
                                     // AVVISO SETA CHE HO PRESO IN CARICA LA RICHIESTA
-
                                     String payload = "Ride ID: " + ride.getId() + " managed by Taxi: " +  TaxisSingleton.getInstance().getCurrentTaxi().getId();
                                     MqttMessage messageRide = new MqttMessage(payload.getBytes());
-
-
                                     messageRide.setQos(qos);
                                     client.publish("seta/smartcity/rides/accomplished/"+ride.getId(),messageRide);
+
+                                    // MANAGED RIDE
+                                    takeRun(ride);
 
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -140,7 +140,7 @@ public class TaxiSubPub extends Thread{
                                     try {
                                         res = stub.election(req);
 
-                                        // TODO: Gestire la risposta
+
                                         if (res.getResult().equals("OK")) {
                                             count++; // incremento del count ad ogni risposta
                                         } else {
@@ -150,16 +150,17 @@ public class TaxiSubPub extends Thread{
                                         }
                                         //System.out.println(res);
                                         if (count == otherTaxiList.size()) {
-                                            System.out.println("GESTISCO IO LA RIDE: " + ride.getId());
+                                            System.out.println("GESTISCO IO LA RIDE: " + ride.getId() + " nel district: " + ride.getStartPosition().getDistrict());
                                             TaxisSingleton.getInstance().getCurrentTaxi().setRiding(true);
 
                                             // AVVISO SETA CHE HO PRESO IN CARICA LA RICHIESTA
-
                                             String payload = "Ride ID: " + ride.getId() + " managed by Taxi: " +  TaxisSingleton.getInstance().getCurrentTaxi().getId();
                                             MqttMessage messageRide = new MqttMessage(payload.getBytes());
                                             messageRide.setQos(qos);
                                             client.publish("seta/smartcity/rides/accomplished/"+ride.getId(),messageRide);
 
+                                            // MANAGED RIDE
+                                            takeRun(ride);
                                         }
                                     } catch (Exception e) {
                                         e.printStackTrace();
@@ -199,6 +200,77 @@ public class TaxiSubPub extends Thread{
             System.out.println("disconnectClient - Errore: " + e);
         }
         System.out.println("MQTT Client disconnected!");
+    }
+
+    public void takeRun(Ride ride) throws InterruptedException, MqttException {
+
+        System.out.println("Sto effettuando la corsa...");
+
+        Thread.sleep(5000);
+
+        /*
+            1. 5 secondi per ride
+            2. Cambio i miei dati
+                2.1 1% di batteria per ogni chilometro
+            3. RCP per inviare i miei nuovi dati a tutti gli altri taxi
+            4. Mi iscrivo ad un altro topic, quello del mio nuovo distretto
+            5. setRiding a false
+            6. Notify lock
+        */
+
+        // ride info
+        int km = (int) Math.round(ride.getDistance());
+        System.out.println("Km percorsi: " + km);
+
+        // set new data taxi
+        int newBatteryLevel = TaxisSingleton.getInstance().getCurrentTaxi().getBatteryLevel() - 1*km;
+        Coordinate newCordinate = new Coordinate(ride.getEndPosition().getX(), ride.getEndPosition().getY());
+
+        TaxisSingleton.getInstance().getCurrentTaxi().setBatteryLevel(newBatteryLevel);
+        TaxisSingleton.getInstance().getCurrentTaxi().setCoordinate(newCordinate);
+        TaxisSingleton.getInstance().addKm(km); // aggiorno il numero di km percorsi
+        TaxisSingleton.getInstance().addRide(); // aggiorno count delle ride
+
+        // send my new info to all other taxi
+        ArrayList<Taxi> otherTaxiList = TaxisSingleton.getInstance().getTaxiList();
+        for (Taxi t : otherTaxiList) {
+            final ManagedChannel channel = ManagedChannelBuilder
+                    .forTarget(t.getServerAddress() + ":" + t.getPort())
+                    .usePlaintext()
+                    .build();
+
+            GrcpGrpc.GrcpBlockingStub stub = GrcpGrpc.newBlockingStub(channel);
+
+            GrcpOuterClass.UpdateTaxiInfoRequest req = GrcpOuterClass.UpdateTaxiInfoRequest.newBuilder()
+                    .setBattery(newBatteryLevel)
+                    .setX(newCordinate.getX())
+                    .setY(newCordinate.getY())
+                    .setId(TaxisSingleton.getInstance().getCurrentTaxi().getId())
+                    .build();
+
+            GrcpOuterClass.UpdateTaxiInfoResponse res;
+            try {
+                res = stub.updateDroneInfo(req);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        changeDistrict(ride.getEndPosition().getDistrict());
+        TaxisSingleton.getInstance().getCurrentTaxi().setRiding(false);
+
+        // Avviso SETA che mi sono liberato
+        String payload = "Taxi ID: " + TaxisSingleton.getInstance().getCurrentTaxi().getId() + " now is FREE ";
+        MqttMessage messageRide = new MqttMessage(payload.getBytes());
+        messageRide.setQos(2);
+
+        client.publish("seta/smartcity/taxis/free/"+TaxisSingleton.getInstance().getCurrentTaxi().getId(),messageRide);
+
+        // TODO: lock sul riding obj
+
+
+        System.out.println("Ho finito la corsa...");
+
     }
 
 }

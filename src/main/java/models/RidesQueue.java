@@ -16,14 +16,12 @@ public class RidesQueue {
     // fields
     private ArrayList<Ride> allRides;
     private ArrayList<Ride> pendingRides;
-    private ArrayList<Ride> noAccomplishedRides;
 
 
     private static RidesQueue instance;
     private RidesQueue(){
         allRides = new ArrayList<Ride>();
         pendingRides = new ArrayList<Ride>();
-        noAccomplishedRides = new ArrayList<Ride>();
     }
 
     // singleton
@@ -77,21 +75,6 @@ public class RidesQueue {
 
     }
 
-    // add no accomplished
-    public synchronized boolean addNoAccomplishedRides(Ride r){
-
-        Boolean isInList = isInList(r.getId());
-        if(isInList){
-            return false;
-        } else {
-            noAccomplishedRides.add(r);
-            this.notify();
-            return true;
-        }
-
-
-    }
-
     // remove
     public synchronized void remove(int id){
         for (Ride r: allRides)
@@ -109,14 +92,25 @@ public class RidesQueue {
         return pendingRides;
     }
 
-    // get no accomplished
-    public ArrayList<Ride> getNoAccomplishedRides() {
-        return noAccomplishedRides;
-    }
-
+    // remove pending
     public synchronized void removePendingRides(int rideID){
         pendingRides.removeIf((ride -> ride.getId() == rideID));
     }
 
+    // take ride from queue
+    public Ride take(){
+
+        Ride r;
+
+        if(pendingRides.size()>0){
+            r = pendingRides.get(0);
+            pendingRides.remove(0);
+        }else{
+            return null;
+        }
+
+        return r;
+
+    }
 
 }

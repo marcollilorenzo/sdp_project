@@ -15,7 +15,7 @@ public class SetaSubscriber extends Thread{
 
     public SetaSubscriber() {
         topics.add("seta/smartcity/rides/accomplished/#");
-        topics.add("seta/smartcity/rides/unaccomplished/#");
+        topics.add("seta/smartcity/taxis/free/#");
     }
 
     @Override
@@ -39,11 +39,15 @@ public class SetaSubscriber extends Thread{
                     // Ride accomplished
                     if (topic.split("/")[3].equals("accomplished")){
 
-                        System.out.println("PENDING: " +  RidesQueue.getInstance().getPendingRides().size());
                         RidesQueue.getInstance().removePendingRides(Integer.parseInt(topic.split("/")[4]));
                         String receivedMessage = new String(message.getPayload());
                         System.out.println(receivedMessage);
-                        System.out.println("PENDING: " +  RidesQueue.getInstance().getPendingRides().size());
+
+                    }else if (topic.split("/")[3].equals("free")){ // when taxi is free
+
+                        // Un taxi si è liberato, posso prenderne una dalla coda
+                        int taxiId = Integer.parseInt(topic.split("/")[4]);
+
 
                     }else{ // other topic
 

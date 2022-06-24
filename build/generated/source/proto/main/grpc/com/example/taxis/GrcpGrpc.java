@@ -89,6 +89,37 @@ public final class GrcpGrpc {
     return getElectionMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest,
+      com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> getUpdateDroneInfoMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "updateDroneInfo",
+      requestType = com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest.class,
+      responseType = com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest,
+      com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> getUpdateDroneInfoMethod() {
+    io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest, com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> getUpdateDroneInfoMethod;
+    if ((getUpdateDroneInfoMethod = GrcpGrpc.getUpdateDroneInfoMethod) == null) {
+      synchronized (GrcpGrpc.class) {
+        if ((getUpdateDroneInfoMethod = GrcpGrpc.getUpdateDroneInfoMethod) == null) {
+          GrcpGrpc.getUpdateDroneInfoMethod = getUpdateDroneInfoMethod =
+              io.grpc.MethodDescriptor.<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest, com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "updateDroneInfo"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new GrcpMethodDescriptorSupplier("updateDroneInfo"))
+              .build();
+        }
+      }
+    }
+    return getUpdateDroneInfoMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -130,6 +161,13 @@ public final class GrcpGrpc {
       asyncUnimplementedUnaryCall(getElectionMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void updateDroneInfo(com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest request,
+        io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getUpdateDroneInfoMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -146,6 +184,13 @@ public final class GrcpGrpc {
                 com.example.taxis.GrcpOuterClass.ElectionRequest,
                 com.example.taxis.GrcpOuterClass.ElectionResponse>(
                   this, METHODID_ELECTION)))
+          .addMethod(
+            getUpdateDroneInfoMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest,
+                com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse>(
+                  this, METHODID_UPDATE_DRONE_INFO)))
           .build();
     }
   }
@@ -183,6 +228,14 @@ public final class GrcpGrpc {
       asyncUnaryCall(
           getChannel().newCall(getElectionMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void updateDroneInfo(com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest request,
+        io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getUpdateDroneInfoMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -215,6 +268,13 @@ public final class GrcpGrpc {
     public com.example.taxis.GrcpOuterClass.ElectionResponse election(com.example.taxis.GrcpOuterClass.ElectionRequest request) {
       return blockingUnaryCall(
           getChannel(), getElectionMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse updateDroneInfo(com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getUpdateDroneInfoMethod(), getCallOptions(), request);
     }
   }
 
@@ -251,10 +311,19 @@ public final class GrcpGrpc {
       return futureUnaryCall(
           getChannel().newCall(getElectionMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> updateDroneInfo(
+        com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getUpdateDroneInfoMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_WELCOME = 0;
   private static final int METHODID_ELECTION = 1;
+  private static final int METHODID_UPDATE_DRONE_INFO = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -280,6 +349,10 @@ public final class GrcpGrpc {
         case METHODID_ELECTION:
           serviceImpl.election((com.example.taxis.GrcpOuterClass.ElectionRequest) request,
               (io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.ElectionResponse>) responseObserver);
+          break;
+        case METHODID_UPDATE_DRONE_INFO:
+          serviceImpl.updateDroneInfo((com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest) request,
+              (io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -344,6 +417,7 @@ public final class GrcpGrpc {
               .setSchemaDescriptor(new GrcpFileDescriptorSupplier())
               .addMethod(getWelcomeMethod())
               .addMethod(getElectionMethod())
+              .addMethod(getUpdateDroneInfoMethod())
               .build();
         }
       }

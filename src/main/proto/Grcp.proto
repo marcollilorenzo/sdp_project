@@ -23,6 +23,7 @@ message ElectionRequest {
   int32 endY = 6;
   int32 district = 7;
   int32 battery = 8;
+  // TODO: Add distance taxi che effettua richiesta e la ride. Non la devo calcolare in GrcoImpl
 }
 
 message ElectionResponse {
@@ -31,7 +32,19 @@ message ElectionResponse {
   string result = 3; // OK - NO
 }
 
+message UpdateTaxiInfoRequest {
+  int32 id = 1;
+  int32 x = 4;
+  int32 y = 5;
+  int32 battery = 6;
+}
+
+message UpdateTaxiInfoResponse {
+  string reply = 1;
+}
+
 service Grcp {
   rpc welcome(WelcomeRequest) returns (WelcomeResponse);
   rpc election(ElectionRequest) returns (ElectionResponse);
+  rpc updateDroneInfo(UpdateTaxiInfoRequest) returns (UpdateTaxiInfoResponse);
 }
