@@ -1459,10 +1459,6 @@ public final class GrcpOuterClass {
     int getBattery();
 
     /**
-     * <pre>
-     * TODO: Add distance taxi che effettua richiesta e la ride. Non la devo calcolare in GrcoImpl
-     * </pre>
-     *
      * <code>double distance = 9;</code>
      * @return The distance.
      */
@@ -1673,10 +1669,6 @@ public final class GrcpOuterClass {
     public static final int DISTANCE_FIELD_NUMBER = 9;
     private double distance_;
     /**
-     * <pre>
-     * TODO: Add distance taxi che effettua richiesta e la ride. Non la devo calcolare in GrcoImpl
-     * </pre>
-     *
      * <code>double distance = 9;</code>
      * @return The distance.
      */
@@ -2366,10 +2358,6 @@ public final class GrcpOuterClass {
 
       private double distance_ ;
       /**
-       * <pre>
-       * TODO: Add distance taxi che effettua richiesta e la ride. Non la devo calcolare in GrcoImpl
-       * </pre>
-       *
        * <code>double distance = 9;</code>
        * @return The distance.
        */
@@ -2377,10 +2365,6 @@ public final class GrcpOuterClass {
         return distance_;
       }
       /**
-       * <pre>
-       * TODO: Add distance taxi che effettua richiesta e la ride. Non la devo calcolare in GrcoImpl
-       * </pre>
-       *
        * <code>double distance = 9;</code>
        * @param value The distance to set.
        * @return This builder for chaining.
@@ -2392,10 +2376,6 @@ public final class GrcpOuterClass {
         return this;
       }
       /**
-       * <pre>
-       * TODO: Add distance taxi che effettua richiesta e la ride. Non la devo calcolare in GrcoImpl
-       * </pre>
-       *
        * <code>double distance = 9;</code>
        * @return This builder for chaining.
        */

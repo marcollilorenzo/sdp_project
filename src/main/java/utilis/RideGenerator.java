@@ -79,6 +79,7 @@ public class RideGenerator extends Thread{
                 message.setQos(qos);
 
                 client.publish(topic+district, message);
+                //client.publish(topic+1, message);
                 RidesQueue.getInstance().addPending(ride);
                 System.out.println("NEW RIDE for TOPIC: " + topic+district);
 

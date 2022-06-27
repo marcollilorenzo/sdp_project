@@ -39,14 +39,12 @@ public class Ride {
     }
 
     public double getDistance(){
-        int rooting = (
-                (this.endPosition.getX() - this.startPosition.getX())^2
-                        +
-                (this.endPosition.getY() - this.startPosition.getY())^2
-        );
 
-        double distance = Math.sqrt(rooting);
-        return distance;
+
+        return Math.sqrt(
+                Math.pow(this.endPosition.getX() - this.startPosition.getX(), 2) +
+                        Math.pow(this.endPosition.getY() - this.startPosition.getY(), 2));
+
     }
 
     @Override

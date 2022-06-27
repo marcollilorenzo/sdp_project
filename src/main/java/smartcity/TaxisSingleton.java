@@ -16,8 +16,17 @@ public class TaxisSingleton {
     private volatile int rides;
     private volatile double km;
 
+    // status
+    private boolean isRiding = false;
+    private boolean isRecharging = false;
+    private boolean isPartecipant = false;
+
     // thread locking
     // TODO: THREAD LOACKING CON WAIT E NOTIFY PER GESTIONE EXIT
+    private Object chargeBatteryLock = new Object();
+    private Object deliveryInProgressLock = new Object();
+    private Object participantElectionLock = new Object();
+
 
     private static TaxisSingleton instance;
 
@@ -104,5 +113,51 @@ public class TaxisSingleton {
 
     public void addRide(){
         rides++;
+    }
+
+    public Object getChargeBatteryLock() {
+        return chargeBatteryLock;
+    }
+
+    public void setChargeBatteryLock(Object chargeBatteryLock) {
+        this.chargeBatteryLock = chargeBatteryLock;
+    }
+
+    public Object getDeliveryInProgressLock() {
+        return deliveryInProgressLock;
+    }
+
+    public void setDeliveryInProgressLock(Object deliveryInProgressLock) {
+        this.deliveryInProgressLock = deliveryInProgressLock;
+    }
+
+    public Object getParticipantElectionLock() {
+        return participantElectionLock;
+    }
+
+    public void setParticipantElectionLock(Object participantElectionLock) {
+        this.participantElectionLock = participantElectionLock;
+    }
+
+    public boolean isRiding() {
+        return isRiding;
+    }
+    public void setRiding(boolean riding) {
+        isRiding = riding;
+    }
+
+    public boolean isRecharging() {
+        return isRecharging;
+    }
+    public void setRecharging(boolean recharging) {
+        isRecharging = recharging;
+    }
+
+    public boolean isPartecipant() {
+        return isPartecipant;
+    }
+
+    public void setPartecipant(boolean partecipant) {
+        isPartecipant = partecipant;
     }
 }

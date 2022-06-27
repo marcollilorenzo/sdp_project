@@ -8,12 +8,11 @@ import models.Taxi;
 public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
 
     public double getDistanceFromCoordinate(Coordinate start, Coordinate end){
-        int rooting = (
-                (end.getX() - start.getX())^2 + (end.getY() - start.getY())^2
-        );
 
-        double distance = Math.sqrt(rooting);
-        return distance;
+
+        return Math.sqrt(
+                Math.pow(end.getX() - start.getX(), 2) +
+                        Math.pow(end.getY() - start.getY(), 2));
     }
 
 
@@ -65,18 +64,27 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
 
         GrcpOuterClass.ElectionResponse response;
 
+        System.out.println("DISTRETTO RICHIESTA: " + request.getDistrict());
+        System.out.println("DISTRETTO DEL MIO TAXI: " + TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate().getDistrict());
+
         if(request.getDistrict() == TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate().getDistrict()) { // ok, è il mio distretto, INIZIO CONTROLLI
 
+            System.out.println("ELEZIONE MIO DISTRETTO");
 
-            if (!TaxisSingleton.getInstance().getCurrentTaxi().isRiding() && !TaxisSingleton.getInstance().getCurrentTaxi().isRecharging()) { // non sono impegnato in un'altra corsa o mi sto caricando
+            if (!TaxisSingleton.getInstance().isRiding() && !TaxisSingleton.getInstance().isRecharging()) { // non sono impegnato in un'altra corsa o mi sto caricando
+
+                System.out.println("POSSO PARTECIPARE ALL'ELEZIONE");
 
                 Coordinate startPosition = new Coordinate(request.getStartX(), request.getStartY());
                 Coordinate taxiPosition = TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate();
 
-                Coordinate positionOfTaxiRequest = TaxisSingleton.getInstance().getPositionByTaxiId(request.getTaxiId());
+                //Coordinate positionOfTaxiRequest = TaxisSingleton.getInstance().getPositionByTaxiId(request.getTaxiId());
 
                 double myDistance = getDistanceFromCoordinate(startPosition, taxiPosition);
-                double taxiRequestDistance = getDistanceFromCoordinate(startPosition, positionOfTaxiRequest);
+                double taxiRequestDistance = request.getDistance();
+
+                System.out.println("Distance TAXi request: " + taxiRequestDistance);
+                System.out.println("Distance My Taxi:" + myDistance);
 
 
                 if (myDistance == taxiRequestDistance) { // Se distanza è uguale vado avanti con i controlli
@@ -86,35 +94,35 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
 
                     if (myBattery == taxiRequestBattery) { // se livello batteria è uguale vado avanti con i controlli
 
-                        if (TaxisSingleton.getInstance().getCurrentTaxi().getId() < request.getTaxiId()) { // ho ID più piccolo, invio NO
-                            response = GrcpOuterClass.ElectionResponse
-                                    .newBuilder()
-                                    .setRideId(request.getRideId())
-                                    .setTaxiId(request.getTaxiId())
-                                    .setResult("NO")
-                                    .build();
-                        } else { // ho ID più grande, invio OK
+                        if (TaxisSingleton.getInstance().getCurrentTaxi().getId() < request.getTaxiId()) { // ho ID più piccolo, invio OK
                             response = GrcpOuterClass.ElectionResponse
                                     .newBuilder()
                                     .setRideId(request.getRideId())
                                     .setTaxiId(request.getTaxiId())
                                     .setResult("OK")
                                     .build();
+                        } else { // ho ID più grande, invio NO
+                            response = GrcpOuterClass.ElectionResponse
+                                    .newBuilder()
+                                    .setRideId(request.getRideId())
+                                    .setTaxiId(request.getTaxiId())
+                                    .setResult("NO")
+                                    .build();
                         }
 
-                    } else if (myBattery < taxiRequestBattery) { // Se la mia batteria è minore invio NO
-                        response = GrcpOuterClass.ElectionResponse
-                                .newBuilder()
-                                .setRideId(request.getRideId())
-                                .setTaxiId(request.getTaxiId())
-                                .setResult("NO")
-                                .build();
-                    } else { // Se la mia batteria è maggiore invio OK
+                    } else if (myBattery < taxiRequestBattery) { // Se la mia batteria è minore invio OK
                         response = GrcpOuterClass.ElectionResponse
                                 .newBuilder()
                                 .setRideId(request.getRideId())
                                 .setTaxiId(request.getTaxiId())
                                 .setResult("OK")
+                                .build();
+                    } else { // Se la mia batteria è maggiore invio NO
+                        response = GrcpOuterClass.ElectionResponse
+                                .newBuilder()
+                                .setRideId(request.getRideId())
+                                .setTaxiId(request.getTaxiId())
+                                .setResult("NO")
                                 .build();
                     }
 
@@ -143,6 +151,7 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
                         .build();
             }
         }else{ // non è il mio distretto ti invio OK
+            System.out.println("NON E? IL MIO DISTRETTO");
             response = GrcpOuterClass.ElectionResponse
                     .newBuilder()
                     .setRideId(request.getRideId())
@@ -150,6 +159,7 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
                     .setResult("OK")
                     .build();
         }
+
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();

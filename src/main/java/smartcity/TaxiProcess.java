@@ -30,14 +30,13 @@ public class TaxiProcess {
 
         initTaxi(); // register taxi to list and start to acquire statistic from pollution sensor
         manageInput(); // manage keyboard input for quit the taxis
-        checkBattery(); // check battery
 
     }
 
-    public static void initTaxi(){
+    public static void initTaxi() {
         // Create random info
-        int taxiId = (int)Math.floor(Math.random()*(1000-1+1)+1);
-        int taxiPort = (int)Math.floor(Math.random()*(3000-1000+1)+1000);
+        int taxiId = (int) Math.floor(Math.random() * (1000 - 1 + 1) + 1);
+        int taxiPort = (int) Math.floor(Math.random() * (3000 - 1000 + 1) + 1000);
         String serverAddressToSend = "localhost";
 
         // Variable for REST call
@@ -56,37 +55,36 @@ public class TaxiProcess {
             result = webResource.type("application/json").post(ClientResponse.class, input);
             response = result.getEntity(JSONArray.class);
 
-            if (result.getStatus() == 200){
+            if (result.getStatus() == 200) {
 
                 myID = taxiId;
 
                 // Save on singleton process
-                for (int i = 0; i < response.length() ; i++) {
+                for (int i = 0; i < response.length(); i++) {
                     JSONObject jsonObject = (JSONObject) response.get(i);
                     int id = (int) jsonObject.get("id");
 
-                        int port = (int) jsonObject.get("port");
-                        String serverAddress = (String) jsonObject.get("serverAddress");
+                    int port = (int) jsonObject.get("port");
+                    String serverAddress = (String) jsonObject.get("serverAddress");
 
-                        int x = Integer.parseInt(jsonObject.get("coordinate").toString().substring(5, 6));
-                        int y = Integer.parseInt(jsonObject.get("coordinate").toString().substring(11, 12));
-                        Coordinate coordinate = new Coordinate(x, y);
+                    int x = Integer.parseInt(jsonObject.get("coordinate").toString().substring(5, 6));
+                    int y = Integer.parseInt(jsonObject.get("coordinate").toString().substring(11, 12));
+                    Coordinate coordinate = new Coordinate(x, y);
 
-                        int batteryLevel = (int) jsonObject.get("batteryLevel");
+                    int batteryLevel = (int) jsonObject.get("batteryLevel");
 
-                        Taxi taxi = new Taxi(id, port, serverAddress, batteryLevel, coordinate);
+                    Taxi taxi = new Taxi(id, port, serverAddress, batteryLevel, coordinate);
 
-                        // Se sono io non aggiungo il taxi alla lista ma come taxi corrente
-                        if (taxi.getId() == myID){
-                            System.out.println("MY ID: "+ taxi.getId());
-                            TaxisSingleton.getInstance().setCurrentTaxi(taxi);
-                        }else{
-                            TaxisSingleton.getInstance().addTaxi(taxi);
-                        }
+                    // Se sono io non aggiungo il taxi alla lista ma come taxi corrente
+                    if (taxi.getId() == myID) {
+                        System.out.println("MY ID: " + taxi.getId());
+                        TaxisSingleton.getInstance().setCurrentTaxi(taxi);
+                    } else {
+                        TaxisSingleton.getInstance().addTaxi(taxi);
+                    }
                 }
 
                 System.out.println("THERE ARE " + TaxisSingleton.getInstance().getTaxiList().size() + " OTHER TAXI");
-
 
 
                 // Start to send statistics 📈
@@ -100,12 +98,12 @@ public class TaxiProcess {
             }
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    private static void acquirePollutionStats(){
+    private static void acquirePollutionStats() {
         System.out.println("START TO ACQUIRE POLLUTION STATS");
         AdminMeasurement pollutionBuffer = new AdminMeasurement();
         PM10Simulator pm10Simulator = new PM10Simulator(pollutionBuffer);
@@ -115,19 +113,21 @@ public class TaxiProcess {
 
         // THREAD THAT MANAGE THE MEASURMENT OF POLLUTION SENSOR
         new Thread(() -> {
-            while(true) {
+            while (true) {
 
                 // readAllAndClean wait if not have just 8 measurement
-                measurementList.addAll( pollutionBuffer.readAllAndClean() );
+                measurementList.addAll(pollutionBuffer.readAllAndClean());
 
-                double sum = 0; long timestamp = 0; int measurementId = 0;
-                for(Measurement m : measurementList){
+                double sum = 0;
+                long timestamp = 0;
+                int measurementId = 0;
+                for (Measurement m : measurementList) {
                     sum += m.getValue();
                     timestamp = m.getTimestamp();
                 }
 
                 TaxisSingleton.getInstance().addAverageList(
-                        new Measurement("pm10-"+measurementId++,"PM10",sum/8,timestamp) // compute average
+                        new Measurement("pm10-" + measurementId++, "PM10", sum / 8, timestamp) // compute average
                 );
                 measurementList.clear(); //sum = 0
 
@@ -146,11 +146,11 @@ public class TaxiProcess {
             System.out.println("START GRPC");
 
             //AVVISO TUTTI GLI ALTRI TAXI
-            if (!TaxisSingleton.getInstance().getTaxiList().isEmpty()){
+            if (!TaxisSingleton.getInstance().getTaxiList().isEmpty()) {
                 ArrayList<Taxi> otherTaxiList = TaxisSingleton.getInstance().getTaxiList();
                 System.out.println(otherTaxiList);
-                for (Taxi t : otherTaxiList){
-                    System.out.println("Send Welcome to Taxi ID: "+ t.getId());
+                for (Taxi t : otherTaxiList) {
+                    System.out.println("Send Welcome to Taxi ID: " + t.getId());
                     final ManagedChannel channel = ManagedChannelBuilder
                             .forTarget(t.getServerAddress() + ":" + t.getPort())
                             .usePlaintext()
@@ -176,7 +176,7 @@ public class TaxiProcess {
                     }
                 }
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -184,7 +184,7 @@ public class TaxiProcess {
     private static void taxiBroker() {
 
         Coordinate coordinate = TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate();
-        if(coordinate != null){
+        if (coordinate != null) {
             int myInitDistrict = coordinate.getDistrict();
 
             //get district number
@@ -195,9 +195,9 @@ public class TaxiProcess {
 
     }
 
-    private static void manageInput(){
-        new Thread(()->{ // lambda expression
-            while(true) {
+    private static void manageInput() {
+        new Thread(() -> { // lambda expression
+            while (true) {
                 Scanner scanner = new Scanner(System.in);
                 //System.out.print("⏹ Send quit to stop the drone process...\n");
                 String input = scanner.next();
@@ -214,10 +214,46 @@ public class TaxiProcess {
 
     private static void exitFromNetwork() throws IOException {
 
-        // DISCONETT MQTT
-       TaxiSubPub.disconnect();
+        /*
+            1. Controllo se Taxi è in un'elezione
+            2. Controllo se Taxi sta effettuando una corsa
+            3. Disconettere broker MQTT
+            4. Invio statistiche al Server
+            5. Stop Server GRPC
+            6. Eliminazione dal Server
+         */
 
-       // DISCONNECT GRPC
+        // 1. Controllo se taxi è già in un'elezione
+        synchronized (TaxisSingleton.getInstance().getParticipantElectionLock()){
+            while(TaxisSingleton.getInstance().isPartecipant()){
+                try {
+                    System.out.println("Sono in un elezione, aspetto di finirla e poi esco");
+                    TaxisSingleton.getInstance().getParticipantElectionLock().wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // 2. Controllo se Taxi sta effettuando una corsa
+        synchronized (TaxisSingleton.getInstance().getDeliveryInProgressLock()){
+            while(TaxisSingleton.getInstance().isRiding()){
+                try {
+                    System.out.println("Sto consegnando, non posso uscire");
+                    TaxisSingleton.getInstance().getDeliveryInProgressLock().wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // 3. Disconettere broker MQTT
+        TaxiSubPub.disconnect();
+
+        // 4. Invio statistiche al Server
+        // TODO: INNVIO STATISTICHE SERVER
+
+        // 5. Stop Server GRPC
         try {
             serverGrcp.shutdownNow();
             System.out.println("GRCP stop!");
@@ -225,7 +261,7 @@ public class TaxiProcess {
             System.out.println("Error GRCP stop: " + e);
         }
 
-        // COMUNICATE EXIT TO SERVER REST
+        // 6. Eliminazione dal Server
         int id = TaxisSingleton.getInstance().getCurrentTaxi().getId();
         try {
             Client client = Client.create();
@@ -242,14 +278,6 @@ public class TaxiProcess {
             e.printStackTrace();
         }
 
-    }
-
-    private static void checkBattery(){
 
     }
-
-
-
-
-
 }

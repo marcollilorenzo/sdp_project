@@ -4,6 +4,7 @@ import models.Coordinate;
 import models.Ride;
 import models.RidesQueue;
 import org.eclipse.paho.client.mqttv3.*;
+import smartcity.TaxisSingleton;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class SetaSubscriber extends Thread{
             client.connect(connOpts);
             client.setCallback(new MqttCallback() {
 
-                public void messageArrived(String topic, MqttMessage message) throws IOException {
+                public void messageArrived(String topic, MqttMessage message) throws IOException, MqttException {
                     // Ride accomplished
                     if (topic.split("/")[3].equals("accomplished")){
 
@@ -47,9 +48,13 @@ public class SetaSubscriber extends Thread{
 
                         // Un taxi si è liberato, posso prendere una ride dalla coda
                         int taxiId = Integer.parseInt(topic.split("/")[4]);
-                        System.out.println("NOW TAXI: " + taxiId + "IS FREE");
+                        String receivedMessage = new String(message.getPayload());
+                        System.out.println(receivedMessage);
 
-                        Ride ride = RidesQueue.getInstance().take();
+
+
+
+
 
 
 

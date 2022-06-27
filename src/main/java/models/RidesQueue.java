@@ -113,4 +113,26 @@ public class RidesQueue {
 
     }
 
+    // take ride from queue BY DISTRICT
+    public Ride takeByDistict(int district){
+
+        Ride r = null;
+
+
+
+        if(pendingRides.size()>0){
+            for (Ride ride: pendingRides) {
+                if(ride.getStartPosition().getDistrict() == district){
+
+                    pendingRides.remove(ride);
+                    r = ride;
+                }
+            }
+        }else{
+            return null;
+        }
+        return r;
+
+    }
+
 }

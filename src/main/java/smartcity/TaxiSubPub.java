@@ -23,6 +23,7 @@ public class TaxiSubPub extends Thread{
     public TaxiSubPub(int district){
         this.district = district;
         this.topic = "seta/smartcity/rides/district"+district;
+        //this.topic = "seta/smartcity/rides/district"+1;
     }
 
     public int getDistrict() {
@@ -86,9 +87,9 @@ public class TaxiSubPub extends Thread{
                         // start election algo
 
                         // se il taxi sta ricaricando o è già occupato non fa nulla
-                        if (!TaxisSingleton.getInstance().getCurrentTaxi().isRiding() && !TaxisSingleton.getInstance().getCurrentTaxi().isRecharging()){
+                        if (!TaxisSingleton.getInstance().isRiding() && !TaxisSingleton.getInstance().isRecharging()){
 
-                            TaxisSingleton.getInstance().getCurrentTaxi().setPartecipant(true); // Set taxi to partecipant
+                            TaxisSingleton.getInstance().setPartecipant(true); // Set taxi to partecipant
                             count = 0; // azzero il count delle risposte
 
                             ArrayList<Taxi> otherTaxiList = TaxisSingleton.getInstance().getTaxiList();
@@ -98,7 +99,7 @@ public class TaxiSubPub extends Thread{
                                 try {
 
                                     System.out.println("GESTISCO IO LA RIDE: " + ride.getId());
-                                    TaxisSingleton.getInstance().getCurrentTaxi().setRiding(true);
+                                    TaxisSingleton.getInstance().setRiding(true);
 
                                     // AVVISO SETA CHE HO PRESO IN CARICA LA RICHIESTA
                                     String payload = "Ride ID: " + ride.getId() + " managed by Taxi: " +  TaxisSingleton.getInstance().getCurrentTaxi().getId();
@@ -122,6 +123,8 @@ public class TaxiSubPub extends Thread{
                                             .usePlaintext()
                                             .build();
 
+                                    double distance = getDistanceFromCoordinate(t.getCoordinate(),ride.getStartPosition());
+
                                     GrcpGrpc.GrcpBlockingStub stub = GrcpGrpc.newBlockingStub(channel);
 
                                     GrcpOuterClass.ElectionRequest req = GrcpOuterClass.ElectionRequest.newBuilder()
@@ -129,11 +132,12 @@ public class TaxiSubPub extends Thread{
                                             .setRideId(ride.getId())
                                             .setBattery(TaxisSingleton.getInstance().getCurrentTaxi().getBatteryLevel())
                                             .setDistrict(TaxisSingleton.getInstance().getCurrentTaxi()
-                                                    .getCoordinate().getX())
+                                                    .getCoordinate().getDistrict())
                                             .setStartX(ride.getStartPosition().getX())
                                             .setStartY(ride.getStartPosition().getY())
                                             .setEndX(ride.getEndPosition().getX())
                                             .setEndY(ride.getEndPosition().getY())
+                                            .setDistance(distance)
                                             .build();
 
                                     GrcpOuterClass.ElectionResponse res;
@@ -144,14 +148,22 @@ public class TaxiSubPub extends Thread{
                                         if (res.getResult().equals("OK")) {
                                             count++; // incremento del count ad ogni risposta
                                         } else {
-                                            TaxisSingleton.getInstance().getCurrentTaxi().setPartecipant(false);
 
-                                            break; // Non vincerò sicuramente io l'elezione, termino ???
+                                            synchronized (TaxisSingleton.getInstance().getParticipantElectionLock()) {
+                                                TaxisSingleton.getInstance().setPartecipant(false);
+                                                TaxisSingleton.getInstance().getParticipantElectionLock().notify();
+                                            }
+
+                                            System.out.println("NON GESTISCO IO LA RIDE: " + ride.getId() + " nel district: " + ride.getStartPosition().getDistrict());
+
+                                            break; // Non vincerò sicuramente io l'elezione, termino
                                         }
                                         //System.out.println(res);
                                         if (count == otherTaxiList.size()) {
+                                            System.out.println("COUNT OK: "+ count);
+                                            System.out.println("DIMENSIONE LISTA: "+ otherTaxiList.size());
                                             System.out.println("GESTISCO IO LA RIDE: " + ride.getId() + " nel district: " + ride.getStartPosition().getDistrict());
-                                            TaxisSingleton.getInstance().getCurrentTaxi().setRiding(true);
+                                            TaxisSingleton.getInstance().setRiding(true);
 
                                             // AVVISO SETA CHE HO PRESO IN CARICA LA RICHIESTA
                                             String payload = "Ride ID: " + ride.getId() + " managed by Taxi: " +  TaxisSingleton.getInstance().getCurrentTaxi().getId();
@@ -200,6 +212,14 @@ public class TaxiSubPub extends Thread{
             System.out.println("disconnectClient - Errore: " + e);
         }
         System.out.println("MQTT Client disconnected!");
+    }
+
+    public double getDistanceFromCoordinate(Coordinate start, Coordinate end){
+
+
+        return Math.sqrt(
+                Math.pow(end.getX() - start.getX(), 2) +
+                        Math.pow(end.getY() - start.getY(), 2));
     }
 
     public void takeRun(Ride ride) throws InterruptedException, MqttException {
@@ -257,7 +277,8 @@ public class TaxiSubPub extends Thread{
         }
 
         changeDistrict(ride.getEndPosition().getDistrict());
-        TaxisSingleton.getInstance().getCurrentTaxi().setRiding(false);
+
+        // TODO: CHECK BATTERIA
 
         // Avviso SETA che mi sono liberato
         String payload = "Taxi ID: " + TaxisSingleton.getInstance().getCurrentTaxi().getId() + " now is FREE ";
@@ -266,10 +287,21 @@ public class TaxiSubPub extends Thread{
 
         client.publish("seta/smartcity/taxis/free/"+TaxisSingleton.getInstance().getCurrentTaxi().getId(),messageRide);
 
-        // TODO: lock sul riding obj
 
 
         System.out.println("Ho finito la corsa...");
+
+        // Notifico che non sono più in un'elezione con il notify
+        synchronized (TaxisSingleton.getInstance().getParticipantElectionLock()) {
+            TaxisSingleton.getInstance().setPartecipant(false);
+            TaxisSingleton.getInstance().getParticipantElectionLock().notify();
+        }
+
+        // Notifico che mi sono liberato con il notify
+        synchronized (TaxisSingleton.getInstance().getDeliveryInProgressLock()) {
+            TaxisSingleton.getInstance().setRiding(false);
+            TaxisSingleton.getInstance().getDeliveryInProgressLock().notify();
+        }
 
     }
 
