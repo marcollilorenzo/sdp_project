@@ -103,6 +103,12 @@ public class TaxiSubPub extends Thread {
                                 System.out.println("GESTISCO IO LA RIDE: " + ride.getId());
                                 TaxisSingleton.getInstance().setRiding(true);
 
+                                // Notifico che non sono più in un'elezione con il notify
+                                synchronized (TaxisSingleton.getInstance().getParticipantElectionLock()) {
+                                    TaxisSingleton.getInstance().setPartecipant(false);
+                                    TaxisSingleton.getInstance().getParticipantElectionLock().notify();
+                                }
+
                                 // AVVISO SETA CHE HO PRESO IN CARICA LA RICHIESTA
                                 String payload = "Ride ID: " + ride.getId() + " managed by Taxi: " + TaxisSingleton.getInstance().getCurrentTaxi().getId();
                                 MqttMessage messageRide = new MqttMessage(payload.getBytes());
@@ -165,6 +171,12 @@ public class TaxiSubPub extends Thread {
                                         System.out.println("DIMENSIONE LISTA: " + otherTaxiList.size());
                                         System.out.println("GESTISCO IO LA RIDE: " + ride.getId() + " nel district: " + ride.getStartPosition().getDistrict());
                                         TaxisSingleton.getInstance().setRiding(true);
+
+                                        // Notifico che non sono più in un'elezione con il notify
+                                        synchronized (TaxisSingleton.getInstance().getParticipantElectionLock()) {
+                                            TaxisSingleton.getInstance().setPartecipant(false);
+                                            TaxisSingleton.getInstance().getParticipantElectionLock().notify();
+                                        }
 
                                         // AVVISO SETA CHE HO PRESO IN CARICA LA RICHIESTA
                                         String payload = "Ride ID: " + ride.getId() + " managed by Taxi: " + TaxisSingleton.getInstance().getCurrentTaxi().getId();
@@ -325,11 +337,7 @@ public class TaxiSubPub extends Thread {
                 synchronized (TaxisSingleton.getInstance().getChargeBatteryLock()) {
                     TaxisSingleton.getInstance().getChargeBatteryLock().notifyAll();
                 }
-
-
             }
-
-
         }
 
         TaxisSingleton.getInstance().getCurrentTaxi().setBatteryLevel(newBatteryLevel);
@@ -375,11 +383,6 @@ public class TaxiSubPub extends Thread {
 
         System.out.println("Ho finito la corsa...");
 
-        // Notifico che non sono più in un'elezione con il notify
-        synchronized (TaxisSingleton.getInstance().getParticipantElectionLock()) {
-            TaxisSingleton.getInstance().setPartecipant(false);
-            TaxisSingleton.getInstance().getParticipantElectionLock().notify();
-        }
 
         // Notifico che mi sono liberato con il notify
         synchronized (TaxisSingleton.getInstance().getDeliveryInProgressLock()) {

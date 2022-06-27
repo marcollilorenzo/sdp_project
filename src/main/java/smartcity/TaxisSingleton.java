@@ -51,46 +51,24 @@ public class TaxisSingleton {
         }
     }
 
-    // Add taxi to list
+    // Taxi things
     public void addTaxi(Taxi t){
         synchronized (taxiList) {
             taxiList.add(t);
             taxiList.notify();
         }
     }
-
     public void removeTaxiById(int taxiID){
         synchronized (taxiList){
             taxiList.removeIf((t -> t.getId() == taxiID));
         }
     }
-
     public Taxi getCurrentTaxi() {
         return currentTaxi;
     }
     public void setCurrentTaxi(Taxi currentTaxi) {
         this.currentTaxi = currentTaxi;
     }
-
-    // pollution
-    public List<Measurement> getPollutionMeasurementList() {
-        synchronized (pollutionMeasurementList) {
-            return pollutionMeasurementList;
-        }
-    }
-    public void addAverageList(Measurement pm10) {
-        synchronized (pollutionMeasurementList){
-            pollutionMeasurementList.add(pm10);
-        }
-    }
-    public void clearPollutionMeasurementList() {
-        synchronized (pollutionMeasurementList) {
-            pollutionMeasurementList.clear();
-        }
-    }
-
-
-    // Get position by Taxi ID
     public Coordinate getPositionByTaxiId(int taxiId){
         synchronized (taxiList){
             Taxi t = taxiList.stream()
@@ -117,6 +95,24 @@ public class TaxisSingleton {
         }
     }
 
+    // pollution
+    public List<Measurement> getPollutionMeasurementList() {
+        synchronized (pollutionMeasurementList) {
+            return pollutionMeasurementList;
+        }
+    }
+    public void addAverageList(Measurement pm10) {
+        synchronized (pollutionMeasurementList){
+            pollutionMeasurementList.add(pm10);
+        }
+    }
+    public void clearPollutionMeasurementList() {
+        synchronized (pollutionMeasurementList) {
+            pollutionMeasurementList.clear();
+        }
+    }
+
+    // statistic
     public void addKm(int km){
         this.km += km;
     }
