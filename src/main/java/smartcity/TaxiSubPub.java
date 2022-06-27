@@ -89,7 +89,7 @@ public class TaxiSubPub extends Thread {
                     // start election algo
 
                     // se il taxi sta ricaricando o è già occupato non fa nulla
-                    if (!TaxisSingleton.getInstance().isRiding() && !TaxisSingleton.getInstance().isRecharging()) {
+                    if (!TaxisSingleton.getInstance().isRiding() && !TaxisSingleton.getInstance().isRecharging() && !TaxisSingleton.getInstance().isPartecipant()) {
 
                         TaxisSingleton.getInstance().setPartecipant(true); // Set taxi to partecipant
                         count = 0; // azzero il count delle risposte
@@ -195,6 +195,8 @@ public class TaxiSubPub extends Thread {
                                 channel.shutdownNow();
                             }
                         }
+                    }else{ // non posso gestire la corsa, o sono in ricarica o sto già facendo un'altra corsa
+                        System.out.println("SONO GIA' OCCUPATO, NON POSSO GESTIRE QUESTA CORSA");
                     }
 
                 }
@@ -262,8 +264,6 @@ public class TaxiSubPub extends Thread {
         int newBatteryLevel = TaxisSingleton.getInstance().getCurrentTaxi().getBatteryLevel() - 1 * km;
         Coordinate newCordinate = new Coordinate(ride.getEndPosition().getX(), ride.getEndPosition().getY());
 
-
-        // TODO: CHECK BATTERIA
         /*
             BATTERIA
             1. Se sotto il 30%, algoritmo di mutua esclusione

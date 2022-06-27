@@ -156,7 +156,7 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
                 }
 
             } else { // sono impegnato in un'altra corsa
-                System.out.println("STO EFFETTUANDO UN'ALTRA RIDE: " + request.getTaxiId());
+                System.out.println("Sono già impegnato");
                 response = GrcpOuterClass.ElectionResponse
                         .newBuilder()
                         .setRideId(request.getRideId())

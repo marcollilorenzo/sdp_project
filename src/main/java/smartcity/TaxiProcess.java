@@ -27,6 +27,15 @@ public class TaxiProcess {
     private static TaxiSubPub threadSubPub;
     private static int myID;
 
+    /*
+    TODO:
+        1. INVIO STATISTICHE AL SERVER
+        2. QUERY CLIENT
+        3. GESTIONE CODE RIDE
+        4.
+     */
+
+
     public static void main(String[] args) throws IOException {
 
         initTaxi(); // register taxi to list and start to acquire statistic from pollution sensor
@@ -242,6 +251,7 @@ public class TaxiProcess {
                 }
 
                 if(input.equals("re")){
+                    System.out.println("RICHIESTA RICARICA");
                     try {
                         if(TaxisSingleton.getInstance().isRiding()){
                             synchronized (TaxisSingleton.getInstance().getDeliveryInProgressLock()) {
@@ -277,7 +287,7 @@ public class TaxiProcess {
                             }
                         }
 
-
+                        System.out.println("RICHIESTA RICARICA PRESA IN CARICO");
                         recharge();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -419,6 +429,10 @@ public class TaxiProcess {
 
             // Non sto più usando la stazione di ricarica
             TaxisSingleton.getInstance().setRecharging(0);
+
+            // aggiorno le mie info
+            TaxisSingleton.getInstance().getCurrentTaxi().setBatteryLevel(100);
+            TaxisSingleton.getInstance().getCurrentTaxi().setCoordinate(newCordinate);
 
             // send my new info to all other taxi
             for (Taxi t : otherTaxiList) {
