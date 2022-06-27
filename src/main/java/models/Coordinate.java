@@ -2,6 +2,7 @@ package models;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
+import java.util.List;
 
 @XmlRootElement
 public class Coordinate {
@@ -48,6 +49,37 @@ public class Coordinate {
                 return 3;
             }
         }
+    }
+
+    public ArrayList<Integer> getStationCoordinateByDistrict() {
+        int dist = getDistrict();
+
+        ArrayList<Integer> coordinateArray = new ArrayList<Integer>();
+
+        if(dist == 1){
+            coordinateArray.add(0);
+            coordinateArray.add(0);
+
+        }
+
+        if(dist == 2){
+            coordinateArray.add(0);
+            coordinateArray.add(9);
+        }
+
+        if(dist == 3){
+            coordinateArray.add(9);
+            coordinateArray.add(0);
+        }
+
+        if(dist == 4){
+            coordinateArray.add(9);
+            coordinateArray.add(9);
+        }
+
+        return coordinateArray;
+
+
     }
 
     @Override

@@ -44,8 +44,20 @@ message UpdateTaxiInfoResponse {
   string reply = 1;
 }
 
+
+message RechargeTaxiRequest {
+    int32 taxiId = 1;
+    int64 timestamp = 2;
+    int32 district = 3;
+}
+
+message RechargeTaxiResponse {
+    string reply = 1; // OK - NO
+}
+
 service Grcp {
   rpc welcome(WelcomeRequest) returns (WelcomeResponse);
   rpc election(ElectionRequest) returns (ElectionResponse);
-  rpc updateDroneInfo(UpdateTaxiInfoRequest) returns (UpdateTaxiInfoResponse);
+  rpc updateTaxiInfo(UpdateTaxiInfoRequest) returns (UpdateTaxiInfoResponse);
+  rpc recharge(RechargeTaxiRequest) returns (RechargeTaxiResponse);
 }

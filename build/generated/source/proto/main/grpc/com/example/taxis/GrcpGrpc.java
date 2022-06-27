@@ -90,34 +90,65 @@ public final class GrcpGrpc {
   }
 
   private static volatile io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest,
-      com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> getUpdateDroneInfoMethod;
+      com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> getUpdateTaxiInfoMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "updateDroneInfo",
+      fullMethodName = SERVICE_NAME + '/' + "updateTaxiInfo",
       requestType = com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest.class,
       responseType = com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest,
-      com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> getUpdateDroneInfoMethod() {
-    io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest, com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> getUpdateDroneInfoMethod;
-    if ((getUpdateDroneInfoMethod = GrcpGrpc.getUpdateDroneInfoMethod) == null) {
+      com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> getUpdateTaxiInfoMethod() {
+    io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest, com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> getUpdateTaxiInfoMethod;
+    if ((getUpdateTaxiInfoMethod = GrcpGrpc.getUpdateTaxiInfoMethod) == null) {
       synchronized (GrcpGrpc.class) {
-        if ((getUpdateDroneInfoMethod = GrcpGrpc.getUpdateDroneInfoMethod) == null) {
-          GrcpGrpc.getUpdateDroneInfoMethod = getUpdateDroneInfoMethod =
+        if ((getUpdateTaxiInfoMethod = GrcpGrpc.getUpdateTaxiInfoMethod) == null) {
+          GrcpGrpc.getUpdateTaxiInfoMethod = getUpdateTaxiInfoMethod =
               io.grpc.MethodDescriptor.<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest, com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "updateDroneInfo"))
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "updateTaxiInfo"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new GrcpMethodDescriptorSupplier("updateDroneInfo"))
+              .setSchemaDescriptor(new GrcpMethodDescriptorSupplier("updateTaxiInfo"))
               .build();
         }
       }
     }
-    return getUpdateDroneInfoMethod;
+    return getUpdateTaxiInfoMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.RechargeTaxiRequest,
+      com.example.taxis.GrcpOuterClass.RechargeTaxiResponse> getRechargeMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "recharge",
+      requestType = com.example.taxis.GrcpOuterClass.RechargeTaxiRequest.class,
+      responseType = com.example.taxis.GrcpOuterClass.RechargeTaxiResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.RechargeTaxiRequest,
+      com.example.taxis.GrcpOuterClass.RechargeTaxiResponse> getRechargeMethod() {
+    io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.RechargeTaxiRequest, com.example.taxis.GrcpOuterClass.RechargeTaxiResponse> getRechargeMethod;
+    if ((getRechargeMethod = GrcpGrpc.getRechargeMethod) == null) {
+      synchronized (GrcpGrpc.class) {
+        if ((getRechargeMethod = GrcpGrpc.getRechargeMethod) == null) {
+          GrcpGrpc.getRechargeMethod = getRechargeMethod =
+              io.grpc.MethodDescriptor.<com.example.taxis.GrcpOuterClass.RechargeTaxiRequest, com.example.taxis.GrcpOuterClass.RechargeTaxiResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "recharge"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.example.taxis.GrcpOuterClass.RechargeTaxiRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.example.taxis.GrcpOuterClass.RechargeTaxiResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new GrcpMethodDescriptorSupplier("recharge"))
+              .build();
+        }
+      }
+    }
+    return getRechargeMethod;
   }
 
   /**
@@ -163,9 +194,16 @@ public final class GrcpGrpc {
 
     /**
      */
-    public void updateDroneInfo(com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest request,
+    public void updateTaxiInfo(com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest request,
         io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(getUpdateDroneInfoMethod(), responseObserver);
+      asyncUnimplementedUnaryCall(getUpdateTaxiInfoMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void recharge(com.example.taxis.GrcpOuterClass.RechargeTaxiRequest request,
+        io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.RechargeTaxiResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getRechargeMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -185,12 +223,19 @@ public final class GrcpGrpc {
                 com.example.taxis.GrcpOuterClass.ElectionResponse>(
                   this, METHODID_ELECTION)))
           .addMethod(
-            getUpdateDroneInfoMethod(),
+            getUpdateTaxiInfoMethod(),
             asyncUnaryCall(
               new MethodHandlers<
                 com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest,
                 com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse>(
-                  this, METHODID_UPDATE_DRONE_INFO)))
+                  this, METHODID_UPDATE_TAXI_INFO)))
+          .addMethod(
+            getRechargeMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.example.taxis.GrcpOuterClass.RechargeTaxiRequest,
+                com.example.taxis.GrcpOuterClass.RechargeTaxiResponse>(
+                  this, METHODID_RECHARGE)))
           .build();
     }
   }
@@ -231,10 +276,18 @@ public final class GrcpGrpc {
 
     /**
      */
-    public void updateDroneInfo(com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest request,
+    public void updateTaxiInfo(com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest request,
         io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(getUpdateDroneInfoMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getUpdateTaxiInfoMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void recharge(com.example.taxis.GrcpOuterClass.RechargeTaxiRequest request,
+        io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.RechargeTaxiResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getRechargeMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -272,9 +325,16 @@ public final class GrcpGrpc {
 
     /**
      */
-    public com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse updateDroneInfo(com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest request) {
+    public com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse updateTaxiInfo(com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest request) {
       return blockingUnaryCall(
-          getChannel(), getUpdateDroneInfoMethod(), getCallOptions(), request);
+          getChannel(), getUpdateTaxiInfoMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.example.taxis.GrcpOuterClass.RechargeTaxiResponse recharge(com.example.taxis.GrcpOuterClass.RechargeTaxiRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getRechargeMethod(), getCallOptions(), request);
     }
   }
 
@@ -314,16 +374,25 @@ public final class GrcpGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> updateDroneInfo(
+    public com.google.common.util.concurrent.ListenableFuture<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse> updateTaxiInfo(
         com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest request) {
       return futureUnaryCall(
-          getChannel().newCall(getUpdateDroneInfoMethod(), getCallOptions()), request);
+          getChannel().newCall(getUpdateTaxiInfoMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.example.taxis.GrcpOuterClass.RechargeTaxiResponse> recharge(
+        com.example.taxis.GrcpOuterClass.RechargeTaxiRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getRechargeMethod(), getCallOptions()), request);
     }
   }
 
   private static final int METHODID_WELCOME = 0;
   private static final int METHODID_ELECTION = 1;
-  private static final int METHODID_UPDATE_DRONE_INFO = 2;
+  private static final int METHODID_UPDATE_TAXI_INFO = 2;
+  private static final int METHODID_RECHARGE = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -350,9 +419,13 @@ public final class GrcpGrpc {
           serviceImpl.election((com.example.taxis.GrcpOuterClass.ElectionRequest) request,
               (io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.ElectionResponse>) responseObserver);
           break;
-        case METHODID_UPDATE_DRONE_INFO:
-          serviceImpl.updateDroneInfo((com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest) request,
+        case METHODID_UPDATE_TAXI_INFO:
+          serviceImpl.updateTaxiInfo((com.example.taxis.GrcpOuterClass.UpdateTaxiInfoRequest) request,
               (io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.UpdateTaxiInfoResponse>) responseObserver);
+          break;
+        case METHODID_RECHARGE:
+          serviceImpl.recharge((com.example.taxis.GrcpOuterClass.RechargeTaxiRequest) request,
+              (io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.RechargeTaxiResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -417,7 +490,8 @@ public final class GrcpGrpc {
               .setSchemaDescriptor(new GrcpFileDescriptorSupplier())
               .addMethod(getWelcomeMethod())
               .addMethod(getElectionMethod())
-              .addMethod(getUpdateDroneInfoMethod())
+              .addMethod(getUpdateTaxiInfoMethod())
+              .addMethod(getRechargeMethod())
               .build();
         }
       }

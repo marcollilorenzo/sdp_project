@@ -195,6 +195,37 @@ public class TaxiProcess {
 
     }
 
+    private static void sendStatistics(){
+        System.out.println("SEND STATISTICS");
+
+        new Thread(()->{
+            while(true) {
+
+
+                /*
+                    STATISTICHE DA INVIARE
+                    1. Numero di chilometri percorsi
+                    2. Numero di rides prese in carico
+                    3. Lista della media delle misurazioni di inquinamento
+
+                    Ogni statistica deve essere inviata al server con Taxi ID, Timestap, Livello batteria
+                 */
+
+                double km = TaxisSingleton.getInstance().getKm();
+                int numberRides = TaxisSingleton.getInstance().getRides();
+
+
+                // STOP 15 SECONDS
+                try {
+                    Thread.sleep(15000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } // while
+        }).start();
+
+    }
+
     private static void manageInput() {
         new Thread(() -> { // lambda expression
             while (true) {

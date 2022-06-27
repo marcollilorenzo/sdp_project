@@ -9,6 +9,14 @@ com/example/taxis/GrcpOuterClass.java
  com.example.taxis.GrcpOuterClass$ElectionResponse$1
  com.example.taxis.GrcpOuterClass$ElectionResponse$Builder
  com.example.taxis.GrcpOuterClass$ElectionResponseOrBuilder
+ com.example.taxis.GrcpOuterClass$RechargeTaxiRequest
+ com.example.taxis.GrcpOuterClass$RechargeTaxiRequest$1
+ com.example.taxis.GrcpOuterClass$RechargeTaxiRequest$Builder
+ com.example.taxis.GrcpOuterClass$RechargeTaxiRequestOrBuilder
+ com.example.taxis.GrcpOuterClass$RechargeTaxiResponse
+ com.example.taxis.GrcpOuterClass$RechargeTaxiResponse$1
+ com.example.taxis.GrcpOuterClass$RechargeTaxiResponse$Builder
+ com.example.taxis.GrcpOuterClass$RechargeTaxiResponseOrBuilder
  com.example.taxis.GrcpOuterClass$UpdateTaxiInfoRequest
  com.example.taxis.GrcpOuterClass$UpdateTaxiInfoRequest$1
  com.example.taxis.GrcpOuterClass$UpdateTaxiInfoRequest$Builder
@@ -29,10 +37,10 @@ simulators/Simulator.java
  simulators.Simulator
 simulators/PM10Simulator.java
  simulators.PM10Simulator
-services/TaxiAdministrator.java
- services.TaxiAdministrator
-simulators/AdminMeasurement.java
- simulators.AdminMeasurement
+simulators/Measurement.java
+ simulators.Measurement
+smartcity/Seta.java
+ smartcity.Seta
 simulators/Buffer.java
  simulators.Buffer
 client/ClientMenu.java
@@ -51,8 +59,12 @@ com/example/taxis/GrcpGrpc.java
 utilis/SetaSubscriber.java
  utilis.SetaSubscriber
  utilis.SetaSubscriber$1
-models/RidesQueue.java
- models.RidesQueue
+client/ClientAdministrator.java
+ client.ClientAdministrator
+StartServer.java
+ StartServer
+simulators/AdminMeasurement.java
+ simulators.AdminMeasurement
 Grcp.java
  Grcp
  Grcp$1
@@ -64,30 +76,26 @@ Grcp.java
  Grcp$WelcomeResponse$1
  Grcp$WelcomeResponse$Builder
  Grcp$WelcomeResponseOrBuilder
+utilis/RideGenerator.java
+ utilis.RideGenerator
+services/TaxiAdministrator.java
+ services.TaxiAdministrator
 models/Taxis.java
  models.Taxis
-smartcity/Seta.java
- smartcity.Seta
+models/Taxi.java
+ models.Taxi
 models/Ride.java
  models.Ride
 models/Coordinate.java
  models.Coordinate
-simulators/Measurement.java
- simulators.Measurement
-client/ClientAdministrator.java
- client.ClientAdministrator
-models/Taxi.java
- models.Taxi
-StartServer.java
- StartServer
-utilis/RideGenerator.java
- utilis.RideGenerator
+models/RidesQueue.java
+ models.RidesQueue
 smartcity/TaxisSingleton.java
  smartcity.TaxisSingleton
-smartcity/GrcpImpl.java
- smartcity.GrcpImpl
 smartcity/TaxiProcess.java
  smartcity.TaxiProcess
 smartcity/TaxiSubPub.java
  smartcity.TaxiSubPub
  smartcity.TaxiSubPub$1
+smartcity/GrcpImpl.java
+ smartcity.GrcpImpl
