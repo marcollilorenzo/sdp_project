@@ -18,6 +18,7 @@ import simulators.Measurement;
 import simulators.PM10Simulator;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class TaxiProcess {
@@ -239,6 +240,49 @@ public class TaxiProcess {
                         e.printStackTrace();
                     }
                 }
+
+                if(input.equals("re")){
+                    try {
+                        if(TaxisSingleton.getInstance().isRiding()){
+                            synchronized (TaxisSingleton.getInstance().getDeliveryInProgressLock()) {
+                                try {
+                                    System.out.println("Aspetta, sto effettuando una ride");
+                                    TaxisSingleton.getInstance().getDeliveryInProgressLock().wait();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                        if(TaxisSingleton.getInstance().isPartecipant()){
+                            synchronized(TaxisSingleton.getInstance().getParticipantElectionLock()){
+                                try {
+                                    System.out.println("Aspetta, sono in corso di un'elezione");
+                                    TaxisSingleton.getInstance().getParticipantElectionLock().wait();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+
+                        if(TaxisSingleton.getInstance().isRecharging()){
+                            synchronized (TaxisSingleton.getInstance().getChargeBatteryLock()){
+                                try {
+                                    System.out.println("Aspetta, mi sto già caricando");
+                                    TaxisSingleton.getInstance().getChargeBatteryLock().wait();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+
+                        recharge();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             } // while
         }).start();
     }
@@ -307,6 +351,105 @@ public class TaxiProcess {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+
+    }
+
+    private static void recharge() throws InterruptedException {
+
+    int countRecharge;
+        int myDistrict = TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate().getDistrict();
+        TaxisSingleton.getInstance().setRecharging(1);
+
+        Date date = new Date();
+        long timestamp = date.getTime(); // timestamp in ms
+
+
+        // chiamata GRPC
+        ArrayList<Taxi> otherTaxiList = TaxisSingleton.getInstance().getTaxiList();
+        countRecharge = 0;
+
+        for (Taxi t : otherTaxiList) {
+
+            final ManagedChannel channel = ManagedChannelBuilder
+                    .forTarget(t.getServerAddress() + ":" + t.getPort())
+                    .usePlaintext()
+                    .build();
+
+            GrcpGrpc.GrcpBlockingStub stub = GrcpGrpc.newBlockingStub(channel);
+
+            GrcpOuterClass.RechargeTaxiRequest req = GrcpOuterClass.RechargeTaxiRequest.newBuilder()
+                    .setTaxiId(TaxisSingleton.getInstance().getCurrentTaxi().getId())
+                    .setDistrict(myDistrict)
+                    .setTimestamp(timestamp)
+                    .build();
+
+            GrcpOuterClass.RechargeTaxiResponse res;
+
+            try {
+                res = stub.recharge(req);
+                if (res.getReply().equals("OK")) {
+                    countRecharge++;
+                }
+
+            } catch (Exception e) {
+                TaxisSingleton.getInstance().removeTaxiById(t.getId());
+                System.out.println("NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
+            }
+
+            channel.shutdownNow();
+
+        }
+
+        // MI POSSO RICARICARE
+        if (countRecharge == otherTaxiList.size()) ;
+        {
+
+            TaxisSingleton.getInstance().setRecharging(2); // la uso
+
+            System.out.println("MI STO RICARICANDO");
+            Thread.sleep(10000);
+            System.out.println("RICARICA COMPLETATA");
+
+            // Aggiorno livello batteria e posizione
+
+            ArrayList<Integer> newCordinateArray = TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate().getStationCoordinateByDistrict();
+            Coordinate newCordinate = new Coordinate(newCordinateArray.get(0),newCordinateArray.get(1)); // prendo il distretto da dove sono partito per ricaricarmi
+
+            // Non sto più usando la stazione di ricarica
+            TaxisSingleton.getInstance().setRecharging(0);
+
+            // send my new info to all other taxi
+            for (Taxi t : otherTaxiList) {
+                final ManagedChannel channel = ManagedChannelBuilder
+                        .forTarget(t.getServerAddress() + ":" + t.getPort())
+                        .usePlaintext()
+                        .build();
+
+                GrcpGrpc.GrcpBlockingStub stub = GrcpGrpc.newBlockingStub(channel);
+
+                GrcpOuterClass.UpdateTaxiInfoRequest req = GrcpOuterClass.UpdateTaxiInfoRequest.newBuilder()
+                        .setBattery(100)
+                        .setX(newCordinate.getX())
+                        .setY(newCordinate.getY())
+                        .setId(TaxisSingleton.getInstance().getCurrentTaxi().getId())
+                        .build();
+
+                GrcpOuterClass.UpdateTaxiInfoResponse res;
+                try {
+                    res = stub.updateTaxiInfo(req);
+                } catch (Exception e) {
+                    TaxisSingleton.getInstance().removeTaxiById(t.getId());
+                    System.out.println("NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
+                }
+            }
+
+            synchronized (TaxisSingleton.getInstance().getChargeBatteryLock()) {
+                TaxisSingleton.getInstance().getChargeBatteryLock().notifyAll();
+            }
+
+
         }
 
 
