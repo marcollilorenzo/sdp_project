@@ -1,3 +1,45 @@
+services/TaxiAdministrator.java
+ services.TaxiAdministrator
+simulators/Measurement.java
+ simulators.Measurement
+client/ClientMenu.java
+ client.ClientMenu
+com/example/taxis/GrcpGrpc.java
+ com.example.taxis.GrcpGrpc
+ com.example.taxis.GrcpGrpc$1
+ com.example.taxis.GrcpGrpc$GrcpBaseDescriptorSupplier
+ com.example.taxis.GrcpGrpc$GrcpBlockingStub
+ com.example.taxis.GrcpGrpc$GrcpFileDescriptorSupplier
+ com.example.taxis.GrcpGrpc$GrcpFutureStub
+ com.example.taxis.GrcpGrpc$GrcpImplBase
+ com.example.taxis.GrcpGrpc$GrcpMethodDescriptorSupplier
+ com.example.taxis.GrcpGrpc$GrcpStub
+ com.example.taxis.GrcpGrpc$MethodHandlers
+models/RidesQueue.java
+ models.RidesQueue
+client/ClientAdministrator.java
+ client.ClientAdministrator
+models/Taxi.java
+ models.Taxi
+models/Taxis.java
+ models.Taxis
+Grcp.java
+ Grcp
+ Grcp$1
+ Grcp$WelcomeRequest
+ Grcp$WelcomeRequest$1
+ Grcp$WelcomeRequest$Builder
+ Grcp$WelcomeRequestOrBuilder
+ Grcp$WelcomeResponse
+ Grcp$WelcomeResponse$1
+ Grcp$WelcomeResponse$Builder
+ Grcp$WelcomeResponseOrBuilder
+models/Ride.java
+ models.Ride
+StartServer.java
+ StartServer
+simulators/AdminMeasurement.java
+ simulators.AdminMeasurement
 com/example/taxis/GrcpOuterClass.java
  com.example.taxis.GrcpOuterClass
  com.example.taxis.GrcpOuterClass$1
@@ -33,69 +75,33 @@ com/example/taxis/GrcpOuterClass.java
  com.example.taxis.GrcpOuterClass$WelcomeResponse$1
  com.example.taxis.GrcpOuterClass$WelcomeResponse$Builder
  com.example.taxis.GrcpOuterClass$WelcomeResponseOrBuilder
-simulators/Simulator.java
- simulators.Simulator
-simulators/PM10Simulator.java
- simulators.PM10Simulator
-simulators/Measurement.java
- simulators.Measurement
+models/Coordinate.java
+ models.Coordinate
+utilis/RideGenerator.java
+ utilis.RideGenerator
 smartcity/Seta.java
  smartcity.Seta
-simulators/Buffer.java
- simulators.Buffer
-client/ClientMenu.java
- client.ClientMenu
-com/example/taxis/GrcpGrpc.java
- com.example.taxis.GrcpGrpc
- com.example.taxis.GrcpGrpc$1
- com.example.taxis.GrcpGrpc$GrcpBaseDescriptorSupplier
- com.example.taxis.GrcpGrpc$GrcpBlockingStub
- com.example.taxis.GrcpGrpc$GrcpFileDescriptorSupplier
- com.example.taxis.GrcpGrpc$GrcpFutureStub
- com.example.taxis.GrcpGrpc$GrcpImplBase
- com.example.taxis.GrcpGrpc$GrcpMethodDescriptorSupplier
- com.example.taxis.GrcpGrpc$GrcpStub
- com.example.taxis.GrcpGrpc$MethodHandlers
 utilis/SetaSubscriber.java
  utilis.SetaSubscriber
  utilis.SetaSubscriber$1
-client/ClientAdministrator.java
- client.ClientAdministrator
-StartServer.java
- StartServer
-simulators/AdminMeasurement.java
- simulators.AdminMeasurement
-Grcp.java
- Grcp
- Grcp$1
- Grcp$WelcomeRequest
- Grcp$WelcomeRequest$1
- Grcp$WelcomeRequest$Builder
- Grcp$WelcomeRequestOrBuilder
- Grcp$WelcomeResponse
- Grcp$WelcomeResponse$1
- Grcp$WelcomeResponse$Builder
- Grcp$WelcomeResponseOrBuilder
-utilis/RideGenerator.java
- utilis.RideGenerator
-services/TaxiAdministrator.java
- services.TaxiAdministrator
-models/Taxis.java
- models.Taxis
-models/Taxi.java
- models.Taxi
-models/Ride.java
- models.Ride
-models/Coordinate.java
- models.Coordinate
-models/RidesQueue.java
- models.RidesQueue
+simulators/Simulator.java
+ simulators.Simulator
+simulators/Buffer.java
+ simulators.Buffer
 smartcity/TaxisSingleton.java
  smartcity.TaxisSingleton
+smartcity/GrcpImpl.java
+ smartcity.GrcpImpl
 smartcity/TaxiSubPub.java
  smartcity.TaxiSubPub
  smartcity.TaxiSubPub$1
+simulators/PM10Simulator.java
+ simulators.PM10Simulator
+models/Statistic.java
+ models.Statistic
 smartcity/TaxiProcess.java
  smartcity.TaxiProcess
-smartcity/GrcpImpl.java
- smartcity.GrcpImpl
+services/StatAdministrator.java
+ services.StatAdministrator
+models/Statistics.java
+ models.Statistics

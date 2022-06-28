@@ -2,6 +2,7 @@ package smartcity;
 
 import com.example.taxis.GrcpGrpc;
 import com.example.taxis.GrcpOuterClass;
+import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -10,6 +11,7 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import models.Coordinate;
+import models.Statistic;
 import models.Taxi;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
@@ -19,6 +21,7 @@ import simulators.PM10Simulator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class TaxiProcess {
@@ -32,7 +35,7 @@ public class TaxiProcess {
         1. INVIO STATISTICHE AL SERVER
         2. QUERY CLIENT
         3. GESTIONE CODE RIDE
-        4.
+        4. check pagina 6
      */
 
 
@@ -105,6 +108,9 @@ public class TaxiProcess {
 
                 //register topic
                 taxiBroker();
+
+                // send stat to server every 15 second
+                sendStatistics();
             }
 
 
@@ -211,6 +217,11 @@ public class TaxiProcess {
         new Thread(()->{
             while(true) {
 
+                // Variable for REST call
+                String input;
+                ClientResponse result;
+                JSONArray response = null;
+
 
                 /*
                     STATISTICHE DA INVIARE
@@ -223,10 +234,49 @@ public class TaxiProcess {
 
                 double km = TaxisSingleton.getInstance().getKm();
                 int numberRides = TaxisSingleton.getInstance().getRides();
+                Date date = new Date();
+                long taxiTimestamp = date.getTime();
 
+                List<Measurement> measurements = TaxisSingleton.getInstance().getPollutionMeasurementList();
+                float singleAveragePollution = 0;
+
+                for (Measurement m: measurements) { // media pollution della singola statistica
+                    singleAveragePollution += m.getValue();
+                }
 
                 // STOP 15 SECONDS
                 try {
+
+                    Client client = Client.create();
+                    WebResource webResource = client.resource("http://localhost:1337/stat/add");
+
+
+
+                /*    Statistic s = new Statistic(
+                            TaxisSingleton.getInstance().getCurrentTaxi().getId(),
+                            taxiTimestamp,
+                            TaxisSingleton.getInstance().getCurrentTaxi().getBatteryLevel(),
+                            km,
+                            numberRides,
+                            measurements
+                    );
+
+                    input = new Gson().toJson(s); */
+
+                    input = "{\"km\":\"" + km +
+                            "\",\"taxiID\":\"" + TaxisSingleton.getInstance().getCurrentTaxi().getId() +
+                            "\",\"timestamp\":\"" + taxiTimestamp +
+                            "\",\"batteryLevel\":\"" + TaxisSingleton.getInstance().getCurrentTaxi().getBatteryLevel() +
+                            "\",\"ride\":\"" + numberRides +
+                            "\",\"averageListPollution\":\"" + TaxisSingleton.getInstance().getPollutionMeasurementListValue() + "\"}";
+
+                    System.out.println(input);
+
+                    result = webResource.type("application/json").post(ClientResponse.class, input);
+                    System.out.println(result);
+                    //response = result.getEntity(JSONArray.class);
+
+
                     Thread.sleep(15000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

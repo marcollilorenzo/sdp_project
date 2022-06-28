@@ -18,7 +18,7 @@ public class TaxiAdministrator {
     @GET
     @Produces("application/json")
     public String helloServer(){
-        return "{\"message\": \"Welcome to SETA Server\"}";
+        return "{\"message\": \"Welcome to SETA Server TAXI\"}";
     }
 
     @Path("get")

@@ -106,6 +106,17 @@ public class TaxisSingleton {
             pollutionMeasurementList.add(pm10);
         }
     }
+
+    public List<Double> getPollutionMeasurementListValue() {
+        ArrayList<Double> temp = new ArrayList<>();
+        synchronized (pollutionMeasurementList) {
+            for (Measurement m: pollutionMeasurementList) {
+                temp.add(m.getValue());
+            }
+        }
+        return temp;
+    }
+
     public void clearPollutionMeasurementList() {
         synchronized (pollutionMeasurementList) {
             pollutionMeasurementList.clear();
@@ -126,6 +137,8 @@ public class TaxisSingleton {
     public int getRides() {
         return rides;
     }
+
+
 
 
     // lock

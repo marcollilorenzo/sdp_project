@@ -18,10 +18,6 @@ public class Taxi {
     private Coordinate coordinate;
     private List<Taxi> allTaxi;
 
-    // status
-    private boolean isRiding = false;
-    private boolean isRecharging = false;
-    private boolean isPartecipant = false;
 
 
 
@@ -67,26 +63,4 @@ public class Taxi {
         return batteryLevel;
     }
     public void setBatteryLevel(int batteryLevel) { this.batteryLevel = batteryLevel;}
-
-    public boolean isRiding() {
-        return isRiding;
-    }
-    public void setRiding(boolean riding) {
-        isRiding = riding;
-    }
-
-    public boolean isRecharging() {
-        return isRecharging;
-    }
-    public void setRecharging(boolean recharging) {
-        isRecharging = recharging;
-    }
-
-    public boolean isPartecipant() {
-        return isPartecipant;
-    }
-
-    public void setPartecipant(boolean partecipant) {
-        isPartecipant = partecipant;
-    }
 }
