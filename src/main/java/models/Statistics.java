@@ -15,8 +15,6 @@ public class Statistics {
 
     @XmlElement(name="stat")
     private static Statistics instance;
-
-   // @XmlElement(name = "pollution")
     private List<Statistic> statisticsList;
 
     // Constructor
@@ -75,11 +73,11 @@ public class Statistics {
 
             float singleAveragePollution = 0;
 
-            for (Double m: lastStat.getAverageList()) { // media pollution della singola statistica
+          /*  for (Double m: lastStat.getAverageList()) { // media pollution della singola statistica
                 singleAveragePollution += m;
-            }
+            } */
 
-            pollutionAverage += singleAveragePollution/lastStat.getAverageList().size();
+            pollutionAverage += lastStat.getAverageList();
 
         }
 

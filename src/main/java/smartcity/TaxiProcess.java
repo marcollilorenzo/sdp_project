@@ -190,7 +190,10 @@ public class TaxiProcess {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    channel.shutdownNow();
                 }
+
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -252,23 +255,27 @@ public class TaxiProcess {
 
 
 
-                /*    Statistic s = new Statistic(
+                    Statistic s = new Statistic(
                             TaxisSingleton.getInstance().getCurrentTaxi().getId(),
                             taxiTimestamp,
                             TaxisSingleton.getInstance().getCurrentTaxi().getBatteryLevel(),
                             km,
                             numberRides,
-                            measurements
+                            TaxisSingleton.getInstance().getPollutionMeasurementListValue().stream()
+                                    .mapToDouble(a -> a)
+                                    .average().orElse(0)
                     );
 
-                    input = new Gson().toJson(s); */
+                    input = new Gson().toJson(s);
 
-                    input = "{\"km\":\"" + km +
+                  /*  input = "{\"km\":\"" + km +
                             "\",\"taxiID\":\"" + TaxisSingleton.getInstance().getCurrentTaxi().getId() +
                             "\",\"timestamp\":\"" + taxiTimestamp +
                             "\",\"batteryLevel\":\"" + TaxisSingleton.getInstance().getCurrentTaxi().getBatteryLevel() +
                             "\",\"ride\":\"" + numberRides +
-                            "\",\"averageListPollution\":\"" + TaxisSingleton.getInstance().getPollutionMeasurementListValue() + "\"}";
+                            "\",\"averageListPollution\":\"" + TaxisSingleton.getInstance().getPollutionMeasurementListValue().stream()
+                            .mapToDouble(a -> a)
+                            .average().orElse(0) + "\"}"; */
 
                     System.out.println(input);
 

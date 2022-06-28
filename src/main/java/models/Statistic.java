@@ -15,11 +15,11 @@ public class Statistic {
     private long timestamp;
     private int batteryLevel;
     private int ride;
-    private List<Double> averageListPollution;
+    private double averageListPollution;
 
     public Statistic(){}
 
-    public Statistic(int taxiID, long timestamp, int batteryLevel, double km, int ride, List<Double> averageListPollution) {
+    public Statistic(int taxiID, long timestamp, int batteryLevel, double km, int ride, double averageListPollution) {
         this.taxiID=taxiID;
         this.timestamp=timestamp;
         this.batteryLevel = batteryLevel;
@@ -28,10 +28,11 @@ public class Statistic {
         this.averageListPollution = averageListPollution;
     }
 
+
     public double getKm() {
         return km;
     }
-    public void setKm(int km) {
+    public void setKm(double km) {
         this.km = km;
     }
 
@@ -63,11 +64,11 @@ public class Statistic {
         this.ride = ride;
     }
 
-    public List<Double> getAverageList() {
+    public double getAverageListPollution() {
         return averageListPollution;
     }
-    public void setAverageList(ArrayList<Double> averageList) {
-        this.averageListPollution = averageList;
+    public void setAverageListPollution(double averageListPollution) {
+        this.averageListPollution = averageListPollution;
     }
 
     @Override
