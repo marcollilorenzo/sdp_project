@@ -370,6 +370,8 @@ public class TaxiSubPub extends Thread {
                 TaxisSingleton.getInstance().removeTaxiById(t.getId());
                 System.out.println("NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
             }
+
+            channel.shutdownNow();
         }
 
         changeDistrict(ride.getEndPosition().getDistrict());

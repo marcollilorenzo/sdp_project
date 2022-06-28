@@ -54,8 +54,8 @@ public class StatAdministrator {
         }
 
         Gson gson = new Gson();
-        ArrayList<Float> stat = Statistics.getInstance().getLastStatisticsByTaxiId(taxiID,n);
+        ObjectNode stat = Statistics.getInstance().getLastStatisticsByTaxiId(taxiID,n);
         System.out.println(stat);
-        return Response.status(Response.Status.OK).entity(gson.toJson(stat)).build();
+        return Response.status(Response.Status.OK).entity(stat).build();
     }
 }

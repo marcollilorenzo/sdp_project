@@ -1,5 +1,7 @@
 package models;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
 import simulators.Measurement;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,6 +18,8 @@ public class Statistics {
     @XmlElement(name="stat")
     private static Statistics instance;
     private List<Statistic> statisticsList;
+
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     // Constructor
     private Statistics() {
@@ -48,7 +52,7 @@ public class Statistics {
         return statisticsOfTaxi.size();
     }
 
-    public ArrayList<Float> getLastStatisticsByTaxiId(int taxiID, int last){
+    public ObjectNode getLastStatisticsByTaxiId(int taxiID, int last){
         List<Statistic> statistics = getStatisticsList();
         List<Statistic> statisticsOfTaxi = new ArrayList<Statistic>();
         List<Statistic> lastStatisticsOfTaxi = new ArrayList<Statistic>();
@@ -77,7 +81,7 @@ public class Statistics {
                 singleAveragePollution += m;
             } */
 
-            pollutionAverage += lastStat.getAverageList();
+            pollutionAverage += lastStat.getAverageListPollution();
 
         }
 
@@ -87,7 +91,13 @@ public class Statistics {
         result.add(pollutionAverage / lastStatisticsOfTaxi.size());
         result.add(numberRides);
 
-        return result;
+        ObjectNode json = mapper.createObjectNode();
+        json.put("kmAverage", kmAverage / lastStatisticsOfTaxi.size());
+        json.put("batteryAverage", batteryAverage / lastStatisticsOfTaxi.size());
+        json.put("pollutionAverage", pollutionAverage / lastStatisticsOfTaxi.size());
+        json.put("numberRides", numberRides);
+
+        return json;
 
     }
 
