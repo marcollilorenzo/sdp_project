@@ -25,7 +25,6 @@ public class TaxiSubPub extends Thread {
     public TaxiSubPub(int district) {
         this.district = district;
         this.topic = "seta/smartcity/rides/district" + district;
-        //this.topic = "seta/smartcity/rides/district"+1;
     }
 
     public int getDistrict() {
@@ -66,7 +65,7 @@ public class TaxiSubPub extends Thread {
             client = new MqttClient(broker, clientId);
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
-
+            connOpts.setMaxInflight(100);
             client.connect(connOpts);
             client.setCallback(new MqttCallback() {
 
@@ -100,8 +99,8 @@ public class TaxiSubPub extends Thread {
                         if (otherTaxiList.size() == 0) { // GESTISCO IO LA RICHIESTA, SONO DA SOLO
 
                             try {
-                                System.out.println("\n");
-                                System.out.println("GESTISCO IO LA RIDE: " + ride.getId());
+
+                                System.out.println("\n--✅ GESTISCO IO LA RIDE: " + ride.getId()+"--");
                                 TaxisSingleton.getInstance().setRiding(true);
 
                                 // Notifico che non sono più in un'elezione con il notify
@@ -125,7 +124,7 @@ public class TaxiSubPub extends Thread {
                         } else {
 
                             for (Taxi t : otherTaxiList) {
-                                System.out.println("\n");
+                                System.out.println("\nSTART ELECTION");
                                 System.out.println("Send election to Taxi: " + t.getId() + " for Ride: " + ride.getId());
                                 final ManagedChannel channel = ManagedChannelBuilder
                                         .forTarget(t.getServerAddress() + ":" + t.getPort())
@@ -167,9 +166,9 @@ public class TaxiSubPub extends Thread {
                             } // for
 
                             if (count == otherTaxiList.size()) {
+                                System.out.println("--✅ GESTISCO IO LA RIDE: " + ride.getId() + " nel district: " + ride.getStartPosition().getDistrict()+"--");
                                 System.out.println("COUNT OK: " + count);
                                 System.out.println("DIMENSIONE LISTA: " + otherTaxiList.size());
-                                System.out.println("GESTISCO IO LA RIDE: " + ride.getId() + " nel district: " + ride.getStartPosition().getDistrict());
                                 TaxisSingleton.getInstance().setRiding(true);
 
                                 // Notifico che non sono più in un'elezione con il notify
@@ -192,7 +191,7 @@ public class TaxiSubPub extends Thread {
                                     TaxisSingleton.getInstance().setPartecipant(false);
                                     TaxisSingleton.getInstance().getParticipantElectionLock().notify();
                                 }
-                                System.out.println("NON GESTISCO IO LA RIDE: " + ride.getId() + " nel district: " + ride.getStartPosition().getDistrict());
+                                System.out.println("\n❌NON GESTISCO IO LA RIDE: " + ride.getId() + " nel district: " + ride.getStartPosition().getDistrict());
                             }
 
                         }
@@ -385,7 +384,6 @@ public class TaxiSubPub extends Thread {
         client.publish("seta/smartcity/taxis/free/" + TaxisSingleton.getInstance().getCurrentTaxi().getId()+"-"+TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate().getDistrict(), messageRide);
 
         System.out.println("Ho finito la corsa...");
-        System.out.println("\n");
 
 
         // Notifico che mi sono liberato con il notify

@@ -35,6 +35,7 @@ public class RideGenerator extends Thread{
             client = new MqttClient(broker, clientId);
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
+            connOpts.setMaxInflight(100);
 
             // Connect the client
             System.out.println(clientId + " Connecting Broker " + broker);
@@ -47,7 +48,6 @@ public class RideGenerator extends Thread{
         int i = 0;
         // PUBLISH RIDE TO RANDOM TOPIC FROM [1-4]
         while (true){
-
 
             try {
 

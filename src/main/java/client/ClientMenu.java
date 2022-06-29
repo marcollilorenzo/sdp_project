@@ -5,9 +5,12 @@ import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
+import jdk.nashorn.internal.parser.JSONParser;
 import models.Taxi;
 import models.Taxis;
 import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+import org.codehaus.jackson.node.ObjectNode;
+import org.codehaus.jettison.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -38,7 +41,7 @@ public class ClientMenu {
         System.out.println("====================================================================================================================");
         System.out.println("| Options:                                                                                                         |");
         System.out.println("|    1. List of taxis present                                                                                      |");
-        System.out.println("|    2. Stop Client                                                                                                |");
+        System.out.println("|    2. Get last n statistic by a given Taxi                                                                       |");
         System.out.println("====================================================================================================================");
         System.out.print("Select option: ");
     }
@@ -49,9 +52,10 @@ public class ClientMenu {
                 listTaxi();
                 break;
             case 2:
+                averageStatisticByTaxiId();
                 break;
             default:
-                System.out.println("Command not found, try again");
+                System.out.println("Comando non trovato");
         }
     }
 
@@ -88,6 +92,57 @@ public class ClientMenu {
             System.out.println("======================");
             System.out.println();
         }
+
+    }
+
+    private void averageStatisticByTaxiId(){
+        System.out.println("Inserisci ID del Taxi: ");
+        while(!scanner.hasNextInt()) {
+
+            scanner.nextLine();
+            scanner.next();
+        }
+
+        int taxiID = scanner.nextInt();
+
+        System.out.println("Inserisci N (ultime statistiche): ");
+        while(!scanner.hasNextInt()) {
+
+            scanner.nextLine();
+            scanner.next();
+        }
+        int n = scanner.nextInt();
+
+        String getPath = "/stat/taxi/"+taxiID+"/last/"+n;
+        String url = serverAddress + getPath;
+        WebResource webResource = client.resource(url);
+
+        System.out.println(getPath);
+
+        try {
+            response = webResource.type("application/json").get(ClientResponse.class);
+        } catch (ClientHandlerException e) {
+            System.out.println("Server non disponibile");
+            return;
+        }
+
+        int status = response.getStatus();
+        if (status != 200) {
+            if (status == 204) System.out.println("Failed");
+            else System.out.println("Failed : HTTP error code : " + status);
+            return;
+        }
+
+
+
+        String res = response.getEntity(String.class);
+
+        System.out.println(res);
+
+
+
+
+
 
     }
 

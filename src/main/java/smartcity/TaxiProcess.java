@@ -33,7 +33,6 @@ public class TaxiProcess {
     /*
     TODO:
         2. QUERY CLIENT
-        3. GESTIONE CODE RIDE
      */
 
 
@@ -118,7 +117,7 @@ public class TaxiProcess {
     }
 
     private static void acquirePollutionStats() {
-        System.out.println("START TO ACQUIRE POLLUTION STATS");
+        System.out.println("\nSTART TO ACQUIRE POLLUTION STATS");
         AdminMeasurement pollutionBuffer = new AdminMeasurement();
         PM10Simulator pm10Simulator = new PM10Simulator(pollutionBuffer);
         pm10Simulator.start(); // start sensor
@@ -213,7 +212,7 @@ public class TaxiProcess {
     }
 
     private static void sendStatistics(){
-        System.out.println("SEND STATISTICS");
+        System.out.println("\nSEND STATISTICS");
 
         new Thread(()->{
             while(true) {
@@ -275,11 +274,7 @@ public class TaxiProcess {
                             .mapToDouble(a -> a)
                             .average().orElse(0) + "\"}"; */
 
-                    System.out.println(input);
-
                     result = webResource.type("application/json").post(ClientResponse.class, input);
-                    System.out.println(result);
-                    //response = result.getEntity(JSONArray.class);
 
 
                     Thread.sleep(15000);
@@ -306,7 +301,7 @@ public class TaxiProcess {
                 }
 
                 if(input.equals("re")){
-                    System.out.println("RICHIESTA RICARICA");
+                    System.out.println("\n RICHIESTA RICARICA");
                     try {
                         if(TaxisSingleton.getInstance().isRiding()){
                             synchronized (TaxisSingleton.getInstance().getDeliveryInProgressLock()) {
@@ -473,7 +468,7 @@ public class TaxiProcess {
 
             TaxisSingleton.getInstance().setRecharging(2); // la uso
 
-            System.out.println("MI STO RICARICANDO");
+            System.out.println("\n MI STO RICARICANDO");
             Thread.sleep(10000);
             System.out.println("RICARICA COMPLETATA");
 

@@ -68,16 +68,13 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
 
         GrcpOuterClass.ElectionResponse response;
 
-        System.out.println("DISTRETTO RICHIESTA: " + request.getDistrict());
-        System.out.println("DISTRETTO DEL MIO TAXI: " + TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate().getDistrict());
+        System.out.println("Distretto richiesta: " + request.getDistrict() + " -- Mio distretto: " +TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate().getDistrict());
 
         if (request.getDistrict() == TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate().getDistrict()) { // ok, è il mio distretto, INIZIO CONTROLLI
 
-            System.out.println("ELEZIONE MIO DISTRETTO");
+            System.out.println("Elezione per il mio distretto");
 
             if (!TaxisSingleton.getInstance().isRiding() && !TaxisSingleton.getInstance().isRecharging() && TaxisSingleton.getInstance().getIdRidePartecipant() == request.getRideId()) { // non sono impegnato in un'altra corsa o mi sto caricando
-
-                System.out.println("POSSO PARTECIPARE ALL'ELEZIONE");
 
                 Coordinate startPosition = new Coordinate(request.getStartX(), request.getStartY());
                 Coordinate taxiPosition = TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate();
@@ -87,8 +84,6 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
                 double myDistance = getDistanceFromCoordinate(startPosition, taxiPosition);
                 double taxiRequestDistance = request.getDistance();
 
-                System.out.println("Distance Taxi request: " + taxiRequestDistance);
-                System.out.println("Distance My Taxi:" + myDistance);
 
 
                 if (myDistance == taxiRequestDistance) { // Se distanza è uguale vado avanti con i controlli

@@ -1,5 +1,6 @@
-smartcity/GrcpImpl.java
- smartcity.GrcpImpl
+smartcity/TaxiSubPub.java
+ smartcity.TaxiSubPub
+ smartcity.TaxiSubPub$1
 simulators/Buffer.java
  simulators.Buffer
 client/ClientMenu.java
@@ -77,8 +78,8 @@ com/example/taxis/GrcpOuterClass.java
  com.example.taxis.GrcpOuterClass$WelcomeResponseOrBuilder
 simulators/Simulator.java
  simulators.Simulator
-client/ClientAdministrator.java
- client.ClientAdministrator
+smartcity/Seta.java
+ smartcity.Seta
 services/StatAdministrator.java
  services.StatAdministrator
 simulators/PM10Simulator.java
@@ -89,19 +90,18 @@ models/Coordinate.java
  models.Coordinate
 simulators/Measurement.java
  simulators.Measurement
-utilis/RideGenerator.java
- utilis.RideGenerator
+models/RidesQueue.java
+ models.RidesQueue
 services/TaxiAdministrator.java
  services.TaxiAdministrator
-smartcity/Seta.java
- smartcity.Seta
-smartcity/TaxiProcess.java
- smartcity.TaxiProcess
-smartcity/TaxiSubPub.java
- smartcity.TaxiSubPub
- smartcity.TaxiSubPub$1
 utilis/SetaSubscriber.java
  utilis.SetaSubscriber
  utilis.SetaSubscriber$1
-models/RidesQueue.java
- models.RidesQueue
+utilis/RideGenerator.java
+ utilis.RideGenerator
+client/ClientAdministrator.java
+ client.ClientAdministrator
+smartcity/TaxiProcess.java
+ smartcity.TaxiProcess
+smartcity/GrcpImpl.java
+ smartcity.GrcpImpl

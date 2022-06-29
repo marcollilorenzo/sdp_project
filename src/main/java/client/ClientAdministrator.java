@@ -14,14 +14,14 @@ public class ClientAdministrator {
 
             while(!scanner.hasNextInt()) {
                 scanner.nextLine();
-                System.out.println("Enter an integer from 1 to 2");
+                System.out.println("Enter an integer from 1 to 4");
                 menu.printMenu();
                 scanner.next();
             }
 
             select = scanner.nextInt();
             menu.selectOption(select);
-        }while (select != 2);
+        }while (select != 4);
 
         scanner.close();
         System.out.println("Administrator client stopped");
