@@ -349,6 +349,10 @@ public class TaxiProcess {
 
     private static void exitFromNetwork() throws IOException {
 
+        if(TaxisSingleton.getInstance().isQuit()){return;}
+        TaxisSingleton.getInstance().setQuit(true);
+
+
         /*
             1. Controllo se Taxi è in un'elezione
             2. Controllo se Taxi sta effettuando una corsa

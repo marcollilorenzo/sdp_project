@@ -21,6 +21,7 @@ public class TaxisSingleton {
     private boolean isRiding = false;
     private int isRecharging = 0;
     private boolean isPartecipant = false;
+    private boolean isQuit = false;
     private int idRideInProgress;
     private int idRidePartecipant;
 
@@ -28,7 +29,6 @@ public class TaxisSingleton {
     private Object chargeBatteryLock = new Object();
     private Object deliveryInProgressLock = new Object();
     private Object participantElectionLock = new Object();
-
 
     private static TaxisSingleton instance;
 
@@ -206,5 +206,12 @@ public class TaxisSingleton {
     }
     public void setIdRidePartecipant(int idRidePartecipant) {
         this.idRidePartecipant = idRidePartecipant;
+    }
+
+    public boolean isQuit() {
+        return isQuit;
+    }
+    public void setQuit(boolean quit) {
+        isQuit = quit;
     }
 }

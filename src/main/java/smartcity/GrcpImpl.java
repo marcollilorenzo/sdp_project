@@ -72,7 +72,7 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
 
         if (request.getDistrict() == TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate().getDistrict()) { // ok, è il mio distretto, INIZIO CONTROLLI
 
-            System.out.println("Elezione per il mio distretto");
+            System.out.println("Elezione per il mio distretto 🥹");
 
             if (!TaxisSingleton.getInstance().isRiding() && !TaxisSingleton.getInstance().isRecharging() && TaxisSingleton.getInstance().getIdRidePartecipant() == request.getRideId()) { // non sono impegnato in un'altra corsa o mi sto caricando
 

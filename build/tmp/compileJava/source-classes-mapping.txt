@@ -1,6 +1,5 @@
-smartcity/TaxiSubPub.java
- smartcity.TaxiSubPub
- smartcity.TaxiSubPub$1
+client/ClientAdministrator.java
+ client.ClientAdministrator
 simulators/Buffer.java
  simulators.Buffer
 client/ClientMenu.java
@@ -16,8 +15,8 @@ com/example/taxis/GrcpGrpc.java
  com.example.taxis.GrcpGrpc$GrcpMethodDescriptorSupplier
  com.example.taxis.GrcpGrpc$GrcpStub
  com.example.taxis.GrcpGrpc$MethodHandlers
-smartcity/TaxisSingleton.java
- smartcity.TaxisSingleton
+utilis/RideGenerator.java
+ utilis.RideGenerator
 models/Taxi.java
  models.Taxi
 models/Statistics.java
@@ -97,11 +96,12 @@ services/TaxiAdministrator.java
 utilis/SetaSubscriber.java
  utilis.SetaSubscriber
  utilis.SetaSubscriber$1
-utilis/RideGenerator.java
- utilis.RideGenerator
-client/ClientAdministrator.java
- client.ClientAdministrator
+smartcity/TaxisSingleton.java
+ smartcity.TaxisSingleton
 smartcity/TaxiProcess.java
  smartcity.TaxiProcess
+smartcity/TaxiSubPub.java
+ smartcity.TaxiSubPub
+ smartcity.TaxiSubPub$1
 smartcity/GrcpImpl.java
  smartcity.GrcpImpl

@@ -88,7 +88,7 @@ public class TaxiSubPub extends Thread {
                     // start election algo
 
                     // se il taxi sta ricaricando o è già occupato non fa nulla
-                    if (!TaxisSingleton.getInstance().isRiding() && !TaxisSingleton.getInstance().isRecharging() && !TaxisSingleton.getInstance().isPartecipant()) {
+                    if (!TaxisSingleton.getInstance().isRiding() && !TaxisSingleton.getInstance().isRecharging() && !TaxisSingleton.getInstance().isPartecipant() && !TaxisSingleton.getInstance().isQuit()) {
 
                         TaxisSingleton.getInstance().setPartecipant(true); // Set taxi to partecipant
                         TaxisSingleton.getInstance().setIdRidePartecipant(ride.getId());
@@ -243,6 +243,7 @@ public class TaxiSubPub extends Thread {
     public void takeRun(Ride ride) throws InterruptedException, MqttException {
 
         TaxisSingleton.getInstance().setIdRideInProgress(ride.getId());
+
         System.out.println("Sto effettuando la corsa...");
 
         Thread.sleep(5000);
