@@ -65,7 +65,8 @@ public class TaxiSubPub extends Thread {
             client = new MqttClient(broker, clientId);
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
-            connOpts.setMaxInflight(100);
+            connOpts.setMaxInflight(200);
+            connOpts.setAutomaticReconnect(true);
             client.connect(connOpts);
             client.setCallback(new MqttCallback() {
 

@@ -35,6 +35,7 @@ public class StatAdministrator {
         Statistics.getInstance().addStatistic(statistic);
 
         System.out.println("STATISTICA AGGIUNTA");
+        System.out.println(statistic.getTimestamp());
 
         ObjectNode json = mapper.createObjectNode();
         json.put("message", "Added statistic");
@@ -55,6 +56,30 @@ public class StatAdministrator {
 
         Gson gson = new Gson();
         ObjectNode stat = Statistics.getInstance().getLastStatisticsByTaxiId(taxiID,n);
+        System.out.println(gson.toJson(stat));
+        return Response.status(Response.Status.OK).entity(stat).build();
+    }
+
+    @GET
+    @Path("time1/{time1}/time2/{time2}")
+    @Produces("application/json")
+    public Response getStatisticBeetweenTwoTimestamp(@PathParam("time1") long time1, @PathParam("time2") long time2){
+
+        if(Statistics.getInstance().getStatisticsList().size() <= 0){
+            ObjectNode json = mapper.createObjectNode();
+            json.put("message", "There aren't statistics");
+            return Response.status(Response.Status.BAD_REQUEST).entity(json).build();
+        }
+
+        Gson gson = new Gson();
+        ObjectNode stat = Statistics.getInstance().getLastStatisticsBeetweenTimestamp(time1,time2);
+
+        if (stat.size()<=0){
+            ObjectNode json = mapper.createObjectNode();
+            json.put("message", "There aren't statistics");
+            return Response.status(Response.Status.BAD_REQUEST).entity(json).build();
+        }
+
         System.out.println(gson.toJson(stat));
         return Response.status(Response.Status.OK).entity(stat).build();
     }

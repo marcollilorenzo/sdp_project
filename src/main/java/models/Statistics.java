@@ -68,34 +68,50 @@ public class Statistics {
         float kmAverage = 0;
         float batteryAverage = 0;
         float pollutionAverage = 0;
-        float numberRides = 0;
 
         for (Statistic lastStat: lastStatisticsOfTaxi) {
             kmAverage += lastStat.getKm();
             batteryAverage += lastStat.getBatteryLevel();
-            numberRides += lastStat.getRide();
-
-            float singleAveragePollution = 0;
-
-          /*  for (Double m: lastStat.getAverageList()) { // media pollution della singola statistica
-                singleAveragePollution += m;
-            } */
-
             pollutionAverage += lastStat.getAverageListPollution();
-
         }
-
-        ArrayList<Float> result = new ArrayList<>();
-        result.add(kmAverage / lastStatisticsOfTaxi.size());
-        result.add(batteryAverage / lastStatisticsOfTaxi.size());
-        result.add(pollutionAverage / lastStatisticsOfTaxi.size());
-        result.add(numberRides);
 
         ObjectNode json = mapper.createObjectNode();
         json.put("kmAverage", kmAverage / lastStatisticsOfTaxi.size());
         json.put("batteryAverage", batteryAverage / lastStatisticsOfTaxi.size());
         json.put("pollutionAverage", pollutionAverage / lastStatisticsOfTaxi.size());
-        json.put("numberRides", numberRides);
+        json.put("numberRides", lastStatisticsOfTaxi.get(lastStatisticsOfTaxi.size()-1).getRide());
+
+        return json;
+
+    }
+
+    public ObjectNode getLastStatisticsBeetweenTimestamp(long time1, long time2){
+        System.out.println("time1: " + time1);
+        List<Statistic> statistics = getStatisticsList();
+        List<Statistic> statisticsBeetween = getStatisticsList();
+
+
+        for (Statistic stat: statistics) {
+            if (time1 < stat.getTimestamp() && stat.getTimestamp() < time2){
+                statisticsBeetween.add(stat);
+            }
+        }
+
+        float kmAverage = 0;
+        float batteryAverage = 0;
+        float pollutionAverage = 0;
+
+        for (Statistic lastStat: statisticsBeetween) {
+            kmAverage += lastStat.getKm();
+            batteryAverage += lastStat.getBatteryLevel();
+            pollutionAverage += lastStat.getAverageListPollution();
+        }
+
+        ObjectNode json = mapper.createObjectNode();
+        json.put("kmAverage", kmAverage / statisticsBeetween.size());
+        json.put("batteryAverage", batteryAverage / statisticsBeetween.size());
+        json.put("pollutionAverage", pollutionAverage / statisticsBeetween.size());
+        json.put("numberRides", statisticsBeetween.get(statisticsBeetween.size()-1).getRide());
 
         return json;
 

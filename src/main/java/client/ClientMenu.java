@@ -42,6 +42,7 @@ public class ClientMenu {
         System.out.println("| Options:                                                                                                         |");
         System.out.println("|    1. List of taxis present                                                                                      |");
         System.out.println("|    2. Get last n statistic by a given Taxi                                                                       |");
+        System.out.println("|    3. Get statistic beetween two timestamp                                                                       |");
         System.out.println("====================================================================================================================");
         System.out.print("Select option: ");
     }
@@ -54,6 +55,8 @@ public class ClientMenu {
             case 2:
                 averageStatisticByTaxiId();
                 break;
+            case 3:
+                statBeetweenTwoTimestamp();
             default:
                 System.out.println("Comando non trovato");
         }
@@ -144,6 +147,48 @@ public class ClientMenu {
 
 
 
+    }
+
+    private void statBeetweenTwoTimestamp(){
+        System.out.println("Inserisci timestamp 1: ");
+        while(!scanner.hasNextLong()) {
+            scanner.nextLine();
+            scanner.next();
+        }
+
+        double time1 = scanner.nextLong();
+
+        System.out.println("Inserisci timestamp 2: ");
+        while(!scanner.hasNextLong()) {
+            scanner.nextLine();
+            scanner.next();
+        }
+
+        double time2 = scanner.nextLong();
+
+        String getPath = "/stat/time1/"+time1+"/time2/"+time2;
+        String url = serverAddress + getPath;
+        WebResource webResource = client.resource(url);
+
+        System.out.println(getPath);
+
+        try {
+            response = webResource.type("application/json").get(ClientResponse.class);
+        } catch (ClientHandlerException e) {
+            System.out.println("Server non disponibile");
+            return;
+        }
+
+        int status = response.getStatus();
+        if (status != 200) {
+            if (status == 204) System.out.println("Failed");
+            else System.out.println("Failed : HTTP error code : " + status);
+            return;
+        }
+
+        String res = response.getEntity(String.class);
+
+        System.out.println(res);
     }
 
 }
