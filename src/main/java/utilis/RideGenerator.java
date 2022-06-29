@@ -28,8 +28,11 @@ public class RideGenerator extends Thread{
         super.run();
 
         int id;
-        Coordinate startCoordinate;
-        Coordinate destinationCoordinate;
+        Coordinate startCoordinateRide1;
+        Coordinate destinationCoordinateRide1;
+
+        Coordinate startCoordinateRide2;
+        Coordinate destinationCoordinateRide2;
 
         try {
             client = new MqttClient(broker, clientId);
@@ -54,34 +57,60 @@ public class RideGenerator extends Thread{
                 id = i;
 
                 int min = 0, max = 9;
-                int x1 = 0;
-                int x2 = 0;
-                int y1 = 0;
-                int y2 = 0;
+                int ride1_x1 = 0;
+                int ride1_x2 = 0;
+                int ride1_y1 = 0;
+                int ride1_y2 = 0;
 
-                while (x1 == x2 && y1 == y2) {
-                    x1 = (int) (Math.random() * ((max - min) + 1) + min);
-                    y1 = (int) (Math.random() * ((max - min) + 1)) + min;
-                    x2 = (int) (Math.random() * ((max - min) + 1)) + min;
-                    y2 = (int) (Math.random() * ((max - min) + 1)) + min;
+                int ride2_x1 = 0;
+                int ride2_x2 = 0;
+                int ride2_y1 = 0;
+                int ride2_y2 = 0;
+
+
+                while (ride1_x1 == ride1_x2 && ride1_y1 == ride1_y2) {
+                    ride1_x1 = (int) (Math.random() * ((max - min) + 1) + min);
+                    ride1_y1 = (int) (Math.random() * ((max - min) + 1)) + min;
+                    ride1_x2 = (int) (Math.random() * ((max - min) + 1)) + min;
+                    ride1_y2 = (int) (Math.random() * ((max - min) + 1)) + min;
                 }
 
-                startCoordinate = new Coordinate(x1, y1);
-                destinationCoordinate = new Coordinate(x2, y2);
+                while (ride2_x1 == ride2_x2 && ride2_y1 == ride2_y2) {
+                    ride2_x1 = (int) (Math.random() * ((max - min) + 1) + min);
+                    ride2_y1 = (int) (Math.random() * ((max - min) + 1)) + min;
+                    ride2_x2 = (int) (Math.random() * ((max - min) + 1)) + min;
+                    ride2_y2 = (int) (Math.random() * ((max - min) + 1)) + min;
+                }
 
-                int district = startCoordinate.getDistrict();
+                startCoordinateRide1 = new Coordinate(ride1_x1, ride1_y1);
+                destinationCoordinateRide1 = new Coordinate(ride1_x2, ride1_y2);
 
-                Ride ride = new Ride(id, startCoordinate, destinationCoordinate);
-                String data = ride.toString();
+                startCoordinateRide2 = new Coordinate(ride2_x1, ride2_y1);
+                destinationCoordinateRide2 = new Coordinate(ride2_x2, ride2_y2);
 
 
-                MqttMessage message = new MqttMessage(data.getBytes());
-                message.setQos(qos);
+                int district1 = startCoordinateRide1.getDistrict();
+                int district2 = startCoordinateRide2.getDistrict();
 
-                client.publish(topic+district, message);
+                Ride ride1 = new Ride(id, startCoordinateRide1, destinationCoordinateRide1);
+                String data1 = ride1.toString();
+
+                Ride ride2 = new Ride(id, startCoordinateRide2, destinationCoordinateRide2);
+                String data2 = ride2.toString();
+
+                MqttMessage message1 = new MqttMessage(data1.getBytes());
+                message1.setQos(qos);
+
+                MqttMessage message2 = new MqttMessage(data2.getBytes());
+                message2.setQos(qos);
+
+                client.publish(topic+district1, message1);
+                client.publish(topic+district2, message2);
                 //client.publish(topic+1, message);
-                RidesQueue.getInstance().addPending(ride);
-                System.out.println("NEW RIDE for TOPIC: " + topic+district);
+                RidesQueue.getInstance().addPending(ride1);
+                RidesQueue.getInstance().addPending(ride2);
+                System.out.println("NEW RIDE for TOPIC: " + topic+district1);
+                System.out.println("NEW RIDE for TOPIC: " + topic+district2);
 
 
                 Thread.sleep(5000);
