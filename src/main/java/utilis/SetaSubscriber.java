@@ -47,15 +47,27 @@ public class SetaSubscriber extends Thread{
                     }else if (topic.split("/")[3].equals("free")){ // when taxi is free
 
                         // Un taxi si è liberato, posso prendere una ride dalla coda
-                        int taxiId = Integer.parseInt(topic.split("/")[4]);
+                        String info = topic.split("/")[4];
+                        int taxiId = Integer.parseInt(info.split("-")[0]);
+                        int district = Integer.parseInt(info.split("-")[1]);
                         String receivedMessage = new String(message.getPayload());
                         System.out.println(receivedMessage);
 
 
+                        Ride ride = RidesQueue.getInstance().takeByDistict(district);
 
+                        if(ride != null){
+                            // republic ride
+                            String data = ride.toString();
 
+                            MqttMessage newMessage = new MqttMessage(data.getBytes());
+                            message.setQos(qos);
 
-
+                            client.publish("seta/smartcity/rides/district"+district, newMessage);
+                            //client.publish(topic+1, message);
+                            RidesQueue.getInstance().addPending(ride);
+                            System.out.println("REPUBLIC RIDE for TOPIC: seta/smartcity/rides/district" +district);
+                        }
 
 
                     }else{ // other topic
@@ -70,6 +82,7 @@ public class SetaSubscriber extends Thread{
 
                 @Override
                 public void connectionLost(Throwable cause) {
+                    System.out.println(cause);
                     System.out.println("Connection Lost");
                 }
             });

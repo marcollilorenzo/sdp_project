@@ -15,7 +15,8 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
 
         return Math.sqrt(
                 Math.pow(end.getX() - start.getX(), 2) +
-                        Math.pow(end.getY() - start.getY(), 2));
+                        Math.pow(end.getY() - start.getY(), 2)
+        );
     }
 
 
@@ -74,7 +75,7 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
 
             System.out.println("ELEZIONE MIO DISTRETTO");
 
-            if (!TaxisSingleton.getInstance().isRiding() && !TaxisSingleton.getInstance().isRecharging()) { // non sono impegnato in un'altra corsa o mi sto caricando
+            if (!TaxisSingleton.getInstance().isRiding() && !TaxisSingleton.getInstance().isRecharging() && TaxisSingleton.getInstance().getIdRidePartecipant() == request.getRideId()) { // non sono impegnato in un'altra corsa o mi sto caricando
 
                 System.out.println("POSSO PARTECIPARE ALL'ELEZIONE");
 
@@ -156,13 +157,27 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
                 }
 
             } else { // sono impegnato in un'altra corsa
-                System.out.println("Sono già impegnato");
-                response = GrcpOuterClass.ElectionResponse
-                        .newBuilder()
-                        .setRideId(request.getRideId())
-                        .setTaxiId(request.getTaxiId())
-                        .setResult("OK")
-                        .build();
+
+                // SE LA RICHIESTA CHE MI ARRIVA E' LA STESSA CHE STO EFFETTUANDO ALLORA TI RISPONDO DI NO
+                if (TaxisSingleton.getInstance().getIdRideInProgress() == request.getRideId()){
+                    System.out.println("La sto già gestendo io questa corsa");
+                    response = GrcpOuterClass.ElectionResponse
+                            .newBuilder()
+                            .setRideId(request.getRideId())
+                            .setTaxiId(request.getTaxiId())
+                            .setResult("NO")
+                            .build();
+                }else{
+                    System.out.println("Sono già impegnato");
+                    response = GrcpOuterClass.ElectionResponse
+                            .newBuilder()
+                            .setRideId(request.getRideId())
+                            .setTaxiId(request.getTaxiId())
+                            .setResult("OK")
+                            .build();
+                }
+
+
             }
         } else { // non è il mio distretto ti invio OK
 

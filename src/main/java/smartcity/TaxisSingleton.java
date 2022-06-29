@@ -21,6 +21,8 @@ public class TaxisSingleton {
     private boolean isRiding = false;
     private int isRecharging = 0;
     private boolean isPartecipant = false;
+    private int idRideInProgress;
+    private int idRidePartecipant;
 
     // thread locking
     private Object chargeBatteryLock = new Object();
@@ -139,8 +141,6 @@ public class TaxisSingleton {
     }
 
 
-
-
     // lock
     public Object getChargeBatteryLock() {
         return chargeBatteryLock;
@@ -192,5 +192,19 @@ public class TaxisSingleton {
     }
     public void setPartecipant(boolean partecipant) {
         isPartecipant = partecipant;
+    }
+
+    public int getIdRideInProgress() {
+        return idRideInProgress;
+    }
+    public void setIdRideInProgress(int idRideInProgress) {
+        this.idRideInProgress = idRideInProgress;
+    }
+
+    public int getIdRidePartecipant() {
+        return idRidePartecipant;
+    }
+    public void setIdRidePartecipant(int idRidePartecipant) {
+        this.idRidePartecipant = idRidePartecipant;
     }
 }

@@ -32,10 +32,8 @@ public class TaxiProcess {
 
     /*
     TODO:
-        1. INVIO STATISTICHE AL SERVER
         2. QUERY CLIENT
         3. GESTIONE CODE RIDE
-        4. check pagina 6
      */
 
 

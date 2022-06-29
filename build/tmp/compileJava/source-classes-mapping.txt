@@ -1,5 +1,5 @@
-services/TaxiAdministrator.java
- services.TaxiAdministrator
+smartcity/GrcpImpl.java
+ smartcity.GrcpImpl
 simulators/Buffer.java
  simulators.Buffer
 client/ClientMenu.java
@@ -15,16 +15,25 @@ com/example/taxis/GrcpGrpc.java
  com.example.taxis.GrcpGrpc$GrcpMethodDescriptorSupplier
  com.example.taxis.GrcpGrpc$GrcpStub
  com.example.taxis.GrcpGrpc$MethodHandlers
-models/RidesQueue.java
- models.RidesQueue
-smartcity/GrcpImpl.java
- smartcity.GrcpImpl
-smartcity/TaxiProcess.java
- smartcity.TaxiProcess
-models/Taxis.java
- models.Taxis
 smartcity/TaxisSingleton.java
  smartcity.TaxisSingleton
+models/Taxi.java
+ models.Taxi
+models/Statistics.java
+ models.Statistics
+models/Taxis.java
+ models.Taxis
+Grcp.java
+ Grcp
+ Grcp$1
+ Grcp$WelcomeRequest
+ Grcp$WelcomeRequest$1
+ Grcp$WelcomeRequest$Builder
+ Grcp$WelcomeRequestOrBuilder
+ Grcp$WelcomeResponse
+ Grcp$WelcomeResponse$1
+ Grcp$WelcomeResponse$Builder
+ Grcp$WelcomeResponseOrBuilder
 models/Ride.java
  models.Ride
 StartServer.java
@@ -68,40 +77,31 @@ com/example/taxis/GrcpOuterClass.java
  com.example.taxis.GrcpOuterClass$WelcomeResponseOrBuilder
 simulators/Simulator.java
  simulators.Simulator
-utilis/RideGenerator.java
- utilis.RideGenerator
-smartcity/Seta.java
- smartcity.Seta
-utilis/SetaSubscriber.java
- utilis.SetaSubscriber
- utilis.SetaSubscriber$1
+client/ClientAdministrator.java
+ client.ClientAdministrator
+services/StatAdministrator.java
+ services.StatAdministrator
+simulators/PM10Simulator.java
+ simulators.PM10Simulator
 models/Statistic.java
  models.Statistic
 models/Coordinate.java
  models.Coordinate
 simulators/Measurement.java
  simulators.Measurement
-client/ClientAdministrator.java
- client.ClientAdministrator
-models/Taxi.java
- models.Taxi
+utilis/RideGenerator.java
+ utilis.RideGenerator
+services/TaxiAdministrator.java
+ services.TaxiAdministrator
+smartcity/Seta.java
+ smartcity.Seta
+smartcity/TaxiProcess.java
+ smartcity.TaxiProcess
 smartcity/TaxiSubPub.java
  smartcity.TaxiSubPub
  smartcity.TaxiSubPub$1
-simulators/PM10Simulator.java
- simulators.PM10Simulator
-Grcp.java
- Grcp
- Grcp$1
- Grcp$WelcomeRequest
- Grcp$WelcomeRequest$1
- Grcp$WelcomeRequest$Builder
- Grcp$WelcomeRequestOrBuilder
- Grcp$WelcomeResponse
- Grcp$WelcomeResponse$1
- Grcp$WelcomeResponse$Builder
- Grcp$WelcomeResponseOrBuilder
-models/Statistics.java
- models.Statistics
-services/StatAdministrator.java
- services.StatAdministrator
+utilis/SetaSubscriber.java
+ utilis.SetaSubscriber
+ utilis.SetaSubscriber$1
+models/RidesQueue.java
+ models.RidesQueue

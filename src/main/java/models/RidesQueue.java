@@ -118,14 +118,12 @@ public class RidesQueue {
 
         Ride r = null;
 
-
-
         if(pendingRides.size()>0){
             for (Ride ride: pendingRides) {
                 if(ride.getStartPosition().getDistrict() == district){
-
                     pendingRides.remove(ride);
                     r = ride;
+                    break;
                 }
             }
         }else{
