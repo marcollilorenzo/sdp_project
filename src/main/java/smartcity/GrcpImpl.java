@@ -230,6 +230,7 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
 
                         synchronized (TaxisSingleton.getInstance().getChargeBatteryLock()) {
                             try {
+                                System.out.println("ASPETTA CHE SI LIBERA LA STAZIONE");
                                 TaxisSingleton.getInstance().getChargeBatteryLock().wait();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
@@ -251,6 +252,7 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
                 } else { // la sto usando
                     synchronized (TaxisSingleton.getInstance().getChargeBatteryLock()) {
                         try {
+                            System.out.println("ASPETTA CHE SI LIBERA LA STAZIONE");
                             TaxisSingleton.getInstance().getChargeBatteryLock().wait();
                         } catch (InterruptedException e) {
                             e.printStackTrace();

@@ -472,7 +472,7 @@ public class TaxiProcess {
 
             TaxisSingleton.getInstance().setRecharging(2); // la uso
 
-            System.out.println("\n MI STO RICARICANDO");
+            System.out.println("\nMI STO RICARICANDO 💪🏻");
             Thread.sleep(10000);
             System.out.println("RICARICA COMPLETATA");
 
@@ -511,6 +511,8 @@ public class TaxiProcess {
                     TaxisSingleton.getInstance().removeTaxiById(t.getId());
                     System.out.println("NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
                 }
+
+                channel.shutdownNow();
             }
 
             synchronized (TaxisSingleton.getInstance().getChargeBatteryLock()) {
