@@ -27,7 +27,10 @@ public class TaxiAdministrator {
     public Response getTaxisList(){
         Gson gson = new Gson();
         Taxis drones = Taxis.getInstance();
-        return Response.status(Response.Status.OK).entity(gson.toJson(drones)).build();
+        return Response.status(Response.Status.OK)
+                .entity(gson.toJson(drones))
+                .header("Access-Control-Allow-Origin", "*")
+                .build();
     }
 
     @Path("add")

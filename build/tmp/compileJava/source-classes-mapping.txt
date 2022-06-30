@@ -1,5 +1,5 @@
-services/TaxiAdministrator.java
- services.TaxiAdministrator
+smartcity/GrcpImpl.java
+ smartcity.GrcpImpl
 simulators/Buffer.java
  simulators.Buffer
 client/ClientMenu.java
@@ -17,8 +17,17 @@ com/example/taxis/GrcpGrpc.java
  com.example.taxis.GrcpGrpc$MethodHandlers
 models/RidesQueue.java
  models.RidesQueue
-smartcity/GrcpImpl.java
- smartcity.GrcpImpl
+Grcp.java
+ Grcp
+ Grcp$1
+ Grcp$WelcomeRequest
+ Grcp$WelcomeRequest$1
+ Grcp$WelcomeRequest$Builder
+ Grcp$WelcomeRequestOrBuilder
+ Grcp$WelcomeResponse
+ Grcp$WelcomeResponse$1
+ Grcp$WelcomeResponse$Builder
+ Grcp$WelcomeResponseOrBuilder
 models/Statistics.java
  models.Statistics
 models/Taxis.java
@@ -85,23 +94,14 @@ client/ClientAdministrator.java
  client.ClientAdministrator
 models/Taxi.java
  models.Taxi
-services/StatAdministrator.java
- services.StatAdministrator
+services/TaxiAdministrator.java
+ services.TaxiAdministrator
 simulators/PM10Simulator.java
  simulators.PM10Simulator
-Grcp.java
- Grcp
- Grcp$1
- Grcp$WelcomeRequest
- Grcp$WelcomeRequest$1
- Grcp$WelcomeRequest$Builder
- Grcp$WelcomeRequestOrBuilder
- Grcp$WelcomeResponse
- Grcp$WelcomeResponse$1
- Grcp$WelcomeResponse$Builder
- Grcp$WelcomeResponseOrBuilder
 smartcity/TaxiProcess.java
  smartcity.TaxiProcess
 smartcity/TaxiSubPub.java
  smartcity.TaxiSubPub
  smartcity.TaxiSubPub$1
+services/StatAdministrator.java
+ services.StatAdministrator

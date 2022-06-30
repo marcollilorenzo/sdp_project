@@ -57,7 +57,10 @@ public class StatAdministrator {
         Gson gson = new Gson();
         ObjectNode stat = Statistics.getInstance().getLastStatisticsByTaxiId(taxiID,n);
         System.out.println(gson.toJson(stat));
-        return Response.status(Response.Status.OK).entity(stat).build();
+        return Response.status(Response.Status.OK)
+                .header("Access-Control-Allow-Origin", "*")
+                .entity(stat)
+                .build();
     }
 
     @GET
@@ -81,6 +84,9 @@ public class StatAdministrator {
         }
 
         System.out.println(gson.toJson(stat));
-        return Response.status(Response.Status.OK).entity(stat).build();
+        return Response.status(Response.Status.OK)
+                .header("Access-Control-Allow-Origin", "*")
+                .entity(stat)
+                .build();
     }
 }
