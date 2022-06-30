@@ -49,12 +49,14 @@ public class RideGenerator extends Thread{
         }
 
         int i = 0;
+        int id2 = 0;
         // PUBLISH RIDE TO RANDOM TOPIC FROM [1-4]
         while (true){
 
             try {
 
                 id = i;
+                id2 = i+1;
 
                 int min = 0, max = 9;
                 int ride1_x1 = 0;
@@ -95,7 +97,7 @@ public class RideGenerator extends Thread{
                 Ride ride1 = new Ride(id, startCoordinateRide1, destinationCoordinateRide1);
                 String data1 = ride1.toString();
 
-                Ride ride2 = new Ride(id, startCoordinateRide2, destinationCoordinateRide2);
+                Ride ride2 = new Ride(id2, startCoordinateRide2, destinationCoordinateRide2);
                 String data2 = ride2.toString();
 
                 MqttMessage message1 = new MqttMessage(data1.getBytes());
@@ -109,13 +111,13 @@ public class RideGenerator extends Thread{
                 //client.publish(topic+1, message);
                 RidesQueue.getInstance().addPending(ride1);
                 RidesQueue.getInstance().addPending(ride2);
-                System.out.println("NEW RIDE for TOPIC: " + topic+district1);
-                System.out.println("NEW RIDE for TOPIC: " + topic+district2);
+                System.out.println("NEW RIDE: "+ id +" for TOPIC: " + topic+district1);
+                System.out.println("NEW RIDE: "+ id2 +" for TOPIC: " + topic+district2);
 
 
                 Thread.sleep(5000);
 
-                i++;
+                i = i+2;
             } catch (MqttException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {

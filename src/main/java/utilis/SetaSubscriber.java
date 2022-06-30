@@ -32,8 +32,10 @@ public class SetaSubscriber extends Thread{
             client = new MqttClient(broker, clientId);
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
+            connOpts.setMaxInflight(500);
 
             client.connect(connOpts);
+
             client.setCallback(new MqttCallback() {
 
                 public void messageArrived(String topic, MqttMessage message) throws IOException, MqttException {
@@ -66,7 +68,7 @@ public class SetaSubscriber extends Thread{
                             client.publish("seta/smartcity/rides/district"+district, newMessage);
                             //client.publish(topic+1, message);
                             RidesQueue.getInstance().addPending(ride);
-                            System.out.println("REPUBLIC RIDE for TOPIC: seta/smartcity/rides/district" +district);
+                            System.out.println("REPUBLIC RIDE: "+ride.getId()+" for TOPIC: seta/smartcity/rides/district" +district);
                         }
 
 

@@ -15,6 +15,7 @@ import models.Statistic;
 import models.Taxi;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import simulators.AdminMeasurement;
 import simulators.Measurement;
 import simulators.PM10Simulator;
@@ -197,7 +198,7 @@ public class TaxiProcess {
         }
     }
 
-    private static void taxiBroker() {
+    private static void taxiBroker() throws MqttException {
 
         Coordinate coordinate = TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate();
         if (coordinate != null) {
@@ -389,8 +390,6 @@ public class TaxiProcess {
         // 3. Disconettere broker MQTT
         TaxiSubPub.disconnect();
 
-        // 4. Invio statistiche al Server
-        // TODO: INVIO STATISTICHE SERVER
 
         // 5. Stop Server GRPC
         try {

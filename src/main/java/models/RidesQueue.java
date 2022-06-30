@@ -68,7 +68,6 @@ public class RidesQueue {
             return false;
         } else {
             pendingRides.add(r);
-            this.notify();
             return true;
         }
 

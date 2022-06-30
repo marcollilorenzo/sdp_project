@@ -22,9 +22,20 @@ public class TaxiSubPub extends Thread {
     private int count;
     private int countRecharge;
 
-    public TaxiSubPub(int district) {
+    String broker = "tcp://localhost:1883";
+    String clientId = MqttClient.generateClientId();
+
+    public TaxiSubPub(int district) throws MqttException {
         this.district = district;
         this.topic = "seta/smartcity/rides/district" + district;
+
+        client = new MqttClient(broker, clientId);
+        MqttConnectOptions connOpts = new MqttConnectOptions();
+        connOpts.setCleanSession(true);
+        connOpts.setMaxInflight(500);
+        connOpts.setConnectionTimeout(0);
+
+        client.connect(connOpts);
     }
 
     public int getDistrict() {
@@ -44,12 +55,20 @@ public class TaxiSubPub extends Thread {
     }
 
     public void changeDistrict(int district) throws MqttException {
-        client.unsubscribe(topic);
-        System.out.println("Mi sono disiscritto dal TOPIC: " + topic);
-        setDistrict(district);
-        setTopic("seta/smartcity/rides/district" + district);
-        client.subscribe(this.topic);
-        System.out.println("Mi sono iscritto al nuovo TOPIC: " + topic);
+
+        if(district != this.district){
+            System.out.println("MI STO DISISCRIVENDO");
+            client.unsubscribe(topic);
+
+            setDistrict(district);
+            setTopic("seta/smartcity/rides/district" + district);
+            System.out.println("MI STO ISCRIVENDO");
+            client.subscribe(this.topic);
+            System.out.println("Mi sono iscritto al nuovo TOPIC: " + topic);
+        }else{
+            System.out.println("STESSO DISTRETTO");
+        }
+
     }
 
     @Override
@@ -57,17 +76,10 @@ public class TaxiSubPub extends Thread {
 
         super.run();
 
-        String broker = "tcp://localhost:1883";
-        String clientId = MqttClient.generateClientId();
         int qos = 2;
 
         try {
-            client = new MqttClient(broker, clientId);
-            MqttConnectOptions connOpts = new MqttConnectOptions();
-            connOpts.setCleanSession(true);
-            connOpts.setMaxInflight(200);
-            connOpts.setAutomaticReconnect(true);
-            client.connect(connOpts);
+
             client.setCallback(new MqttCallback() {
 
                 public void messageArrived(String topic, MqttMessage message) throws MqttException, InterruptedException {
@@ -84,7 +96,10 @@ public class TaxiSubPub extends Thread {
                     Coordinate con = new Coordinate(x2, y2);
                     Ride ride = new Ride(id, rit, con);
 
-                    // System.out.println("NUOVA CORSA DISTRETTO: " + ride.getStartPosition().getDistrict());
+                     System.out.println("NUOVA CORSA DISTRETTO: " + ride.getStartPosition().getDistrict());
+                     if(ride.getStartPosition().getDistrict() == district){
+
+
 
                     // start election algo
 
@@ -101,7 +116,7 @@ public class TaxiSubPub extends Thread {
 
                             try {
 
-                                System.out.println("\n--✅ GESTISCO IO LA RIDE: " + ride.getId()+"--");
+                                System.out.println("\n--✅ GESTISCO IO LA RIDE: " + ride.getId()+" nel distict:"+ride.getStartPosition().getDistrict()+ "--");
                                 TaxisSingleton.getInstance().setRiding(true);
 
                                 // Notifico che non sono più in un'elezione con il notify
@@ -199,6 +214,7 @@ public class TaxiSubPub extends Thread {
                     }else{ // non posso gestire la corsa, o sono in ricarica o sto già facendo un'altra corsa
                         System.out.println("SONO GIA' OCCUPATO, NON POSSO GESTIRE QUESTA CORSA");
                     }
+                     }
 
                 }
 
@@ -367,7 +383,9 @@ public class TaxiSubPub extends Thread {
 
             GrcpOuterClass.UpdateTaxiInfoResponse res;
             try {
+
                 res = stub.updateTaxiInfo(req);
+
             } catch (Exception e) {
                 TaxisSingleton.getInstance().removeTaxiById(t.getId());
                 System.out.println("NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
@@ -376,23 +394,27 @@ public class TaxiSubPub extends Thread {
             channel.shutdownNow();
         }
 
+        System.out.println("STO PER CAMBIARE DISTRETTO");
+
         changeDistrict(ride.getEndPosition().getDistrict());
+
+        System.out.println("DISTRETTO OK");
+
+        // Notifico che mi sono liberato con il notify
+        TaxisSingleton.getInstance().setRiding(false);
+        synchronized (TaxisSingleton.getInstance().getDeliveryInProgressLock()) {
+            TaxisSingleton.getInstance().getDeliveryInProgressLock().notify();
+        }
 
         // Avviso SETA che mi sono liberato
         String payload = "Taxi ID: " + TaxisSingleton.getInstance().getCurrentTaxi().getId() + " now is FREE ";
         MqttMessage messageRide = new MqttMessage(payload.getBytes());
-        messageRide.setQos(2);
+        messageRide.setQos(2); // TODO: 0 o 2?
 
-        client.publish("seta/smartcity/taxis/free/" + TaxisSingleton.getInstance().getCurrentTaxi().getId()+"-"+TaxisSingleton.getInstance().getCurrentTaxi().getCoordinate().getDistrict(), messageRide);
+        client.publish("seta/smartcity/taxis/free/" + TaxisSingleton.getInstance().getCurrentTaxi().getId()+"-"+ride.getEndPosition().getDistrict(), messageRide);
 
         System.out.println("Ho finito la corsa...");
 
-
-        // Notifico che mi sono liberato con il notify
-        synchronized (TaxisSingleton.getInstance().getDeliveryInProgressLock()) {
-            TaxisSingleton.getInstance().setRiding(false);
-            TaxisSingleton.getInstance().getDeliveryInProgressLock().notify();
-        }
 
     }
 
