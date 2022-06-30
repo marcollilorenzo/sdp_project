@@ -62,9 +62,9 @@ public class TaxiSubPub extends Thread {
 
             setDistrict(district);
             setTopic("seta/smartcity/rides/district" + district);
-            System.out.println("MI STO ISCRIVENDO");
+
             client.subscribe(this.topic);
-            System.out.println("Mi sono iscritto al nuovo TOPIC: " + topic);
+            System.out.println("MI SONO ISCRITTO AL NUOVO TOPIC: " + topic);
         }else{
             System.out.println("STESSO DISTRETTO");
         }
@@ -175,7 +175,7 @@ public class TaxiSubPub extends Thread {
 
                                 } catch (Exception e) {
                                     TaxisSingleton.getInstance().removeTaxiById(t.getId());
-                                    System.out.println("NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
+                                    System.out.println("🗑 NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
                                 }
 
                                 channel.shutdownNow();
@@ -327,7 +327,7 @@ public class TaxiSubPub extends Thread {
 
                 } catch (Exception e) {
                     TaxisSingleton.getInstance().removeTaxiById(t.getId());
-                    System.out.println("NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
+                    System.out.println("🗑 NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
                 }
 
                 channel.shutdownNow();
@@ -388,7 +388,7 @@ public class TaxiSubPub extends Thread {
 
             } catch (Exception e) {
                 TaxisSingleton.getInstance().removeTaxiById(t.getId());
-                System.out.println("NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
+                System.out.println("🗑 NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
             }
 
             channel.shutdownNow();

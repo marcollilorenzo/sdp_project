@@ -458,7 +458,7 @@ public class TaxiProcess {
 
             } catch (Exception e) {
                 TaxisSingleton.getInstance().removeTaxiById(t.getId());
-                System.out.println("NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
+                System.out.println("🗑 NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
             }
 
             channel.shutdownNow();
@@ -508,7 +508,7 @@ public class TaxiProcess {
                     res = stub.updateTaxiInfo(req);
                 } catch (Exception e) {
                     TaxisSingleton.getInstance().removeTaxiById(t.getId());
-                    System.out.println("NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
+                    System.out.println("🗑 NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
                 }
 
                 channel.shutdownNow();
