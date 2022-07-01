@@ -409,7 +409,7 @@ public class TaxiSubPub extends Thread {
         // Avviso SETA che mi sono liberato
         String payload = "Taxi ID: " + TaxisSingleton.getInstance().getCurrentTaxi().getId() + " now is FREE ";
         MqttMessage messageRide = new MqttMessage(payload.getBytes());
-        messageRide.setQos(2); // TODO: 0 o 2?
+        messageRide.setQos(2);
 
         client.publish("seta/smartcity/taxis/free/" + TaxisSingleton.getInstance().getCurrentTaxi().getId()+"-"+ride.getEndPosition().getDistrict(), messageRide);
 

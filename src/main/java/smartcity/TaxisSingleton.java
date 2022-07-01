@@ -63,6 +63,7 @@ public class TaxisSingleton {
     public void removeTaxiById(int taxiID){
         synchronized (taxiList){
             taxiList.removeIf((t -> t.getId() == taxiID));
+            taxiList.notify();
         }
     }
     public Taxi getCurrentTaxi() {
@@ -94,6 +95,7 @@ public class TaxisSingleton {
                 t.setBatteryLevel(battery);
                 t.setCoordinate(coordinate);
             }
+            taxiList.notify();
         }
     }
 

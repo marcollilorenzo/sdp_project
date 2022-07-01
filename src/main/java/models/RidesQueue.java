@@ -63,15 +63,17 @@ public class RidesQueue {
     // add pending
     public synchronized boolean addPending(Ride r){
 
-        Boolean isInList = isInList(r.getId());
-        if(isInList){
-            return false;
-        } else {
-            pendingRides.add(r);
-            return true;
+        synchronized (pendingRides){
+            Boolean isInList = isInList(r.getId());
+            if(isInList){
+                pendingRides.notify();
+                return false;
+            } else {
+                pendingRides.add(r);
+                pendingRides.notify();
+                return true;
+            }
         }
-
-
     }
 
     // remove
@@ -93,7 +95,11 @@ public class RidesQueue {
 
     // remove pending
     public synchronized void removePendingRides(int rideID){
-        pendingRides.removeIf((ride -> ride.getId() == rideID));
+        synchronized (pendingRides){
+            pendingRides.removeIf((ride -> ride.getId() == rideID));
+            pendingRides.notify();
+        }
+
     }
 
     // take ride from queue
@@ -113,22 +119,27 @@ public class RidesQueue {
     }
 
     // take ride from queue BY DISTRICT
-    public Ride takeByDistict(int district){
+    public synchronized Ride takeByDistict(int district){
 
-        Ride r = null;
+        synchronized (pendingRides){
+            Ride r = null;
 
-        if(pendingRides.size()>0){
-            for (Ride ride: pendingRides) {
-                if(ride.getStartPosition().getDistrict() == district){
-                    pendingRides.remove(ride);
-                    r = ride;
-                    break;
+            if(pendingRides.size()>0){
+                for (Ride ride: pendingRides) {
+                    if(ride.getStartPosition().getDistrict() == district){
+                        pendingRides.remove(ride);
+                        r = ride;
+                        break;
+                    }
                 }
+            }else{
+                pendingRides.notify();
+                return null;
             }
-        }else{
-            return null;
+            pendingRides.notify();
+            return r;
         }
-        return r;
+
 
     }
 
