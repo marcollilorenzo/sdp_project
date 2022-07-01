@@ -337,7 +337,7 @@ public class TaxiSubPub extends Thread {
             // MI POSSO RICARICARE
             if (countRecharge == otherTaxiList.size()) ;
             {
-
+                System.out.println("HO VINTO ELEZIONE PER LA STAZIONE DI RICARICA");
                 TaxisSingleton.getInstance().setRecharging(2); // la uso
 
                 System.out.println("MI STO RICARICANDO");

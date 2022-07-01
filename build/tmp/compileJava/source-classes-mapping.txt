@@ -81,8 +81,8 @@ smartcity/GrcpImpl.java
  smartcity.GrcpImpl
 smartcity/Seta.java
  smartcity.Seta
-smartcity/TaxiProcess.java
- smartcity.TaxiProcess
+models/RidesQueue.java
+ models.RidesQueue
 models/Statistic.java
  models.Statistic
 models/Coordinate.java
@@ -93,15 +93,15 @@ client/ClientAdministrator.java
  client.ClientAdministrator
 models/Taxi.java
  models.Taxi
-smartcity/TaxiSubPub.java
- smartcity.TaxiSubPub
- smartcity.TaxiSubPub$1
+utilis/SetaSubscriber.java
+ utilis.SetaSubscriber
+ utilis.SetaSubscriber$1
 utilis/RideGenerator.java
  utilis.RideGenerator
 services/TaxiAdministrator.java
  services.TaxiAdministrator
-utilis/SetaSubscriber.java
- utilis.SetaSubscriber
- utilis.SetaSubscriber$1
-models/RidesQueue.java
- models.RidesQueue
+smartcity/TaxiProcess.java
+ smartcity.TaxiProcess
+smartcity/TaxiSubPub.java
+ smartcity.TaxiSubPub
+ smartcity.TaxiSubPub$1
