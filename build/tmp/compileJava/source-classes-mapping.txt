@@ -1,5 +1,5 @@
-simulators/PM10Simulator.java
- simulators.PM10Simulator
+services/TaxiAdministrator.java
+ services.TaxiAdministrator
 simulators/Buffer.java
  simulators.Buffer
 client/ClientMenu.java
@@ -15,25 +15,16 @@ com/example/taxis/GrcpGrpc.java
  com.example.taxis.GrcpGrpc$GrcpMethodDescriptorSupplier
  com.example.taxis.GrcpGrpc$GrcpStub
  com.example.taxis.GrcpGrpc$MethodHandlers
-smartcity/TaxisSingleton.java
- smartcity.TaxisSingleton
-Grcp.java
- Grcp
- Grcp$1
- Grcp$WelcomeRequest
- Grcp$WelcomeRequest$1
- Grcp$WelcomeRequest$Builder
- Grcp$WelcomeRequestOrBuilder
- Grcp$WelcomeResponse
- Grcp$WelcomeResponse$1
- Grcp$WelcomeResponse$Builder
- Grcp$WelcomeResponseOrBuilder
+models/RidesQueue.java
+ models.RidesQueue
+smartcity/GrcpImpl.java
+ smartcity.GrcpImpl
 models/Statistics.java
  models.Statistics
 models/Taxis.java
  models.Taxis
-services/StatAdministrator.java
- services.StatAdministrator
+smartcity/TaxisSingleton.java
+ smartcity.TaxisSingleton
 models/Ride.java
  models.Ride
 StartServer.java
@@ -77,31 +68,40 @@ com/example/taxis/GrcpOuterClass.java
  com.example.taxis.GrcpOuterClass$WelcomeResponseOrBuilder
 simulators/Simulator.java
  simulators.Simulator
-smartcity/GrcpImpl.java
- smartcity.GrcpImpl
+utilis/RideGenerator.java
+ utilis.RideGenerator
 smartcity/Seta.java
  smartcity.Seta
-models/RidesQueue.java
- models.RidesQueue
-models/Statistic.java
- models.Statistic
-models/Coordinate.java
- models.Coordinate
-simulators/Measurement.java
- simulators.Measurement
-client/ClientAdministrator.java
- client.ClientAdministrator
-models/Taxi.java
- models.Taxi
 utilis/SetaSubscriber.java
  utilis.SetaSubscriber
  utilis.SetaSubscriber$1
-utilis/RideGenerator.java
- utilis.RideGenerator
-services/TaxiAdministrator.java
- services.TaxiAdministrator
+models/Statistic.java
+ models.Statistic
 smartcity/TaxiProcess.java
  smartcity.TaxiProcess
 smartcity/TaxiSubPub.java
  smartcity.TaxiSubPub
  smartcity.TaxiSubPub$1
+client/ClientAdministrator.java
+ client.ClientAdministrator
+models/Taxi.java
+ models.Taxi
+services/StatAdministrator.java
+ services.StatAdministrator
+simulators/PM10Simulator.java
+ simulators.PM10Simulator
+Grcp.java
+ Grcp
+ Grcp$1
+ Grcp$WelcomeRequest
+ Grcp$WelcomeRequest$1
+ Grcp$WelcomeRequest$Builder
+ Grcp$WelcomeRequestOrBuilder
+ Grcp$WelcomeResponse
+ Grcp$WelcomeResponse$1
+ Grcp$WelcomeResponse$Builder
+ Grcp$WelcomeResponseOrBuilder
+simulators/Measurement.java
+ simulators.Measurement
+models/Coordinate.java
+ models.Coordinate

@@ -96,7 +96,7 @@ public class TaxiSubPub extends Thread {
                     Coordinate con = new Coordinate(x2, y2);
                     Ride ride = new Ride(id, rit, con);
 
-                     System.out.println("NUOVA CORSA DISTRETTO: " + ride.getStartPosition().getDistrict());
+                  //   System.out.println("NUOVA CORSA DISTRETTO: " + ride.getStartPosition().getDistrict());
                      if(ride.getStartPosition().getDistrict() == district){
 
 
@@ -337,7 +337,7 @@ public class TaxiSubPub extends Thread {
             // MI POSSO RICARICARE
             if (countRecharge == otherTaxiList.size()) ;
             {
-                System.out.println("HO VINTO ELEZIONE PER LA STAZIONE DI RICARICA");
+                System.out.println("🏆 HO VINTO ELEZIONE PER LA STAZIONE DI RICARICA");
                 TaxisSingleton.getInstance().setRecharging(2); // la uso
 
                 System.out.println("MI STO RICARICANDO");

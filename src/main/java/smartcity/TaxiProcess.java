@@ -31,19 +31,14 @@ public class TaxiProcess {
     private static TaxiSubPub threadSubPub;
     private static int myID;
 
-    /*
-    TODO:
-        2. QUERY CLIENT
-     */
-
-
     public static void main(String[] args) throws IOException {
 
-        initTaxi(); // register taxi to list and start to acquire statistic from pollution sensor
-        manageInput(); // manage keyboard input for quit the taxis
+        initTaxi(); // 1.1 register taxi to list and start to acquire statistic from pollution sensor
+        manageInput(); // 1.2 manage keyboard input for quit the taxis
 
     }
 
+    // 1.1 INIT TAXI
     public static void initTaxi() {
         // Create random info
         int taxiId = (int) Math.floor(Math.random() * (1000 - 1 + 1) + 1);
@@ -287,6 +282,7 @@ public class TaxiProcess {
 
     }
 
+    // 1.2 MANAGE INPUT
     private static void manageInput() {
         new Thread(() -> { // lambda expression
             while (true) {
@@ -348,6 +344,7 @@ public class TaxiProcess {
         }).start();
     }
 
+    // 1.2.1 QUIT
     private static void exitFromNetwork() throws IOException {
 
         if(TaxisSingleton.getInstance().isQuit()){return;}
@@ -419,6 +416,7 @@ public class TaxiProcess {
 
     }
 
+    // 1.2.2 RECHARGE
     private static void recharge() throws InterruptedException {
 
     int countRecharge;
