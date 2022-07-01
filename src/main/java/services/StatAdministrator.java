@@ -30,11 +30,9 @@ public class StatAdministrator {
     @Consumes({"application/json", "application/xml"})
     public Response addStatistic(Statistic statistic){
 
-        System.out.println("AGGIUNGO UNA STATISTICA");
-
         Statistics.getInstance().addStatistic(statistic);
 
-        System.out.println("STATISTICA AGGIUNTA");
+        System.out.println("AGGIUNTA NUOVA STATISTICA");
         System.out.println(statistic.getTimestamp());
 
         ObjectNode json = mapper.createObjectNode();

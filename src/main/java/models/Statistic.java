@@ -17,6 +17,7 @@ public class Statistic {
     private int ride;
     private double averageListPollution;
 
+    // Costruttore vuoto
     public Statistic(){}
 
     public Statistic(int taxiID, long timestamp, int batteryLevel, double km, int ride, double averageListPollution) {

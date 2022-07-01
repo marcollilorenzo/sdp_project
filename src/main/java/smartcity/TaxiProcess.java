@@ -208,7 +208,8 @@ public class TaxiProcess {
     }
 
     private static void sendStatistics(){
-        System.out.println("\nSEND STATISTICS");
+
+        System.out.println("\nSEND STATISTICS THREAD STARTED");
 
         new Thread(()->{
             while(true) {
@@ -217,7 +218,6 @@ public class TaxiProcess {
                 String input;
                 ClientResponse result;
                 JSONArray response = null;
-
 
                 /*
                     STATISTICHE DA INVIARE
@@ -246,8 +246,6 @@ public class TaxiProcess {
                     Client client = Client.create();
                     WebResource webResource = client.resource("http://localhost:1337/stat/add");
 
-
-
                     Statistic s = new Statistic(
                             TaxisSingleton.getInstance().getCurrentTaxi().getId(),
                             taxiTimestamp,
@@ -260,18 +258,7 @@ public class TaxiProcess {
                     );
 
                     input = new Gson().toJson(s);
-
-                  /*  input = "{\"km\":\"" + km +
-                            "\",\"taxiID\":\"" + TaxisSingleton.getInstance().getCurrentTaxi().getId() +
-                            "\",\"timestamp\":\"" + taxiTimestamp +
-                            "\",\"batteryLevel\":\"" + TaxisSingleton.getInstance().getCurrentTaxi().getBatteryLevel() +
-                            "\",\"ride\":\"" + numberRides +
-                            "\",\"averageListPollution\":\"" + TaxisSingleton.getInstance().getPollutionMeasurementListValue().stream()
-                            .mapToDouble(a -> a)
-                            .average().orElse(0) + "\"}"; */
-
                     result = webResource.type("application/json").post(ClientResponse.class, input);
-
 
                     Thread.sleep(15000);
                 } catch (InterruptedException e) {
@@ -298,7 +285,7 @@ public class TaxiProcess {
                 }
 
                 if(input.equals("re")){
-                    System.out.println("\n RICHIESTA RICARICA");
+                    System.out.println("\nRICHIESTA RICARICA");
                     try {
                         if(TaxisSingleton.getInstance().isRiding()){
                             synchronized (TaxisSingleton.getInstance().getDeliveryInProgressLock()) {
@@ -467,7 +454,7 @@ public class TaxiProcess {
         if (countRecharge == otherTaxiList.size()) ;
         {
 
-            System.out.println("HO VINTO ELEZIONE PER LA STAZIONE DI RICARICA");
+            System.out.println("🏆🔋 HO VINTO ELEZIONE PER LA STAZIONE DI RICARICA");
 
             TaxisSingleton.getInstance().setRecharging(2); // la uso
 

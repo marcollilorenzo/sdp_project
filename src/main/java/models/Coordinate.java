@@ -7,10 +7,11 @@ import java.util.List;
 @XmlRootElement
 public class Coordinate {
 
+    // info
     private int x;
     private int y;
 
-    // empty costructor
+    // Costruttore vuoto
     public Coordinate(){}
 
     public Coordinate(int x, int y) {

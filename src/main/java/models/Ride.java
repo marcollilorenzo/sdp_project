@@ -2,10 +2,12 @@ package models;
 
 public class Ride {
 
+    // info
     private int id;
     private Coordinate startPosition;
     private Coordinate endPosition;
 
+    // Costruttore vuoto
     public Ride(){};
 
     public Ride(int id, Coordinate startPosition, Coordinate endPosition) {
@@ -39,7 +41,6 @@ public class Ride {
     }
 
     public double getDistance(){
-
 
         return Math.sqrt(
                 Math.pow(this.endPosition.getX() - this.startPosition.getX(), 2) +

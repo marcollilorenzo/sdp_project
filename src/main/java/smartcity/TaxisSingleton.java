@@ -110,7 +110,6 @@ public class TaxisSingleton {
             pollutionMeasurementList.add(pm10);
         }
     }
-
     public List<Double> getPollutionMeasurementListValue() {
         ArrayList<Double> temp = new ArrayList<>();
         synchronized (pollutionMeasurementList) {
@@ -120,7 +119,6 @@ public class TaxisSingleton {
         }
         return temp;
     }
-
     public void clearPollutionMeasurementList() {
         synchronized (pollutionMeasurementList) {
             pollutionMeasurementList.clear();

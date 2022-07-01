@@ -30,14 +30,18 @@ public class TaxiSubPub extends Thread {
         this.topic = "seta/smartcity/rides/district" + district;
 
         client = new MqttClient(broker, clientId);
+
+        // MQTT Option
         MqttConnectOptions connOpts = new MqttConnectOptions();
         connOpts.setCleanSession(true);
         connOpts.setMaxInflight(500);
         connOpts.setConnectionTimeout(0);
 
+        // Connection
         client.connect(connOpts);
     }
 
+    // district
     public int getDistrict() {
         return this.district;
     }
@@ -46,6 +50,7 @@ public class TaxiSubPub extends Thread {
         this.district = district;
     }
 
+    // topic
     public String getTopic() {
         return topic;
     }
@@ -56,7 +61,7 @@ public class TaxiSubPub extends Thread {
 
     public void changeDistrict(int district) throws MqttException {
 
-        if(district != this.district){
+        if (district != this.district) {
             System.out.println("MI STO DISISCRIVENDO");
             client.unsubscribe(topic);
 
@@ -65,7 +70,7 @@ public class TaxiSubPub extends Thread {
 
             client.subscribe(this.topic);
             System.out.println("MI SONO ISCRITTO AL NUOVO TOPIC: " + topic);
-        }else{
+        } else {
             System.out.println("STESSO DISTRETTO");
         }
 
@@ -75,11 +80,11 @@ public class TaxiSubPub extends Thread {
     public void run() {
 
         super.run();
-
         int qos = 2;
 
         try {
 
+            // MQTT Callback
             client.setCallback(new MqttCallback() {
 
                 public void messageArrived(String topic, MqttMessage message) throws MqttException, InterruptedException {
@@ -96,125 +101,121 @@ public class TaxiSubPub extends Thread {
                     Coordinate con = new Coordinate(x2, y2);
                     Ride ride = new Ride(id, rit, con);
 
-                  //   System.out.println("NUOVA CORSA DISTRETTO: " + ride.getStartPosition().getDistrict());
-                     if(ride.getStartPosition().getDistrict() == district){
+                    if (ride.getStartPosition().getDistrict() == district) {
 
+                        // start election algo
 
+                        // se il taxi sta ricaricando o è già occupato non fa nulla
+                        if (!TaxisSingleton.getInstance().isRiding() && !TaxisSingleton.getInstance().isRecharging() && !TaxisSingleton.getInstance().isPartecipant() && !TaxisSingleton.getInstance().isQuit()) {
 
-                    // start election algo
+                            TaxisSingleton.getInstance().setPartecipant(true); // Set taxi to partecipant
+                            TaxisSingleton.getInstance().setIdRidePartecipant(ride.getId());
+                            count = 0; // azzero il count delle risposte
 
-                    // se il taxi sta ricaricando o è già occupato non fa nulla
-                    if (!TaxisSingleton.getInstance().isRiding() && !TaxisSingleton.getInstance().isRecharging() && !TaxisSingleton.getInstance().isPartecipant() && !TaxisSingleton.getInstance().isQuit()) {
+                            ArrayList<Taxi> otherTaxiList = TaxisSingleton.getInstance().getTaxiList();
 
-                        TaxisSingleton.getInstance().setPartecipant(true); // Set taxi to partecipant
-                        TaxisSingleton.getInstance().setIdRidePartecipant(ride.getId());
-                        count = 0; // azzero il count delle risposte
+                            if (otherTaxiList.size() == 0) { // GESTISCO IO LA RICHIESTA, SONO DA SOLO
 
-                        ArrayList<Taxi> otherTaxiList = TaxisSingleton.getInstance().getTaxiList();
-
-                        if (otherTaxiList.size() == 0) { // GESTISCO IO LA RICHIESTA, SONO DA SOLO
-
-                            try {
-
-                                System.out.println("\n--✅ GESTISCO IO LA RIDE: " + ride.getId()+" nel distict:"+ride.getStartPosition().getDistrict()+ "--");
-                                TaxisSingleton.getInstance().setRiding(true);
-
-                                // Notifico che non sono più in un'elezione con il notify
-                                synchronized (TaxisSingleton.getInstance().getParticipantElectionLock()) {
-                                    TaxisSingleton.getInstance().setPartecipant(false);
-                                    TaxisSingleton.getInstance().getParticipantElectionLock().notify();
-                                }
-
-                                // AVVISO SETA CHE HO PRESO IN CARICA LA RICHIESTA
-                                String payload = "Ride ID: " + ride.getId() + " managed by Taxi: " + TaxisSingleton.getInstance().getCurrentTaxi().getId();
-                                MqttMessage messageRide = new MqttMessage(payload.getBytes());
-                                messageRide.setQos(qos);
-                                client.publish("seta/smartcity/rides/accomplished/" + ride.getId(), messageRide);
-
-                                // MANAGED RIDE
-                                takeRun(ride);
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-
-                            for (Taxi t : otherTaxiList) {
-                                System.out.println("\nSTART ELECTION");
-                                System.out.println("Send election to Taxi: " + t.getId() + " for Ride: " + ride.getId());
-                                final ManagedChannel channel = ManagedChannelBuilder
-                                        .forTarget(t.getServerAddress() + ":" + t.getPort())
-                                        .usePlaintext()
-                                        .build();
-
-                                double distance = getDistanceFromCoordinate(t.getCoordinate(), ride.getStartPosition());
-
-                                GrcpGrpc.GrcpBlockingStub stub = GrcpGrpc.newBlockingStub(channel);
-
-                                GrcpOuterClass.ElectionRequest req = GrcpOuterClass.ElectionRequest.newBuilder()
-                                        .setTaxiId(TaxisSingleton.getInstance().getCurrentTaxi().getId())
-                                        .setRideId(ride.getId())
-                                        .setBattery(TaxisSingleton.getInstance().getCurrentTaxi().getBatteryLevel())
-                                        .setDistrict(TaxisSingleton.getInstance().getCurrentTaxi()
-                                                .getCoordinate().getDistrict())
-                                        .setStartX(ride.getStartPosition().getX())
-                                        .setStartY(ride.getStartPosition().getY())
-                                        .setEndX(ride.getEndPosition().getX())
-                                        .setEndY(ride.getEndPosition().getY())
-                                        .setDistance(distance)
-                                        .build();
-
-                                GrcpOuterClass.ElectionResponse res;
                                 try {
-                                    res = stub.election(req);
 
-                                    if (res.getResult().equals("OK")) {
-                                        count++; // incremento del count ad ogni risposta
+                                    System.out.println("\n✅ GESTISCO IO LA RIDE: " + ride.getId() + " nel distict:" + ride.getStartPosition().getDistrict() + "--");
+                                    TaxisSingleton.getInstance().setRiding(true);
+
+                                    // Notifico che non sono più in un'elezione con il notify
+                                    synchronized (TaxisSingleton.getInstance().getParticipantElectionLock()) {
+                                        TaxisSingleton.getInstance().setPartecipant(false);
+                                        TaxisSingleton.getInstance().getParticipantElectionLock().notify();
                                     }
-                                    //System.out.println(res);
+
+                                    // AVVISO SETA CHE HO PRESO IN CARICA LA RICHIESTA
+                                    String payload = "Ride ID: " + ride.getId() + " managed by Taxi: " + TaxisSingleton.getInstance().getCurrentTaxi().getId();
+                                    MqttMessage messageRide = new MqttMessage(payload.getBytes());
+                                    messageRide.setQos(qos);
+                                    client.publish("seta/smartcity/rides/accomplished/" + ride.getId(), messageRide);
+
+                                    // MANAGED RIDE
+                                    takeRun(ride);
 
                                 } catch (Exception e) {
-                                    TaxisSingleton.getInstance().removeTaxiById(t.getId());
-                                    System.out.println("🗑 NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
+                                    e.printStackTrace();
+                                }
+                            } else {
+
+                                for (Taxi t : otherTaxiList) {
+                                    System.out.println("\nSTART ELECTION");
+                                    System.out.println("Send election to Taxi: " + t.getId() + " for Ride: " + ride.getId());
+                                    final ManagedChannel channel = ManagedChannelBuilder
+                                            .forTarget(t.getServerAddress() + ":" + t.getPort())
+                                            .usePlaintext()
+                                            .build();
+
+                                    double distance = getDistanceFromCoordinate(t.getCoordinate(), ride.getStartPosition());
+
+                                    GrcpGrpc.GrcpBlockingStub stub = GrcpGrpc.newBlockingStub(channel);
+
+                                    GrcpOuterClass.ElectionRequest req = GrcpOuterClass.ElectionRequest.newBuilder()
+                                            .setTaxiId(TaxisSingleton.getInstance().getCurrentTaxi().getId())
+                                            .setRideId(ride.getId())
+                                            .setBattery(TaxisSingleton.getInstance().getCurrentTaxi().getBatteryLevel())
+                                            .setDistrict(TaxisSingleton.getInstance().getCurrentTaxi()
+                                                    .getCoordinate().getDistrict())
+                                            .setStartX(ride.getStartPosition().getX())
+                                            .setStartY(ride.getStartPosition().getY())
+                                            .setEndX(ride.getEndPosition().getX())
+                                            .setEndY(ride.getEndPosition().getY())
+                                            .setDistance(distance)
+                                            .build();
+
+                                    GrcpOuterClass.ElectionResponse res;
+                                    try {
+                                        res = stub.election(req);
+
+                                        if (res.getResult().equals("OK")) {
+                                            count++; // incremento del count ad ogni risposta
+                                        }
+                                        //System.out.println(res);
+
+                                    } catch (Exception e) {
+                                        TaxisSingleton.getInstance().removeTaxiById(t.getId());
+                                        System.out.println("🗑 NON RIESCO A CONTATTARE IL TAXI: " + t.getId() + " LO ELIMINO");
+                                    }
+
+                                    channel.shutdownNow();
+                                } // for
+
+                                if (count == otherTaxiList.size()) {
+                                    System.out.println("✅ GESTISCO IO LA RIDE: " + ride.getId() + " nel district: " + ride.getStartPosition().getDistrict() + "--");
+
+                                    TaxisSingleton.getInstance().setRiding(true);
+
+                                    // Notifico che non sono più in un'elezione con il notify
+                                    synchronized (TaxisSingleton.getInstance().getParticipantElectionLock()) {
+                                        TaxisSingleton.getInstance().setPartecipant(false);
+                                        TaxisSingleton.getInstance().getParticipantElectionLock().notify();
+                                    }
+
+                                    // AVVISO SETA CHE HO PRESO IN CARICA LA RICHIESTA
+                                    String payload = "Ride ID: " + ride.getId() + " managed by Taxi: " + TaxisSingleton.getInstance().getCurrentTaxi().getId();
+                                    MqttMessage messageRide = new MqttMessage(payload.getBytes());
+                                    messageRide.setQos(qos);
+                                    client.publish("seta/smartcity/rides/accomplished/" + ride.getId(), messageRide);
+
+                                    // MANAGED RIDE
+                                    takeRun(ride);
+
+                                } else { // non gestisco io la ride, ho ricevuto sicuramente dei "NO"
+                                    synchronized (TaxisSingleton.getInstance().getParticipantElectionLock()) {
+                                        TaxisSingleton.getInstance().setPartecipant(false);
+                                        TaxisSingleton.getInstance().getParticipantElectionLock().notify();
+                                    }
+                                    System.out.println("\n❌ NON GESTISCO IO LA RIDE: " + ride.getId() + " nel district: " + ride.getStartPosition().getDistrict());
                                 }
 
-                                channel.shutdownNow();
-                            } // for
-
-                            if (count == otherTaxiList.size()) {
-                                System.out.println("--✅ GESTISCO IO LA RIDE: " + ride.getId() + " nel district: " + ride.getStartPosition().getDistrict()+"--");
-                                System.out.println("COUNT OK: " + count);
-                                System.out.println("DIMENSIONE LISTA: " + otherTaxiList.size());
-                                TaxisSingleton.getInstance().setRiding(true);
-
-                                // Notifico che non sono più in un'elezione con il notify
-                                synchronized (TaxisSingleton.getInstance().getParticipantElectionLock()) {
-                                    TaxisSingleton.getInstance().setPartecipant(false);
-                                    TaxisSingleton.getInstance().getParticipantElectionLock().notify();
-                                }
-
-                                // AVVISO SETA CHE HO PRESO IN CARICA LA RICHIESTA
-                                String payload = "Ride ID: " + ride.getId() + " managed by Taxi: " + TaxisSingleton.getInstance().getCurrentTaxi().getId();
-                                MqttMessage messageRide = new MqttMessage(payload.getBytes());
-                                messageRide.setQos(qos);
-                                client.publish("seta/smartcity/rides/accomplished/" + ride.getId(), messageRide);
-
-                                // MANAGED RIDE
-                                takeRun(ride);
-
-                            }else{ // non gestisco io la ride, ho ricevuto sicuramente dei "NO"
-                                synchronized (TaxisSingleton.getInstance().getParticipantElectionLock()) {
-                                    TaxisSingleton.getInstance().setPartecipant(false);
-                                    TaxisSingleton.getInstance().getParticipantElectionLock().notify();
-                                }
-                                System.out.println("\n❌NON GESTISCO IO LA RIDE: " + ride.getId() + " nel district: " + ride.getStartPosition().getDistrict());
                             }
-
+                        } else { // non posso gestire la corsa, o sono in ricarica o sto già facendo un'altra corsa
+                            System.out.println("SONO GIA' OCCUPATO, NON POSSO GESTIRE QUESTA CORSA");
                         }
-                    }else{ // non posso gestire la corsa, o sono in ricarica o sto già facendo un'altra corsa
-                        System.out.println("SONO GIA' OCCUPATO, NON POSSO GESTIRE QUESTA CORSA");
                     }
-                     }
 
                 }
 
@@ -240,7 +241,6 @@ public class TaxiSubPub extends Thread {
     }
 
     public static void disconnect() {
-        //System.out.println("disconnectClient()");
         try {
             client.disconnect();
         } catch (MqttException e) {
@@ -337,7 +337,7 @@ public class TaxiSubPub extends Thread {
             // MI POSSO RICARICARE
             if (countRecharge == otherTaxiList.size()) ;
             {
-                System.out.println("🏆 HO VINTO ELEZIONE PER LA STAZIONE DI RICARICA");
+                System.out.println("🏆🔋 HO VINTO ELEZIONE PER LA STAZIONE DI RICARICA");
                 TaxisSingleton.getInstance().setRecharging(2); // la uso
 
                 System.out.println("MI STO RICARICANDO");
@@ -348,7 +348,7 @@ public class TaxiSubPub extends Thread {
                 newBatteryLevel = 100;
 
                 ArrayList<Integer> newCordinateArray = newCordinate.getStationCoordinateByDistrict();
-                newCordinate = new Coordinate(newCordinateArray.get(0),newCordinateArray.get(1)); // prendo il distretto da dove sono partito per ricaricarmi
+                newCordinate = new Coordinate(newCordinateArray.get(0), newCordinateArray.get(1)); // prendo il distretto da dove sono partito per ricaricarmi
 
                 synchronized (TaxisSingleton.getInstance().getChargeBatteryLock()) {
                     // Non sto più usando la stazione di ricarica
@@ -398,8 +398,6 @@ public class TaxiSubPub extends Thread {
 
         changeDistrict(ride.getEndPosition().getDistrict());
 
-        System.out.println("DISTRETTO OK");
-
         // Notifico che mi sono liberato con il notify
         TaxisSingleton.getInstance().setRiding(false);
         synchronized (TaxisSingleton.getInstance().getDeliveryInProgressLock()) {
@@ -411,7 +409,7 @@ public class TaxiSubPub extends Thread {
         MqttMessage messageRide = new MqttMessage(payload.getBytes());
         messageRide.setQos(2);
 
-        client.publish("seta/smartcity/taxis/free/" + TaxisSingleton.getInstance().getCurrentTaxi().getId()+"-"+ride.getEndPosition().getDistrict(), messageRide);
+        client.publish("seta/smartcity/taxis/free/" + TaxisSingleton.getInstance().getCurrentTaxi().getId() + "-" + ride.getEndPosition().getDistrict(), messageRide);
 
         System.out.println("Ho finito la corsa...");
 

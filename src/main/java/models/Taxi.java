@@ -18,9 +18,7 @@ public class Taxi {
     private Coordinate coordinate;
     private List<Taxi> allTaxi;
 
-
-
-
+    // Costruttore vuoto
     public Taxi(){}
 
     public Taxi(int id, int port, String serverAddress) {

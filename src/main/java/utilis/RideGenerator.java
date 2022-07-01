@@ -108,9 +108,10 @@ public class RideGenerator extends Thread{
 
                 client.publish(topic+district1, message1);
                 client.publish(topic+district2, message2);
-                //client.publish(topic+1, message);
+
                 RidesQueue.getInstance().addPending(ride1);
                 RidesQueue.getInstance().addPending(ride2);
+
                 System.out.println("NEW RIDE: "+ id +" for TOPIC: " + topic+district1);
                 System.out.println("NEW RIDE: "+ id2 +" for TOPIC: " + topic+district2);
 
