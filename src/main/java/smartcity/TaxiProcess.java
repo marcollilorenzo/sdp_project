@@ -103,7 +103,7 @@ public class TaxiProcess {
                 taxiBroker();
 
                 // send stat to server every 15 second
-                sendStatistics();
+                sendStatisticsThread();
             }
 
 
@@ -207,17 +207,11 @@ public class TaxiProcess {
 
     }
 
-    private static void sendStatistics(){
-
-        System.out.println("\nSEND STATISTICS THREAD STARTED");
-
-        new Thread(()->{
-            while(true) {
-
-                // Variable for REST call
-                String input;
-                ClientResponse result;
-                JSONArray response = null;
+    private static void sendStatisticToServer(){
+        // Variable for REST call
+        String input;
+        ClientResponse result;
+        JSONArray response = null;
 
                 /*
                     STATISTICHE DA INVIARE
@@ -228,38 +222,52 @@ public class TaxiProcess {
                     Ogni statistica deve essere inviata al server con Taxi ID, Timestap, Livello batteria
                  */
 
-                double km = TaxisSingleton.getInstance().getKm();
-                int numberRides = TaxisSingleton.getInstance().getRides();
-                Date date = new Date();
-                long taxiTimestamp = date.getTime();
+        double km = TaxisSingleton.getInstance().getKm();
+        int numberRides = TaxisSingleton.getInstance().getRides();
+        Date date = new Date();
+        long taxiTimestamp = date.getTime();
 
-                List<Measurement> measurements = TaxisSingleton.getInstance().getPollutionMeasurementList();
-                float singleAveragePollution = 0;
+        List<Measurement> measurements = TaxisSingleton.getInstance().getPollutionMeasurementList();
+        float singleAveragePollution = 0;
 
-                for (Measurement m: measurements) { // media pollution della singola statistica
-                    singleAveragePollution += m.getValue();
-                }
+        for (Measurement m: measurements) { // media pollution della singola statistica
+            singleAveragePollution += m.getValue();
+        }
 
-                // STOP 15 SECONDS
+        // STOP 15 SECONDS
+        try {
+
+            Client client = Client.create();
+            WebResource webResource = client.resource("http://localhost:1337/stat/add");
+
+            Statistic s = new Statistic(
+                    TaxisSingleton.getInstance().getCurrentTaxi().getId(),
+                    taxiTimestamp,
+                    TaxisSingleton.getInstance().getCurrentTaxi().getBatteryLevel(),
+                    km,
+                    numberRides,
+                    TaxisSingleton.getInstance().getPollutionMeasurementListValue().stream()
+                            .mapToDouble(a -> a)
+                            .average().orElse(0)
+            );
+
+            input = new Gson().toJson(s);
+            result = webResource.type("application/json").post(ClientResponse.class, input);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void sendStatisticsThread(){
+
+        System.out.println("\nSEND STATISTICS THREAD STARTED");
+
+        new Thread(()->{
+            while(true) {
+
+                sendStatisticToServer();
                 try {
-
-                    Client client = Client.create();
-                    WebResource webResource = client.resource("http://localhost:1337/stat/add");
-
-                    Statistic s = new Statistic(
-                            TaxisSingleton.getInstance().getCurrentTaxi().getId(),
-                            taxiTimestamp,
-                            TaxisSingleton.getInstance().getCurrentTaxi().getBatteryLevel(),
-                            km,
-                            numberRides,
-                            TaxisSingleton.getInstance().getPollutionMeasurementListValue().stream()
-                                    .mapToDouble(a -> a)
-                                    .average().orElse(0)
-                    );
-
-                    input = new Gson().toJson(s);
-                    result = webResource.type("application/json").post(ClientResponse.class, input);
-
                     Thread.sleep(15000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -268,6 +276,8 @@ public class TaxiProcess {
         }).start();
 
     }
+
+
 
     // 1.2 MANAGE INPUT
     private static void manageInput() {
@@ -343,8 +353,9 @@ public class TaxiProcess {
             2. Controllo se Taxi sta effettuando una corsa
             3. Disconettere broker MQTT
             4. Invio statistiche al Server
-            5. Stop Server GRPC
-            6. Eliminazione dal Server
+            5. Notifico gli altri taxi che mi sto togliendo
+            6. Stop Server GRPC
+            7. Eliminazione dal Server
          */
 
         // 1. Controllo se taxi è già in un'elezione
@@ -374,8 +385,38 @@ public class TaxiProcess {
         // 3. Disconettere broker MQTT
         TaxiSubPub.disconnect();
 
+        // 4. Send Statistic to Server
+        sendStatisticToServer();
+        System.out.println("INVIATE STATISTICHE AL SERVER");
 
-        // 5. Stop Server GRPC
+        // 5. Notifico gli altri taxi che mi sto togliendo
+// send my new info to all other taxi
+        ArrayList<Taxi> otherTaxiList = TaxisSingleton.getInstance().getTaxiList();
+        for (Taxi t : otherTaxiList) {
+            final ManagedChannel channel = ManagedChannelBuilder
+                    .forTarget(t.getServerAddress() + ":" + t.getPort())
+                    .usePlaintext()
+                    .build();
+
+            GrcpGrpc.GrcpBlockingStub stub = GrcpGrpc.newBlockingStub(channel);
+
+            GrcpOuterClass.RemoveTaxiRequest req = GrcpOuterClass.RemoveTaxiRequest.newBuilder()
+                    .setTaxiId(TaxisSingleton.getInstance().getCurrentTaxi().getId())
+                    .build();
+
+            GrcpOuterClass.RemoveTaxiResponse res;
+            try {
+                System.out.println("Ho avvisto il taxi: " + t.getId() + " che sto uscendo");
+                res = stub.removeTaxi(req);
+
+            } catch (Exception e) {
+                System.out.println("🗑 NON SONO RIUSICITO A CONTATTARE IL TAXI: " + t.getId() + ", CI PENSERA' LUI AD ELIMINARMI");
+            }
+
+            channel.shutdownNow();
+        }
+
+        // 6. Stop Server GRPC
         try {
             serverGrcp.shutdownNow();
             System.out.println("GRCP stop!");
@@ -383,7 +424,7 @@ public class TaxiProcess {
             System.out.println("Error GRCP stop: " + e);
         }
 
-        // 6. Eliminazione dal Server
+        // 7. Eliminazione dal Server
         int id = TaxisSingleton.getInstance().getCurrentTaxi().getId();
         try {
             Client client = Client.create();

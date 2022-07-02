@@ -273,4 +273,21 @@ public class GrcpImpl extends GrcpGrpc.GrcpImplBase {
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void removeTaxi(GrcpOuterClass.RemoveTaxiRequest request, StreamObserver<GrcpOuterClass.RemoveTaxiResponse> responseObserver) {
+
+        int taxiID = request.getTaxiId();
+        TaxisSingleton.getInstance().removeTaxiById(taxiID);
+        System.out.println("HO ELIMINATO IL TAXI: " + taxiID + " perhcè sta uscendo");
+
+        GrcpOuterClass.RemoveTaxiResponse response = GrcpOuterClass.RemoveTaxiResponse
+                .newBuilder()
+                .setReply("OK")
+                .build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+
+    }
 }

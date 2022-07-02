@@ -51,8 +51,16 @@ message RechargeTaxiRequest {
     int32 district = 3;
 }
 
-message RechargeTaxiResponse {
+message RemoveTaxiResponse {
     string reply = 1; // OK - NO
+}
+
+message RemoveTaxiRequest {
+  int32 taxiId = 1;
+}
+
+message RechargeTaxiResponse {
+  string reply = 1; // OK - NO
 }
 
 service Grcp {
@@ -60,4 +68,5 @@ service Grcp {
   rpc election(ElectionRequest) returns (ElectionResponse);
   rpc updateTaxiInfo(UpdateTaxiInfoRequest) returns (UpdateTaxiInfoResponse);
   rpc recharge(RechargeTaxiRequest) returns (RechargeTaxiResponse);
+  rpc removeTaxi(RemoveTaxiRequest) returns (RemoveTaxiResponse);
 }

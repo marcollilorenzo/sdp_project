@@ -39,6 +39,15 @@ public class TaxiSubPub extends Thread {
 
         // Connection
         client.connect(connOpts);
+
+        // Avviso SETA sono libero
+        String payload = "Taxi ID: " + TaxisSingleton.getInstance().getCurrentTaxi().getId() + " is FREE (NEW TAXI 🎉) ";
+        MqttMessage messageRide = new MqttMessage(payload.getBytes());
+        messageRide.setQos(2);
+
+        client.publish("seta/smartcity/taxis/free/" + TaxisSingleton.getInstance().getCurrentTaxi().getId() + "-" + district, messageRide);
+
+        System.out.println("Avvisato SETA che sono nuovo");
     }
 
     // district

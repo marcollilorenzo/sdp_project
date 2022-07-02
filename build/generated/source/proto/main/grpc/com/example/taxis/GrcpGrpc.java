@@ -151,6 +151,37 @@ public final class GrcpGrpc {
     return getRechargeMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.RemoveTaxiRequest,
+      com.example.taxis.GrcpOuterClass.RemoveTaxiResponse> getRemoveTaxiMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "removeTaxi",
+      requestType = com.example.taxis.GrcpOuterClass.RemoveTaxiRequest.class,
+      responseType = com.example.taxis.GrcpOuterClass.RemoveTaxiResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.RemoveTaxiRequest,
+      com.example.taxis.GrcpOuterClass.RemoveTaxiResponse> getRemoveTaxiMethod() {
+    io.grpc.MethodDescriptor<com.example.taxis.GrcpOuterClass.RemoveTaxiRequest, com.example.taxis.GrcpOuterClass.RemoveTaxiResponse> getRemoveTaxiMethod;
+    if ((getRemoveTaxiMethod = GrcpGrpc.getRemoveTaxiMethod) == null) {
+      synchronized (GrcpGrpc.class) {
+        if ((getRemoveTaxiMethod = GrcpGrpc.getRemoveTaxiMethod) == null) {
+          GrcpGrpc.getRemoveTaxiMethod = getRemoveTaxiMethod =
+              io.grpc.MethodDescriptor.<com.example.taxis.GrcpOuterClass.RemoveTaxiRequest, com.example.taxis.GrcpOuterClass.RemoveTaxiResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "removeTaxi"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.example.taxis.GrcpOuterClass.RemoveTaxiRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.example.taxis.GrcpOuterClass.RemoveTaxiResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new GrcpMethodDescriptorSupplier("removeTaxi"))
+              .build();
+        }
+      }
+    }
+    return getRemoveTaxiMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -206,6 +237,13 @@ public final class GrcpGrpc {
       asyncUnimplementedUnaryCall(getRechargeMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void removeTaxi(com.example.taxis.GrcpOuterClass.RemoveTaxiRequest request,
+        io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.RemoveTaxiResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getRemoveTaxiMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -236,6 +274,13 @@ public final class GrcpGrpc {
                 com.example.taxis.GrcpOuterClass.RechargeTaxiRequest,
                 com.example.taxis.GrcpOuterClass.RechargeTaxiResponse>(
                   this, METHODID_RECHARGE)))
+          .addMethod(
+            getRemoveTaxiMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.example.taxis.GrcpOuterClass.RemoveTaxiRequest,
+                com.example.taxis.GrcpOuterClass.RemoveTaxiResponse>(
+                  this, METHODID_REMOVE_TAXI)))
           .build();
     }
   }
@@ -289,6 +334,14 @@ public final class GrcpGrpc {
       asyncUnaryCall(
           getChannel().newCall(getRechargeMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void removeTaxi(com.example.taxis.GrcpOuterClass.RemoveTaxiRequest request,
+        io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.RemoveTaxiResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getRemoveTaxiMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -335,6 +388,13 @@ public final class GrcpGrpc {
     public com.example.taxis.GrcpOuterClass.RechargeTaxiResponse recharge(com.example.taxis.GrcpOuterClass.RechargeTaxiRequest request) {
       return blockingUnaryCall(
           getChannel(), getRechargeMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.example.taxis.GrcpOuterClass.RemoveTaxiResponse removeTaxi(com.example.taxis.GrcpOuterClass.RemoveTaxiRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getRemoveTaxiMethod(), getCallOptions(), request);
     }
   }
 
@@ -387,12 +447,21 @@ public final class GrcpGrpc {
       return futureUnaryCall(
           getChannel().newCall(getRechargeMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.example.taxis.GrcpOuterClass.RemoveTaxiResponse> removeTaxi(
+        com.example.taxis.GrcpOuterClass.RemoveTaxiRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getRemoveTaxiMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_WELCOME = 0;
   private static final int METHODID_ELECTION = 1;
   private static final int METHODID_UPDATE_TAXI_INFO = 2;
   private static final int METHODID_RECHARGE = 3;
+  private static final int METHODID_REMOVE_TAXI = 4;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -426,6 +495,10 @@ public final class GrcpGrpc {
         case METHODID_RECHARGE:
           serviceImpl.recharge((com.example.taxis.GrcpOuterClass.RechargeTaxiRequest) request,
               (io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.RechargeTaxiResponse>) responseObserver);
+          break;
+        case METHODID_REMOVE_TAXI:
+          serviceImpl.removeTaxi((com.example.taxis.GrcpOuterClass.RemoveTaxiRequest) request,
+              (io.grpc.stub.StreamObserver<com.example.taxis.GrcpOuterClass.RemoveTaxiResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -492,6 +565,7 @@ public final class GrcpGrpc {
               .addMethod(getElectionMethod())
               .addMethod(getUpdateTaxiInfoMethod())
               .addMethod(getRechargeMethod())
+              .addMethod(getRemoveTaxiMethod())
               .build();
         }
       }
