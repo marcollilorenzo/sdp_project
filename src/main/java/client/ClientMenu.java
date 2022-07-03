@@ -43,6 +43,7 @@ public class ClientMenu {
         System.out.println("|    1. List of taxis present                                                                                      |");
         System.out.println("|    2. Get last n statistic by a given Taxi                                                                       |");
         System.out.println("|    3. Get statistic beetween two timestamp                                                                       |");
+        System.out.println("|    4. Exit                                                                                                       |");
         System.out.println("====================================================================================================================");
         System.out.print("Select option: ");
     }
@@ -156,7 +157,7 @@ public class ClientMenu {
             scanner.next();
         }
 
-        double time1 = scanner.nextLong();
+        long time1 = scanner.nextLong();
 
         System.out.println("Inserisci timestamp 2: ");
         while(!scanner.hasNextLong()) {
@@ -164,7 +165,7 @@ public class ClientMenu {
             scanner.next();
         }
 
-        double time2 = scanner.nextLong();
+        long time2 = scanner.nextLong();
 
         String getPath = "/stat/time1/"+time1+"/time2/"+time2;
         String url = serverAddress + getPath;
